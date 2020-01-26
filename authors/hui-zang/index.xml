@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hui Zang | Jonathan Crussell</title>
+    <link>/authors/hui-zang/</link>
+      <atom:link href="/authors/hui-zang/index.xml" rel="self" type="application/rss+xml" />
+    <description>Hui Zang</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020</copyright><lastBuildDate>Tue, 25 Jun 2013 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Adrob: Examining the Landscape and Impact of Android Application Plagiarism</title>
+      <link>/publication/gibler2013adrob/</link>
+      <pubDate>Tue, 25 Jun 2013 00:00:00 +0000</pubDate>
+      <guid>/publication/gibler2013adrob/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

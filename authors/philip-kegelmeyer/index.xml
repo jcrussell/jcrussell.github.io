@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Philip Kegelmeyer | Jonathan Crussell</title>
+    <link>/authors/philip-kegelmeyer/</link>
+      <atom:link href="/authors/philip-kegelmeyer/index.xml" rel="self" type="application/rss+xml" />
+    <description>Philip Kegelmeyer</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020</copyright><lastBuildDate>Thu, 30 Apr 2015 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Attacking DBSCAN for Fun and Profit</title>
+      <link>/publication/crussell2015attacking/</link>
+      <pubDate>Thu, 30 Apr 2015 00:00:00 +0000</pubDate>
+      <guid>/publication/crussell2015attacking/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

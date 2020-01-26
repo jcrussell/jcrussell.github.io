@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>1 | Jonathan Crussell</title>
+    <link>/publication_types/1/</link>
+      <atom:link href="/publication_types/1/index.xml" rel="self" type="application/rss+xml" />
+    <description>1</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020</copyright><lastBuildDate>Mon, 12 Aug 2019 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
+      <title>1</title>
+      <link>/publication_types/1/</link>
+    </image>
+    
+    <item>
+      <title>Lessons learned from 10k experiments to compare virtual and physical testbeds</title>
+      <link>/publication/crussell2019lessons/</link>
+      <pubDate>Mon, 12 Aug 2019 00:00:00 +0000</pubDate>
+      <guid>/publication/crussell2019lessons/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Exploration Of Multifidelity Approaches For Uncertainty Quantification In Network Applications</title>
+      <link>/publication/geraci2019exploration/</link>
+      <pubDate>Sat, 01 Jun 2019 00:00:00 +0000</pubDate>
+      <guid>/publication/geraci2019exploration/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Virtually the same: Comparing physical and virtual testbeds</title>
+      <link>/publication/crussell2019virtually/</link>
+      <pubDate>Mon, 18 Feb 2019 00:00:00 +0000</pubDate>
+      <guid>/publication/crussell2019virtually/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>On the Origin of Mobile Apps: Network Provenance for Android Applications</title>
+      <link>/publication/stevens2016origin/</link>
+      <pubDate>Wed, 09 Mar 2016 00:00:00 +0000</pubDate>
+      <guid>/publication/stevens2016origin/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Attacking DBSCAN for Fun and Profit</title>
+      <link>/publication/crussell2015attacking/</link>
+      <pubDate>Thu, 30 Apr 2015 00:00:00 +0000</pubDate>
+      <guid>/publication/crussell2015attacking/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Madfraud: Investigating Ad Fraud in Android Applications</title>
+      <link>/publication/crussell2014madfraud/</link>
+      <pubDate>Mon, 16 Jun 2014 00:00:00 +0000</pubDate>
+      <guid>/publication/crussell2014madfraud/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Andarwin: Scalable detection of semantically similar android applications</title>
+      <link>/publication/crussell2013andarwin/</link>
+      <pubDate>Mon, 09 Sep 2013 00:00:00 +0000</pubDate>
+      <guid>/publication/crussell2013andarwin/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Adrob: Examining the Landscape and Impact of Android Application Plagiarism</title>
+      <link>/publication/gibler2013adrob/</link>
+      <pubDate>Tue, 25 Jun 2013 00:00:00 +0000</pubDate>
+      <guid>/publication/gibler2013adrob/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Attack of the clones: Detecting cloned applications on android markets</title>
+      <link>/publication/crussell2012attack/</link>
+      <pubDate>Mon, 10 Sep 2012 00:00:00 +0000</pubDate>
+      <guid>/publication/crussell2012attack/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>AndroidLeaks: Automatically Detecting Potential Privacy Leaks in Android Applications on a Large Scale</title>
+      <link>/publication/gibler2012androidleaks/</link>
+      <pubDate>Wed, 13 Jun 2012 00:00:00 +0000</pubDate>
+      <guid>/publication/gibler2012androidleaks/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Investigating User Privacy in Android Ad Libraries</title>
+      <link>/publication/stevens2012investigating/</link>
+      <pubDate>Thu, 24 May 2012 00:00:00 +0000</pubDate>
+      <guid>/publication/stevens2012investigating/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

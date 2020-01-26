@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Clint Gibler | Jonathan Crussell</title>
+    <link>/authors/clint-gibler/</link>
+      <atom:link href="/authors/clint-gibler/index.xml" rel="self" type="application/rss+xml" />
+    <description>Clint Gibler</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020</copyright><lastBuildDate>Wed, 17 Dec 2014 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Andarwin: Scalable detection of android application clones based on semantics</title>
+      <link>/publication/crussell2014andarwin/</link>
+      <pubDate>Wed, 17 Dec 2014 00:00:00 +0000</pubDate>
+      <guid>/publication/crussell2014andarwin/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Andarwin: Scalable detection of semantically similar android applications</title>
+      <link>/publication/crussell2013andarwin/</link>
+      <pubDate>Mon, 09 Sep 2013 00:00:00 +0000</pubDate>
+      <guid>/publication/crussell2013andarwin/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Adrob: Examining the Landscape and Impact of Android Application Plagiarism</title>
+      <link>/publication/gibler2013adrob/</link>
+      <pubDate>Tue, 25 Jun 2013 00:00:00 +0000</pubDate>
+      <guid>/publication/gibler2013adrob/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Attack of the clones: Detecting cloned applications on android markets</title>
+      <link>/publication/crussell2012attack/</link>
+      <pubDate>Mon, 10 Sep 2012 00:00:00 +0000</pubDate>
+      <guid>/publication/crussell2012attack/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>AndroidLeaks: Automatically Detecting Potential Privacy Leaks in Android Applications on a Large Scale</title>
+      <link>/publication/gibler2012androidleaks/</link>
+      <pubDate>Wed, 13 Jun 2012 00:00:00 +0000</pubDate>
+      <guid>/publication/gibler2012androidleaks/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Investigating User Privacy in Android Ad Libraries</title>
+      <link>/publication/stevens2012investigating/</link>
+      <pubDate>Thu, 24 May 2012 00:00:00 +0000</pubDate>
+      <guid>/publication/stevens2012investigating/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
