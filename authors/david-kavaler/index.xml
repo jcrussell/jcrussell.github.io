@@ -5,7 +5,13 @@
     <link>/authors/david-kavaler/</link>
       <atom:link href="/authors/david-kavaler/index.xml" rel="self" type="application/rss+xml" />
     <description>David Kavaler</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020</copyright><lastBuildDate>Sun, 22 Sep 2019 00:00:00 +0000</lastBuildDate>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>© 2020</copyright><lastBuildDate>Sun, 22 Sep 2019 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png</url>
+      <title>David Kavaler</title>
+      <link>/authors/david-kavaler/</link>
+    </image>
+    
     <item>
       <title>Quantifying Uncertainty in Emulations: LDRD Report</title>
       <link>/publication/crussell2019quantifying/</link>
