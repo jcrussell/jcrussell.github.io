@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Distributed-Systems on Jonathan Crussell</title>
+    <link>/tags/distributed-systems/</link>
+    <description>Recent content in Distributed-Systems on Jonathan Crussell</description>
+    <generator>Hugo -- 0.153.5</generator>
+    <language>en-us</language>
+    <copyright>2020-2026</copyright>
+    <lastBuildDate>Sat, 10 Nov 2018 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/tags/distributed-systems/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>minimega toolset</title>
+      <link>/project/minimega/</link>
+      <pubDate>Sat, 10 Nov 2018 00:00:00 +0000</pubDate>
+      <guid>/project/minimega/</guid>
+      <description>Distributed VM management tool.</description>
+    </item>
+  </channel>
+</rss>

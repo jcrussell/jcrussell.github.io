@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Projects on Jonathan Crussell</title>
+    <link>/categories/projects/</link>
+    <description>Recent content in Projects on Jonathan Crussell</description>
+    <generator>Hugo -- 0.153.5</generator>
+    <language>en-us</language>
+    <copyright>2020-2026</copyright>
+    <lastBuildDate>Tue, 11 Feb 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/categories/projects/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ghidra-galore</title>
+      <link>/project/ghidra-galore/</link>
+      <pubDate>Tue, 11 Feb 2025 00:00:00 +0000</pubDate>
+      <guid>/project/ghidra-galore/</guid>
+      <description>Framework to run binaries through many versions of Ghidra.</description>
+    </item>
+    <item>
+      <title>QUE LDRD Tools</title>
+      <link>/project/que-ldrd-tools/</link>
+      <pubDate>Sun, 01 Sep 2019 00:00:00 +0000</pubDate>
+      <guid>/project/que-ldrd-tools/</guid>
+      <description>Tools for comparing virtual and physical testbeds.</description>
+    </item>
+    <item>
+      <title>discovery toolset</title>
+      <link>/project/discovery/</link>
+      <pubDate>Sat, 10 Nov 2018 00:00:00 +0000</pubDate>
+      <guid>/project/discovery/</guid>
+      <description>Automated map-to-model for Emulytics.</description>
+    </item>
+    <item>
+      <title>minimega toolset</title>
+      <link>/project/minimega/</link>
+      <pubDate>Sat, 10 Nov 2018 00:00:00 +0000</pubDate>
+      <guid>/project/minimega/</guid>
+      <description>Distributed VM management tool.</description>
+    </item>
+  </channel>
+</rss>

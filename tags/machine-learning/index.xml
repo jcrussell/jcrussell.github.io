@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Machine-Learning on Jonathan Crussell</title>
+    <link>/tags/machine-learning/</link>
+    <description>Recent content in Machine-Learning on Jonathan Crussell</description>
+    <generator>Hugo -- 0.153.5</generator>
+    <language>en-us</language>
+    <copyright>2020-2026</copyright>
+    <lastBuildDate>Thu, 30 Apr 2015 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/tags/machine-learning/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Attacking DBSCAN for Fun and Profit</title>
+      <link>/publication/crussell2015attacking/</link>
+      <pubDate>Thu, 30 Apr 2015 00:00:00 +0000</pubDate>
+      <guid>/publication/crussell2015attacking/</guid>
+      <description>Published at SDM 2015.</description>
+    </item>
+  </channel>
+</rss>

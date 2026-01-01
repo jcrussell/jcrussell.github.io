@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Network-Discovery on Jonathan Crussell</title>
+    <link>/tags/network-discovery/</link>
+    <description>Recent content in Network-Discovery on Jonathan Crussell</description>
+    <generator>Hugo -- 0.153.5</generator>
+    <language>en-us</language>
+    <copyright>2020-2026</copyright>
+    <lastBuildDate>Tue, 24 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/tags/network-discovery/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Automated Discovery for Emulytics</title>
+      <link>/publication/crussell2020automated/</link>
+      <pubDate>Tue, 24 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>/publication/crussell2020automated/</guid>
+      <description>arXiv preprint.</description>
+    </item>
+    <item>
+      <title>discovery toolset</title>
+      <link>/project/discovery/</link>
+      <pubDate>Sat, 10 Nov 2018 00:00:00 +0000</pubDate>
+      <guid>/project/discovery/</guid>
+      <description>Automated map-to-model for Emulytics.</description>
+    </item>
+  </channel>
+</rss>

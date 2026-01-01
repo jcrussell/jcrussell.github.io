@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Clone-Detection on Jonathan Crussell</title>
+    <link>/tags/clone-detection/</link>
+    <description>Recent content in Clone-Detection on Jonathan Crussell</description>
+    <generator>Hugo -- 0.153.5</generator>
+    <language>en-us</language>
+    <copyright>2020-2026</copyright>
+    <lastBuildDate>Wed, 31 Dec 2014 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/tags/clone-detection/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Scalable Semantics-Based Detection of Similar Android Apps: Design, Implementation, and Applications</title>
+      <link>/publication/crussell2014scalable/</link>
+      <pubDate>Wed, 31 Dec 2014 00:00:00 +0000</pubDate>
+      <guid>/publication/crussell2014scalable/</guid>
+      <description>PhD Dissertation.</description>
+    </item>
+    <item>
+      <title>Andarwin: Scalable detection of android application clones based on semantics</title>
+      <link>/publication/crussell2014andarwin/</link>
+      <pubDate>Wed, 17 Dec 2014 00:00:00 +0000</pubDate>
+      <guid>/publication/crussell2014andarwin/</guid>
+      <description>Published in IEEE TMC.</description>
+    </item>
+    <item>
+      <title>Andarwin: Scalable detection of semantically similar android applications</title>
+      <link>/publication/crussell2013andarwin/</link>
+      <pubDate>Mon, 09 Sep 2013 00:00:00 +0000</pubDate>
+      <guid>/publication/crussell2013andarwin/</guid>
+      <description>Published at ESORICS 2013.</description>
+    </item>
+    <item>
+      <title>Adrob: Examining the Landscape and Impact of Android Application Plagiarism</title>
+      <link>/publication/gibler2013adrob/</link>
+      <pubDate>Tue, 25 Jun 2013 00:00:00 +0000</pubDate>
+      <guid>/publication/gibler2013adrob/</guid>
+      <description>Published at MobiSys 2013.</description>
+    </item>
+    <item>
+      <title>An Investigation of Android Application Plagiarism</title>
+      <link>/publication/crussell2012investigation/</link>
+      <pubDate>Mon, 31 Dec 2012 00:00:00 +0000</pubDate>
+      <guid>/publication/crussell2012investigation/</guid>
+      <description>MS Thesis.</description>
+    </item>
+    <item>
+      <title>Attack of the clones: Detecting cloned applications on android markets</title>
+      <link>/publication/crussell2012attack/</link>
+      <pubDate>Mon, 10 Sep 2012 00:00:00 +0000</pubDate>
+      <guid>/publication/crussell2012attack/</guid>
+      <description>Published at ESORICS 2012.</description>
+    </item>
+  </channel>
+</rss>

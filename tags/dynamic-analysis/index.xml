@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Dynamic-Analysis on Jonathan Crussell</title>
+    <link>/tags/dynamic-analysis/</link>
+    <description>Recent content in Dynamic-Analysis on Jonathan Crussell</description>
+    <generator>Hugo -- 0.153.5</generator>
+    <language>en-us</language>
+    <copyright>2020-2026</copyright>
+    <lastBuildDate>Mon, 16 Jun 2014 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/tags/dynamic-analysis/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Madfraud: Investigating Ad Fraud in Android Applications</title>
+      <link>/publication/crussell2014madfraud/</link>
+      <pubDate>Mon, 16 Jun 2014 00:00:00 +0000</pubDate>
+      <guid>/publication/crussell2014madfraud/</guid>
+      <description>Published at MobiSys 2014.</description>
+    </item>
+  </channel>
+</rss>

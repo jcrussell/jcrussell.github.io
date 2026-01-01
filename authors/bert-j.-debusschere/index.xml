@@ -1,24 +1,27 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Bert J. Debusschere | Jonathan Crussell</title>
+    <title>Bert J. Debusschere on Jonathan Crussell</title>
     <link>/authors/bert-j.-debusschere/</link>
-      <atom:link href="/authors/bert-j.-debusschere/index.xml" rel="self" type="application/rss+xml" />
-    <description>Bert J. Debusschere</description>
-    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>© 2020</copyright><lastBuildDate>Sat, 01 Jun 2019 00:00:00 +0000</lastBuildDate>
-    <image>
-      <url>/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png</url>
-      <title>Bert J. Debusschere</title>
-      <link>/authors/bert-j.-debusschere/</link>
-    </image>
-    
+    <description>Recent content in Bert J. Debusschere on Jonathan Crussell</description>
+    <generator>Hugo -- 0.153.5</generator>
+    <language>en-us</language>
+    <copyright>2020-2026</copyright>
+    <lastBuildDate>Fri, 01 Jan 2021 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/authors/bert-j.-debusschere/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Exploration of multifidelity UQ sampling strategies for computer network applications</title>
+      <link>/publication/geraci2021exploration/</link>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>/publication/geraci2021exploration/</guid>
+      <description>Published in International Journal for Uncertainty Quantification.</description>
+    </item>
     <item>
       <title>Exploration Of Multifidelity Approaches For Uncertainty Quantification In Network Applications</title>
       <link>/publication/geraci2019exploration/</link>
       <pubDate>Sat, 01 Jun 2019 00:00:00 +0000</pubDate>
       <guid>/publication/geraci2019exploration/</guid>
-      <description></description>
+      <description>Published at UNCECOMP 2019.</description>
     </item>
-    
   </channel>
 </rss>

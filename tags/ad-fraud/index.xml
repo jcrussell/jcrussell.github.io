@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Ad-Fraud on Jonathan Crussell</title>
+    <link>/tags/ad-fraud/</link>
+    <description>Recent content in Ad-Fraud on Jonathan Crussell</description>
+    <generator>Hugo -- 0.153.5</generator>
+    <language>en-us</language>
+    <copyright>2020-2026</copyright>
+    <lastBuildDate>Wed, 09 Mar 2016 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/tags/ad-fraud/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>On the Origin of Mobile Apps: Network Provenance for Android Applications</title>
+      <link>/publication/stevens2016origin/</link>
+      <pubDate>Wed, 09 Mar 2016 00:00:00 +0000</pubDate>
+      <guid>/publication/stevens2016origin/</guid>
+      <description>Published at CODASPY 2016.</description>
+    </item>
+    <item>
+      <title>Madfraud: Investigating Ad Fraud in Android Applications</title>
+      <link>/publication/crussell2014madfraud/</link>
+      <pubDate>Mon, 16 Jun 2014 00:00:00 +0000</pubDate>
+      <guid>/publication/crussell2014madfraud/</guid>
+      <description>Published at MobiSys 2014.</description>
+    </item>
+    <item>
+      <title>Adrob: Examining the Landscape and Impact of Android Application Plagiarism</title>
+      <link>/publication/gibler2013adrob/</link>
+      <pubDate>Tue, 25 Jun 2013 00:00:00 +0000</pubDate>
+      <guid>/publication/gibler2013adrob/</guid>
+      <description>Published at MobiSys 2013.</description>
+    </item>
+  </channel>
+</rss>

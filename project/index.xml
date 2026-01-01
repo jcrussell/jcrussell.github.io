@@ -1,43 +1,41 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Projects | Jonathan Crussell</title>
+    <title>Projects on Jonathan Crussell</title>
     <link>/project/</link>
-      <atom:link href="/project/index.xml" rel="self" type="application/rss+xml" />
-    <description>Projects</description>
-    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>© 2020</copyright><lastBuildDate>Sat, 10 Nov 2018 12:33:12 -0800</lastBuildDate>
-    <image>
-      <url>/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png</url>
-      <title>Projects</title>
-      <link>/project/</link>
-    </image>
-    
+    <description>Recent content in Projects on Jonathan Crussell</description>
+    <generator>Hugo -- 0.153.5</generator>
+    <language>en-us</language>
+    <copyright>2020-2026</copyright>
+    <lastBuildDate>Tue, 11 Feb 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/project/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ghidra-galore</title>
+      <link>/project/ghidra-galore/</link>
+      <pubDate>Tue, 11 Feb 2025 00:00:00 +0000</pubDate>
+      <guid>/project/ghidra-galore/</guid>
+      <description>Framework to run binaries through many versions of Ghidra.</description>
+    </item>
+    <item>
+      <title>QUE LDRD Tools</title>
+      <link>/project/que-ldrd-tools/</link>
+      <pubDate>Sun, 01 Sep 2019 00:00:00 +0000</pubDate>
+      <guid>/project/que-ldrd-tools/</guid>
+      <description>Tools for comparing virtual and physical testbeds.</description>
+    </item>
     <item>
       <title>discovery toolset</title>
       <link>/project/discovery/</link>
-      <pubDate>Sat, 10 Nov 2018 12:33:12 -0800</pubDate>
+      <pubDate>Sat, 10 Nov 2018 00:00:00 +0000</pubDate>
       <guid>/project/discovery/</guid>
-      <description>&lt;p&gt;The discovery toolset for Emulytics enables the construction of high-fidelity
-emulation models of systems. The toolset consists of a set of tools and
-techniques to automatically go from network discovery of operational systems to
-emulating those complex systems. Our toolset combines data from host discovery
-and network mapping tools into an intermediate representation that can then be
-further refined. Once the intermediate representation reaches the desired
-state, our toolset supports emitting the Emulytics models with varying levels
-of specificity based on experiment needs.&lt;/p&gt;
-</description>
+      <description>Automated map-to-model for Emulytics.</description>
     </item>
-    
     <item>
       <title>minimega toolset</title>
       <link>/project/minimega/</link>
-      <pubDate>Sat, 10 Nov 2018 12:33:07 -0800</pubDate>
+      <pubDate>Sat, 10 Nov 2018 00:00:00 +0000</pubDate>
       <guid>/project/minimega/</guid>
-      <description>&lt;p&gt;minimega is a tool for launching and managing virtual machines. It can run on
-your laptop or distributed across a cluster. minimega is fast, easy to deploy,
-and can scale to run on massive clusters with virtually no setup.&lt;/p&gt;
-</description>
+      <description>Distributed VM management tool.</description>
     </item>
-    
   </channel>
 </rss>

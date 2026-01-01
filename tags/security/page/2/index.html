@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Security | Jonathan Crussell</title>
+<meta name="keywords" content="">
+<meta name="description" content="Jonathan Crussell - Computer Security Researcher at Sandia National Laboratories">
+<meta name="author" content="Jonathan Crussell">
+<link rel="canonical" href="/tags/security/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.cb1b966424391d58a85617e342812e23e741186aa62baaf33e320fa5b85c2b0b.css" integrity="sha256-yxuWZCQ5HVioVhfjQoEuI&#43;dBGGqmK6rzPjIPpbhcKws=" rel="preload stylesheet" as="style">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" type="application/rss+xml" href="/tags/security/index.xml" title="rss">
+<link rel="alternate" hreflang="en" href="/tags/security/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+        @media (prefers-color-scheme: light) {
+            .list::-webkit-scrollbar-thumb {
+                border-color: var(--code-bg);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="/tags/security/">
+  <meta property="og:site_name" content="Jonathan Crussell">
+  <meta property="og:title" content="Security">
+  <meta property="og:description" content="Jonathan Crussell - Computer Security Researcher at Sandia National Laboratories">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Security">
+<meta name="twitter:description" content="Jonathan Crussell - Computer Security Researcher at Sandia National Laboratories">
+
+</head>
+<body class="list" id="top">
+    <header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="/" accesskey="h" title="Jonathan Crussell (Alt + H)">Jonathan Crussell</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="/" title="Home">
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="/publication/" title="Publications">
+                    <span>Publications</span>
+                </a>
+            </li>
+            <li>
+                <a href="/project/" title="Projects">
+                    <span>Projects</span>
+                </a>
+            </li>
+            <li>
+                <a href="/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main"> 
+<header class="page-header">
+  <h1>
+    Security
+  </h1>
+</header>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Andarwin: Scalable detection of android application clones based on semantics
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Journal article presenting AnDarwin’s scalable semantic analysis approach that detected 4,295 cloned and 36,106 rebranded apps from 265,359 applications across 17 markets including Google Play, with automatic library code removal.</p>
+  </div>
+  <footer class="entry-footer"><span title='2014-12-17 00:00:00 +0000 UTC'>December 17, 2014</span>&nbsp;·&nbsp;<span>3 min</span>&nbsp;·&nbsp;<span>Jonathan Crussell</span></footer>
+  <a class="entry-link" aria-label="post link to Andarwin: Scalable detection of android application clones based on semantics" href="/publication/crussell2014andarwin/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Madfraud: Investigating Ad Fraud in Android Applications
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Presents MAdFraud, analyzing 130,339 apps to detect mobile ad fraud including background ad requests (30% of apps) and 27 apps with automated clicking, revealing stealthy techniques to evade detection.</p>
+  </div>
+  <footer class="entry-footer"><span title='2014-06-16 00:00:00 +0000 UTC'>June 16, 2014</span>&nbsp;·&nbsp;<span>2 min</span>&nbsp;·&nbsp;<span>Jonathan Crussell</span></footer>
+  <a class="entry-link" aria-label="post link to Madfraud: Investigating Ad Fraud in Android Applications" href="/publication/crussell2014madfraud/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Andarwin: Scalable detection of semantically similar android applications
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Introduces AnDarwin, a scalable tool that analyzed 265,359 apps from 17 markets to detect 4,295 clones and 36,106 rebranded apps, discovering 88 new malware variants by comparing semantic information without pairwise comparison.</p>
+  </div>
+  <footer class="entry-footer"><span title='2013-09-09 00:00:00 +0000 UTC'>September 9, 2013</span>&nbsp;·&nbsp;<span>2 min</span>&nbsp;·&nbsp;<span>Jonathan Crussell</span></footer>
+  <a class="entry-link" aria-label="post link to Andarwin: Scalable detection of semantically similar android applications" href="/publication/crussell2013andarwin/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Adrob: Examining the Landscape and Impact of Android Application Plagiarism
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>First large-scale study characterizing plagiarized Android apps across 265,359 applications from 17 markets and estimating their economic impact by analyzing advertising revenue siphoned from original developers using tier-1 cellular network traces.</p>
+  </div>
+  <footer class="entry-footer"><span title='2013-06-25 00:00:00 +0000 UTC'>June 25, 2013</span>&nbsp;·&nbsp;<span>2 min</span>&nbsp;·&nbsp;<span>Jonathan Crussell</span></footer>
+  <a class="entry-link" aria-label="post link to Adrob: Examining the Landscape and Impact of Android Application Plagiarism" href="/publication/gibler2013adrob/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">An Investigation of Android Application Plagiarism
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Master’s thesis investigating Android application plagiarism through program analysis techniques to detect cloned and repackaged mobile apps.</p>
+  </div>
+  <footer class="entry-footer"><span title='2012-12-31 00:00:00 +0000 UTC'>December 31, 2012</span>&nbsp;·&nbsp;<span>2 min</span>&nbsp;·&nbsp;<span>Jonathan Crussell</span></footer>
+  <a class="entry-link" aria-label="post link to An Investigation of Android Application Plagiarism" href="/publication/crussell2012investigation/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Attack of the clones: Detecting cloned applications on android markets
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Presents DNADroid, a tool that detects Android application cloning by comparing program dependency graphs, identifying at least 141 cloned apps including cases of malware injection and ad revenue redirection.</p>
+  </div>
+  <footer class="entry-footer"><span title='2012-09-10 00:00:00 +0000 UTC'>September 10, 2012</span>&nbsp;·&nbsp;<span>1 min</span>&nbsp;·&nbsp;<span>Jonathan Crussell</span></footer>
+  <a class="entry-link" aria-label="post link to Attack of the clones: Detecting cloned applications on android markets" href="/publication/crussell2012attack/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">AndroidLeaks: Automatically Detecting Potential Privacy Leaks in Android Applications on a Large Scale
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Presents AndroidLeaks, which analyzed 24,350 Android apps in 30 hours and found 2,342 apps leaking private data including phone info, GPS location, WiFi data, and audio from 57,299 potential privacy leaks detected.</p>
+  </div>
+  <footer class="entry-footer"><span title='2012-06-13 00:00:00 +0000 UTC'>June 13, 2012</span>&nbsp;·&nbsp;<span>2 min</span>&nbsp;·&nbsp;<span>Jonathan Crussell</span></footer>
+  <a class="entry-link" aria-label="post link to AndroidLeaks: Automatically Detecting Potential Privacy Leaks in Android Applications on a Large Scale" href="/publication/gibler2012androidleaks/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Investigating User Privacy in Android Ad Libraries
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Examines privacy implications of 13 Android ad libraries, discovering several checked dangerous permissions beyond documentation (CAMERA, WRITE_CALENDAR, WRITE_CONTACTS) and identifying cross-app user tracking capabilities.</p>
+  </div>
+  <footer class="entry-footer"><span title='2012-05-24 00:00:00 +0000 UTC'>May 24, 2012</span>&nbsp;·&nbsp;<span>2 min</span>&nbsp;·&nbsp;<span>Jonathan Crussell</span></footer>
+  <a class="entry-link" aria-label="post link to Investigating User Privacy in Android Ad Libraries" href="/publication/stevens2012investigating/"></a>
+</article>
+<footer class="page-footer">
+  <nav class="pagination">
+    <a class="prev" href="/tags/security/">
+      «&nbsp;Prev&nbsp;
+    </a>
+  </nav>
+</footer>
+    </main>
+    
+<footer class="footer">
+        <span>© 2020-2026</span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

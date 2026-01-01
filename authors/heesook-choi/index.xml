@@ -1,24 +1,20 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Heesook Choi | Jonathan Crussell</title>
+    <title>Heesook Choi on Jonathan Crussell</title>
     <link>/authors/heesook-choi/</link>
-      <atom:link href="/authors/heesook-choi/index.xml" rel="self" type="application/rss+xml" />
-    <description>Heesook Choi</description>
-    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>© 2020</copyright><lastBuildDate>Tue, 25 Jun 2013 00:00:00 +0000</lastBuildDate>
-    <image>
-      <url>/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png</url>
-      <title>Heesook Choi</title>
-      <link>/authors/heesook-choi/</link>
-    </image>
-    
+    <description>Recent content in Heesook Choi on Jonathan Crussell</description>
+    <generator>Hugo -- 0.153.5</generator>
+    <language>en-us</language>
+    <copyright>2020-2026</copyright>
+    <lastBuildDate>Tue, 25 Jun 2013 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/authors/heesook-choi/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Adrob: Examining the Landscape and Impact of Android Application Plagiarism</title>
       <link>/publication/gibler2013adrob/</link>
       <pubDate>Tue, 25 Jun 2013 00:00:00 +0000</pubDate>
       <guid>/publication/gibler2013adrob/</guid>
-      <description></description>
+      <description>Published at MobiSys 2013.</description>
     </item>
-    
   </channel>
 </rss>

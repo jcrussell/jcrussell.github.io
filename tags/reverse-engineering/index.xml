@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Reverse-Engineering on Jonathan Crussell</title>
+    <link>/tags/reverse-engineering/</link>
+    <description>Recent content in Reverse-Engineering on Jonathan Crussell</description>
+    <generator>Hugo -- 0.153.5</generator>
+    <language>en-us</language>
+    <copyright>2020-2026</copyright>
+    <lastBuildDate>Fri, 28 Feb 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/tags/reverse-engineering/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ghidra: Is Newer Always Better?</title>
+      <link>/publication/crussell2025ghidra/</link>
+      <pubDate>Fri, 28 Feb 2025 00:00:00 +0000</pubDate>
+      <guid>/publication/crussell2025ghidra/</guid>
+      <description>Published at BAR 2025.</description>
+    </item>
+    <item>
+      <title>ghidra-galore</title>
+      <link>/project/ghidra-galore/</link>
+      <pubDate>Tue, 11 Feb 2025 00:00:00 +0000</pubDate>
+      <guid>/project/ghidra-galore/</guid>
+      <description>Framework to run binaries through many versions of Ghidra.</description>
+    </item>
+  </channel>
+</rss>

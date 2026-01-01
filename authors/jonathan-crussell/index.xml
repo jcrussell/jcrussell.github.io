@@ -1,144 +1,139 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Jonathan Crussell</title>
     <link>/authors/jonathan-crussell/</link>
-      <atom:link href="/authors/jonathan-crussell/index.xml" rel="self" type="application/rss+xml" />
-    <description>Jonathan Crussell</description>
-    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>© 2020</copyright><lastBuildDate>Tue, 24 Mar 2020 00:00:00 +0000</lastBuildDate>
-    <image>
-      <url>/images/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png</url>
-      <title>Jonathan Crussell</title>
-      <link>/authors/jonathan-crussell/</link>
-    </image>
-    
+    <description>Recent content on Jonathan Crussell</description>
+    <generator>Hugo -- 0.153.5</generator>
+    <language>en-us</language>
+    <copyright>2020-2026</copyright>
+    <lastBuildDate>Fri, 28 Feb 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/authors/jonathan-crussell/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ghidra: Is Newer Always Better?</title>
+      <link>/publication/crussell2025ghidra/</link>
+      <pubDate>Fri, 28 Feb 2025 00:00:00 +0000</pubDate>
+      <guid>/publication/crussell2025ghidra/</guid>
+      <description>Published at BAR 2025.</description>
+    </item>
+    <item>
+      <title>Exploration of multifidelity UQ sampling strategies for computer network applications</title>
+      <link>/publication/geraci2021exploration/</link>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>/publication/geraci2021exploration/</guid>
+      <description>Published in International Journal for Uncertainty Quantification.</description>
+    </item>
     <item>
       <title>Automated Discovery for Emulytics</title>
       <link>/publication/crussell2020automated/</link>
       <pubDate>Tue, 24 Mar 2020 00:00:00 +0000</pubDate>
       <guid>/publication/crussell2020automated/</guid>
-      <description></description>
+      <description>arXiv preprint.</description>
     </item>
-    
     <item>
       <title>Quantifying Uncertainty in Emulations: LDRD Report</title>
       <link>/publication/crussell2019quantifying/</link>
       <pubDate>Sun, 22 Sep 2019 00:00:00 +0000</pubDate>
       <guid>/publication/crussell2019quantifying/</guid>
-      <description></description>
+      <description>Sandia LDRD Report.</description>
     </item>
-    
     <item>
       <title>Lessons learned from 10k experiments to compare virtual and physical testbeds</title>
       <link>/publication/crussell2019lessons/</link>
       <pubDate>Mon, 12 Aug 2019 00:00:00 +0000</pubDate>
       <guid>/publication/crussell2019lessons/</guid>
-      <description></description>
+      <description>Published at CSET 2019.</description>
     </item>
-    
     <item>
       <title>Exploration Of Multifidelity Approaches For Uncertainty Quantification In Network Applications</title>
       <link>/publication/geraci2019exploration/</link>
       <pubDate>Sat, 01 Jun 2019 00:00:00 +0000</pubDate>
       <guid>/publication/geraci2019exploration/</guid>
-      <description></description>
+      <description>Published at UNCECOMP 2019.</description>
     </item>
-    
     <item>
       <title>Virtually the same: Comparing physical and virtual testbeds</title>
       <link>/publication/crussell2019virtually/</link>
       <pubDate>Mon, 18 Feb 2019 00:00:00 +0000</pubDate>
       <guid>/publication/crussell2019virtually/</guid>
-      <description></description>
+      <description>Published at ICNC 2019.</description>
     </item>
-    
     <item>
       <title>On the Origin of Mobile Apps: Network Provenance for Android Applications</title>
       <link>/publication/stevens2016origin/</link>
       <pubDate>Wed, 09 Mar 2016 00:00:00 +0000</pubDate>
       <guid>/publication/stevens2016origin/</guid>
-      <description></description>
+      <description>Published at CODASPY 2016.</description>
     </item>
-    
     <item>
       <title>Attacking DBSCAN for Fun and Profit</title>
       <link>/publication/crussell2015attacking/</link>
       <pubDate>Thu, 30 Apr 2015 00:00:00 +0000</pubDate>
       <guid>/publication/crussell2015attacking/</guid>
-      <description></description>
+      <description>Published at SDM 2015.</description>
     </item>
-    
     <item>
       <title>Scalable Semantics-Based Detection of Similar Android Apps: Design, Implementation, and Applications</title>
       <link>/publication/crussell2014scalable/</link>
       <pubDate>Wed, 31 Dec 2014 00:00:00 +0000</pubDate>
       <guid>/publication/crussell2014scalable/</guid>
-      <description></description>
+      <description>PhD Dissertation.</description>
     </item>
-    
     <item>
       <title>Andarwin: Scalable detection of android application clones based on semantics</title>
       <link>/publication/crussell2014andarwin/</link>
       <pubDate>Wed, 17 Dec 2014 00:00:00 +0000</pubDate>
       <guid>/publication/crussell2014andarwin/</guid>
-      <description></description>
+      <description>Published in IEEE TMC.</description>
     </item>
-    
     <item>
       <title>Madfraud: Investigating Ad Fraud in Android Applications</title>
       <link>/publication/crussell2014madfraud/</link>
       <pubDate>Mon, 16 Jun 2014 00:00:00 +0000</pubDate>
       <guid>/publication/crussell2014madfraud/</guid>
-      <description></description>
+      <description>Published at MobiSys 2014.</description>
     </item>
-    
     <item>
       <title>Andarwin: Scalable detection of semantically similar android applications</title>
       <link>/publication/crussell2013andarwin/</link>
       <pubDate>Mon, 09 Sep 2013 00:00:00 +0000</pubDate>
       <guid>/publication/crussell2013andarwin/</guid>
-      <description></description>
+      <description>Published at ESORICS 2013.</description>
     </item>
-    
     <item>
       <title>Adrob: Examining the Landscape and Impact of Android Application Plagiarism</title>
       <link>/publication/gibler2013adrob/</link>
       <pubDate>Tue, 25 Jun 2013 00:00:00 +0000</pubDate>
       <guid>/publication/gibler2013adrob/</guid>
-      <description></description>
+      <description>Published at MobiSys 2013.</description>
     </item>
-    
     <item>
       <title>An Investigation of Android Application Plagiarism</title>
       <link>/publication/crussell2012investigation/</link>
       <pubDate>Mon, 31 Dec 2012 00:00:00 +0000</pubDate>
       <guid>/publication/crussell2012investigation/</guid>
-      <description></description>
+      <description>MS Thesis.</description>
     </item>
-    
     <item>
       <title>Attack of the clones: Detecting cloned applications on android markets</title>
       <link>/publication/crussell2012attack/</link>
       <pubDate>Mon, 10 Sep 2012 00:00:00 +0000</pubDate>
       <guid>/publication/crussell2012attack/</guid>
-      <description></description>
+      <description>Published at ESORICS 2012.</description>
     </item>
-    
     <item>
       <title>AndroidLeaks: Automatically Detecting Potential Privacy Leaks in Android Applications on a Large Scale</title>
       <link>/publication/gibler2012androidleaks/</link>
       <pubDate>Wed, 13 Jun 2012 00:00:00 +0000</pubDate>
       <guid>/publication/gibler2012androidleaks/</guid>
-      <description></description>
+      <description>Published at TRUST 2012.</description>
     </item>
-    
     <item>
       <title>Investigating User Privacy in Android Ad Libraries</title>
       <link>/publication/stevens2012investigating/</link>
       <pubDate>Thu, 24 May 2012 00:00:00 +0000</pubDate>
       <guid>/publication/stevens2012investigating/</guid>
-      <description></description>
+      <description>Published at MoST 2012.</description>
     </item>
-    
   </channel>
 </rss>
