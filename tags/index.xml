@@ -7,8 +7,43 @@
     <generator>Hugo -- 0.153.5</generator>
     <language>en-us</language>
     <copyright>2020-2026</copyright>
-    <lastBuildDate>Thu, 01 Jan 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 04 Jan 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ai</title>
+      <link>/tags/ai/</link>
+      <pubDate>Sun, 04 Jan 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/ai/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Automation</title>
+      <link>/tags/automation/</link>
+      <pubDate>Sun, 04 Jan 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/automation/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gnome</title>
+      <link>/tags/gnome/</link>
+      <pubDate>Sun, 04 Jan 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/gnome/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Testing</title>
+      <link>/tags/testing/</link>
+      <pubDate>Sun, 04 Jan 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/testing/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Window-Manager</title>
+      <link>/tags/window-manager/</link>
+      <pubDate>Sun, 04 Jan 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/window-manager/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Ai-Assisted</title>
       <link>/tags/ai-assisted/</link>
@@ -70,13 +105,6 @@
       <link>/tags/reverse-engineering/</link>
       <pubDate>Fri, 28 Feb 2025 00:00:00 +0000</pubDate>
       <guid>/tags/reverse-engineering/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Automation</title>
-      <link>/tags/automation/</link>
-      <pubDate>Tue, 11 Feb 2025 00:00:00 +0000</pubDate>
-      <guid>/tags/automation/</guid>
       <description></description>
     </item>
     <item>
