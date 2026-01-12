@@ -7,8 +7,15 @@
     <generator>Hugo -- 0.153.5</generator>
     <language>en-us</language>
     <copyright>2020-2026</copyright>
-    <lastBuildDate>Sun, 04 Jan 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 11 Jan 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Forge, meet Claude, part 2</title>
+      <link>/post/forge-part-2/</link>
+      <pubDate>Sun, 11 Jan 2026 00:00:00 +0000</pubDate>
+      <guid>/post/forge-part-2/</guid>
+      <description>Continuing to tackle the Forge backlog with Claude: 43 bug fixes, 19 new features, and 728 unit tests.</description>
+    </item>
     <item>
       <title>Forge, meet Claude</title>
       <link>/post/forge/</link>
