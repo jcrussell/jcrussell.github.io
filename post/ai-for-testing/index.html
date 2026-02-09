@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Can AI Test All Code Like SQLite? | Jonathan Crussell</title>
+<meta name="keywords" content="ai, testing, automation">
+<meta name="description" content="SQLite has 590x more test code than library code. Can AI help us achieve that level of testing for all software?">
+<meta name="author" content="Jonathan Crussell">
+<link rel="canonical" href="/post/ai-for-testing/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.cb1b966424391d58a85617e342812e23e741186aa62baaf33e320fa5b85c2b0b.css" integrity="sha256-yxuWZCQ5HVioVhfjQoEuI&#43;dBGGqmK6rzPjIPpbhcKws=" rel="preload stylesheet" as="style">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="/post/ai-for-testing/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+        @media (prefers-color-scheme: light) {
+            .list::-webkit-scrollbar-thumb {
+                border-color: var(--code-bg);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="/post/ai-for-testing/">
+  <meta property="og:site_name" content="Jonathan Crussell">
+  <meta property="og:title" content="Can AI Test All Code Like SQLite?">
+  <meta property="og:description" content="SQLite has 590x more test code than library code. Can AI help us achieve that level of testing for all software?">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2026-02-08T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-02-08T00:00:00+00:00">
+    <meta property="article:tag" content="Ai">
+    <meta property="article:tag" content="Testing">
+    <meta property="article:tag" content="Automation">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Can AI Test All Code Like SQLite?">
+<meta name="twitter:description" content="SQLite has 590x more test code than library code. Can AI help us achieve that level of testing for all software?">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "/post/"
+    }
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Can AI Test All Code Like SQLite?",
+      "item": "/post/ai-for-testing/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Can AI Test All Code Like SQLite?",
+  "name": "Can AI Test All Code Like SQLite?",
+  "description": "SQLite has 590x more test code than library code. Can AI help us achieve that level of testing for all software?",
+  "keywords": [
+    "ai", "testing", "automation"
+  ],
+  "articleBody": "Did you know that SQLite has 590x more test code and test scripts than the library itself? I did not, at least until last week (thanks, HN). From How SQLite is Tested:\nAs of version 3.42.0 (2023-05-16), the SQLite library consists of approximately 155.8 KSLOC of C code. (KSLOC means thousands of “Source Lines Of Code” or, in other words, lines of code excluding blank lines and comments.) By comparison, the project has 590 times as much test code and test scripts - 92053.1 KSLOC.\nFor a library as important as SQLite, this level of rigorous testing makes sense – many important systems use SQLite and bugs that may lead to data loss (or worse, corruption) should be avoided. But what about less “critical” libraries? Like those supporting all modern digital infrastructure?\nxkcd 2347.\nShould we not test all code like SQLite? We do not know what code will be used where – why not build the test infrastructure with the code? Put simply, who has time for that? Developers are notoriously bad at writing tests for their own code. AI offers a new possibility – what if we can use it to test all code as thoroughly as SQLite?\nIn my experiments with Forge, I was nervous to let AI start changing things without a pathway to ensure that the extension still worked correctly without manually using the extension. In parallel to fixing issues and adding features, I worked to generate a comprehensive test suite. I mildly guided Claude but, for the most part, I let it figure out a test plan, implement the tests, and then update the plan for the next phase. This worked well and even discovered several bugs in the process. However, the number of tests (and LoC of tests) grew quickly with unknown “quality”. Early on, I did not even bother measuring coverage and when I finally got around to enabling codecov, the coverage was around 55% (up to 62% now). This was better than I expected and I decided to spend some tokens refining the tests. Specifically, at commit #38 (db36193), I asked Claude to review the tests and focus on testing behaviors (not implementation). This removed ~190 tests which caused a small hit to the branch coverage but the other coverages were largely unchanged.\nTest coverage over time (commits).\nOver the follow commits, I continued to refine the testing suite. There is no doubt that the testing infrastructure introduced a ton of code into the repo (fortunately, not 590x):\nLoC over time (commits). LoC based on cloc.\nRegression Tests One of my goals with building the testing infrastructure was to measure whether bugs were fixed or not in my latest code based on whether the tests pass and not via manual testing. Since I had already iterated through the issue board several times, I asked Claude to generate a list of issues that were suitable to be converted into regression tests. I did not try too hard to turn every such issue into a unit test (and a few were duplicates) but Claude was able to implement a total of 26 regression tests (which grew the size of the tests). I still need to finish this experiment and confirm these fail on the earlier version of the repo.\nEnd-to-end Testing One of the biggest challenges with testing a Gnome extension is that it often requires a lot of manual testing. Here’s what I asked Gemini to explore via deep research:\ni have a gnome extension that manages tiling windows. i have a lot of unit tests with mocked APIs but it would be nice to do automated end-to-end tests without needing a human in the loop or a GUI so that i can put this in CI/CD. What are my options? The repo is here: https://github.com/jcrussell/forge\nThis pointed me towards the gnome-shell-pod repo and I used Gemini to generate an implementation plan for Claude. I pasted this into a planning session and then let Claude work. This took forever (many hours) but it eventually figured out how to implement end-to-end tests. I probably could have helped it accomplish this faster but I was focusing on other things. I am so glad I did not have to figure this out and I could let Claude do the trial-and-error.\nThe commit introducing the E2E testing is on the dev branch. It took long enough to implement that I did not get to experiment with it as much as I would have liked.\nCI/CD Whenever I set up CI/CD on a repo that has not had it enabled in the past, I usually prepare myself for a world of pain. One of the coolest discoveries this time was that gh can pull CI/CD logs meaning that I could create a simple loop to: push, check CI/CD worked, and fix it if it did not. I could probably have replicated the CI/CD stages locally and should probably do that in the future but this was a surprisingly easy process. The only downside was that gh does not have a long-polling mechanism (that Claude was able to find) for when CI/CD is complete.\nLinks How SQLite is Tested Stable Branch Dev Branch ",
+  "wordCount" : "865",
+  "inLanguage": "en",
+  "datePublished": "2026-02-08T00:00:00Z",
+  "dateModified": "2026-02-08T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Jonathan Crussell"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/post/ai-for-testing/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Jonathan Crussell",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="/" accesskey="h" title="Jonathan Crussell (Alt + H)">Jonathan Crussell</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="/" title="Home">
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="/publication/" title="Publications">
+                    <span>Publications</span>
+                </a>
+            </li>
+            <li>
+                <a href="/project/" title="Projects">
+                    <span>Projects</span>
+                </a>
+            </li>
+            <li>
+                <a href="/post/" title="Posts">
+                    <span>Posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Can AI Test All Code Like SQLite?
+    </h1>
+    <div class="post-description">
+      SQLite has 590x more test code than library code. Can AI help us achieve that level of testing for all software?
+    </div>
+    <div class="post-meta"><span title='2026-02-08 00:00:00 +0000 UTC'>February 8, 2026</span>&nbsp;·&nbsp;<span>5 min</span>&nbsp;·&nbsp;<span>Jonathan Crussell</span>
+
+</div>
+  </header> 
+  <div class="post-content"><p>Did you know that SQLite has 590x more test code and test scripts than the
+library itself? I did not, at least until last week (thanks, HN). From <a href="https://sqlite.org/testing.html">How
+SQLite is Tested</a>:</p>
+<blockquote>
+<p>As of version 3.42.0 (2023-05-16), the SQLite library consists of
+approximately 155.8 KSLOC of C code. (KSLOC means thousands of &ldquo;Source Lines
+Of Code&rdquo; or, in other words, lines of code excluding blank lines and
+comments.) By comparison, the project has 590 times as much test code and
+test scripts - 92053.1 KSLOC.</p>
+</blockquote>
+<p>For a library as important as SQLite, this level of rigorous testing makes
+sense &ndash; many important systems use SQLite and bugs that may lead to data loss
+(or worse, corruption) should be avoided. But what about less &ldquo;critical&rdquo;
+libraries? Like those supporting <a href="https://xkcd.com/2347">all modern digital
+infrastructure</a>?</p>
+<figure class="align-center ">
+    <img loading="lazy" src="https://imgs.xkcd.com/comics/dependency.png#center"
+         alt="xkcd 2347."/> <figcaption>
+            <p>xkcd 2347.</p>
+        </figcaption>
+</figure>
+
+<p>Should we not test all code like SQLite? We do not know what code will be
+used where &ndash; why not build the test infrastructure with the code? Put simply,
+who has time for that? Developers are notoriously bad at writing tests for
+their own code. AI offers a new possibility &ndash; what if we can use it to test
+<em>all</em> code as thoroughly as SQLite?</p>
+<p>In my experiments with <a href="/post/forge/">Forge</a>, I was nervous to let AI start
+changing things without a pathway to ensure that the extension still worked
+correctly without manually using the extension. In parallel to fixing issues
+and adding features, I worked to generate a comprehensive test suite. I mildly
+guided Claude but, for the most part, I let it figure out a test plan,
+implement the tests, and then update the plan for the next phase. This worked
+well and even discovered <a href="/post/forge-part-2/">several bugs</a> in the process.
+However, the number of tests (and LoC of tests) grew quickly with unknown
+&ldquo;quality&rdquo;. Early on, I did not even bother measuring coverage and when I
+finally got around to enabling
+<a href="https://app.codecov.io/github/jcrussell/forge">codecov</a>, the coverage was
+around 55% (up to 62% now). This was better than I expected and I decided to
+spend some tokens refining the tests. Specifically, at commit #38
+(<a href="https://github.com/jcrussell/forge/commit/db361930e06b41dbd8ca9062c72ae03bd513dddf">db36193</a>),
+I asked Claude to review the tests and focus on testing behaviors (not
+implementation). This removed ~190 tests which caused a small hit to the branch
+coverage but the other coverages were largely unchanged.</p>
+<figure class="align-center ">
+    <img loading="lazy" src="/img/forge-coverage-combined.png#center"
+         alt="Test coverage over time (commits)."/> <figcaption>
+            <p>Test coverage over time (commits).</p>
+        </figcaption>
+</figure>
+
+<p>Over the follow commits, I continued to refine the testing suite. There is no
+doubt that the testing infrastructure introduced a ton of code into the repo
+(fortunately, not 590x):</p>
+<figure class="align-center ">
+    <img loading="lazy" src="/img/forge-loc-combined.png#center"
+         alt="LoC over time (commits). LoC based on cloc."/> <figcaption>
+            <p>LoC over time (commits). LoC based on <a href="https://github.com/AlDanial/cloc">cloc</a>.</p>
+        </figcaption>
+</figure>
+
+<h2 id="regression-tests">Regression Tests<a hidden class="anchor" aria-hidden="true" href="#regression-tests">#</a></h2>
+<p>One of my goals with building the testing infrastructure was to measure whether
+bugs were fixed or not in my latest code based on whether the tests pass and
+not via manual testing. Since I had already iterated through the issue board
+several times, I asked Claude to generate a list of issues that were suitable
+to be converted into regression tests. I did not try too hard to turn every such
+issue into a unit test (and a few were duplicates) but Claude was able to
+implement a total of 26 <a href="https://github.com/jcrussell/forge/tree/main/tests/regression">regression
+tests</a> (which
+grew the size of the tests). I still need to finish this experiment and confirm
+these fail on the earlier version of the repo.</p>
+<h2 id="end-to-end-testing">End-to-end Testing<a hidden class="anchor" aria-hidden="true" href="#end-to-end-testing">#</a></h2>
+<p>One of the biggest challenges with testing a Gnome extension is that it often
+requires a lot of manual testing. Here&rsquo;s what I asked Gemini to explore via
+deep research:</p>
+<blockquote>
+<p>i have a gnome extension that manages tiling windows. i have a lot of unit
+tests with mocked APIs but it would be nice to do automated end-to-end tests
+without needing a human in the loop or a GUI so that i can put this in CI/CD.
+What are my options? The repo is here: <a href="https://github.com/jcrussell/forge">https://github.com/jcrussell/forge</a></p>
+</blockquote>
+<p>This pointed me towards the <a href="https://github.com/Schneegans/gnome-shell-pod">gnome-shell-pod
+repo</a> and I used Gemini to
+generate an implementation plan for Claude. I pasted this into a planning
+session and then let Claude work. This took <strong>forever</strong> (many hours) but it
+eventually figured out how to implement end-to-end tests. I probably could have
+helped it accomplish this faster but I was focusing on other things. I am so
+glad I did not have to figure this out and I could let Claude do the
+trial-and-error.</p>
+<p>The
+<a href="https://github.com/jcrussell/forge/commit/48b2f1442eeebad7d9892d346da3b54bfd46384d">commit</a>
+introducing the E2E testing is on the <a href="https://github.com/jcrussell/forge/tree/dev">dev
+branch</a>. It took long enough to
+implement that I did not get to experiment with it as much as I would have
+liked.</p>
+<h2 id="cicd">CI/CD<a hidden class="anchor" aria-hidden="true" href="#cicd">#</a></h2>
+<p>Whenever I set up CI/CD on a repo that has not had it enabled in the past, I
+usually prepare myself for a world of pain. One of the coolest discoveries this
+time was that <code>gh</code> can pull CI/CD logs meaning that I could create a simple
+loop to: push, check CI/CD worked, and fix it if it did not. I could probably
+have replicated the CI/CD stages locally and should probably do that in the
+future but this was a surprisingly easy process. The only downside was that
+<code>gh</code> does not have a long-polling mechanism (that Claude was able to find) for
+when CI/CD is complete.</p>
+<h2 id="links">Links<a hidden class="anchor" aria-hidden="true" href="#links">#</a></h2>
+<ul>
+<li><a href="https://sqlite.org/testing.html">How SQLite is Tested</a></li>
+<li><a href="https://github.com/jcrussell/forge/tree/main">Stable Branch</a></li>
+<li><a href="https://github.com/jcrussell/forge/tree/dev">Dev Branch</a></li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="/tags/ai/">Ai</a></li>
+      <li><a href="/tags/testing/">Testing</a></li>
+      <li><a href="/tags/automation/">Automation</a></li>
+    </ul>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>© 2020-2026</span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

@@ -7,8 +7,15 @@
     <generator>Hugo -- 0.153.5</generator>
     <language>en-us</language>
     <copyright>2020-2026</copyright>
-    <lastBuildDate>Sun, 25 Jan 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 08 Feb 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="/tags/automation/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Can AI Test All Code Like SQLite?</title>
+      <link>/post/ai-for-testing/</link>
+      <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>/post/ai-for-testing/</guid>
+      <description>SQLite has 590x more test code than library code. Can AI help us achieve that level of testing for all software?</description>
+    </item>
     <item>
       <title>Forge, meet Claude, part 4</title>
       <link>/post/forge-part-4/</link>
