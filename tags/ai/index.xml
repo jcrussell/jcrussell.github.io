@@ -7,8 +7,15 @@
     <generator>Hugo -- 0.153.5</generator>
     <language>en-us</language>
     <copyright>2020-2026</copyright>
-    <lastBuildDate>Sun, 08 Feb 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 11 Mar 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="/tags/ai/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hand tools versus Power tools</title>
+      <link>/post/hand-tools-versus-power-tools/</link>
+      <pubDate>Wed, 11 Mar 2026 00:00:00 +0000</pubDate>
+      <guid>/post/hand-tools-versus-power-tools/</guid>
+      <description>What barrel-making teaches us about AI and the future of software development.</description>
+    </item>
     <item>
       <title>Can AI Test All Code Like SQLite?</title>
       <link>/post/ai-for-testing/</link>
