@@ -7,33 +7,40 @@
     <generator>Hugo -- 0.153.5</generator>
     <language>en-us</language>
     <copyright>2020-2026</copyright>
-    <lastBuildDate>Tue, 21 Apr 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 22 May 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Ai</title>
       <link>/tags/ai/</link>
-      <pubDate>Tue, 21 Apr 2026 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 22 May 2026 00:00:00 +0000</pubDate>
       <guid>/tags/ai/</guid>
       <description></description>
     </item>
     <item>
       <title>Automation</title>
       <link>/tags/automation/</link>
-      <pubDate>Tue, 21 Apr 2026 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 22 May 2026 00:00:00 +0000</pubDate>
       <guid>/tags/automation/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Go</title>
+      <link>/tags/go/</link>
+      <pubDate>Fri, 22 May 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/go/</guid>
       <description></description>
     </item>
     <item>
       <title>Rust</title>
       <link>/tags/rust/</link>
-      <pubDate>Tue, 21 Apr 2026 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 22 May 2026 00:00:00 +0000</pubDate>
       <guid>/tags/rust/</guid>
       <description></description>
     </item>
     <item>
       <title>Symbolic-Execution</title>
       <link>/tags/symbolic-execution/</link>
-      <pubDate>Tue, 21 Apr 2026 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 22 May 2026 00:00:00 +0000</pubDate>
       <guid>/tags/symbolic-execution/</guid>
       <description></description>
     </item>
