@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Forge end-to-end testing | Jonathan Crussell</title>
+<meta name="keywords" content="gnome, window-manager, ai, testing, automation">
+<meta name="description" content="Building out Forge&#39;s end-to-end test suite with Claude, beads, and a sandboxed feedback loop.">
+<meta name="author" content="Jonathan Crussell">
+<link rel="canonical" href="/post/forge-e2e/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.cb1b966424391d58a85617e342812e23e741186aa62baaf33e320fa5b85c2b0b.css" integrity="sha256-yxuWZCQ5HVioVhfjQoEuI&#43;dBGGqmK6rzPjIPpbhcKws=" rel="preload stylesheet" as="style">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="/post/forge-e2e/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+        @media (prefers-color-scheme: light) {
+            .list::-webkit-scrollbar-thumb {
+                border-color: var(--code-bg);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="/post/forge-e2e/">
+  <meta property="og:site_name" content="Jonathan Crussell">
+  <meta property="og:title" content="Forge end-to-end testing">
+  <meta property="og:description" content="Building out Forge&#39;s end-to-end test suite with Claude, beads, and a sandboxed feedback loop.">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2026-06-05T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-06-05T00:00:00+00:00">
+    <meta property="article:tag" content="Gnome">
+    <meta property="article:tag" content="Window-Manager">
+    <meta property="article:tag" content="Ai">
+    <meta property="article:tag" content="Testing">
+    <meta property="article:tag" content="Automation">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Forge end-to-end testing">
+<meta name="twitter:description" content="Building out Forge&#39;s end-to-end test suite with Claude, beads, and a sandboxed feedback loop.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "/post/"
+    }
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Forge end-to-end testing",
+      "item": "/post/forge-e2e/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Forge end-to-end testing",
+  "name": "Forge end-to-end testing",
+  "description": "Building out Forge's end-to-end test suite with Claude, beads, and a sandboxed feedback loop.",
+  "keywords": [
+    "gnome", "window-manager", "ai", "testing", "automation"
+  ],
+  "articleBody": "Recap A few months ago, I was using Claude to fix bugs and add features to Forge, a tiling window manager for Gnome, that I now use every day. The last “piece” was to add robust end-to-end (E2E) testing to reduce the need for manual testing and I was making progress but there was little sense of urgency – Forge was now working great for me – so I decided to instead focus on other projects. With those other projects now humming along, I decided to revisit Forge.\nScaffolding I have started to use beads to track state across sessions and decided to try to incorporate those into my Forge work. The first step was to populate the backlog based on the initial state of my fork. This started by prompting Claude:\nwe have just started using beads to track issues and norms for this repo. do a comprehensive review of the repo (including the commit history) from multiple angles to determine all the beads that we should create and all the memories that we should store. use a swarm of subagents.\nI reviewed the plan and everything looked reasonable. Claude did also find a .todos/ directory that snuck into the repo a while ago (where I had been tracking what to do next) which we trimmed from the repo. After this initial set of beads, I downloaded the E2E logs from Github and asked Claude to triage the failures to identify root causes and create beads as needed. This led to a healthy backlog to implement.\nWhen I first started working on E2E tests, I did not have a robust sandbox so I was reluctant to use Claude’s --dangerously-skip-permissions flag. This made creating the E2E tests, even when starting from an example, take forever as I monitored and approved each action. Now that I can use abox and Claude has an auto mode, I felt confident to let Claude iterate on E2E tests without supervision during implementation. However, for the first few iterations, I was still stuck in the loop. Specifically, since I still “own” push/pull operations and did not have E2E tests running locally, the way I tested was to push to Github and download the logs when CI/CD finished. This was awful for many reasons so after a few iterations, I paused to get E2E testing working locally. This was relatively simple as abox allows you to run Docker containers inside the VM (although it does require baking abox’s CA certificate into the containers for them to build properly). Once E2E tests were running locally, we were ready to iterate.\nAt its core, this is essentially an observe-orient-decide-act (OODA) loop. Claude uses these kinds of feedback loops all the time – it generates some code, runs it through the compiler, parses the errors, and sets up the next edit. In this context, instead of using a compiler to report errors, we are using the full E2E suite. This allowed me to adjust my planning so that the end “goal” was to work towards an E2E suite that passes on all supported Gnome versions.\nAside: we are running Claude in a sandbox with trusted data (i.e., data that we generate ourselves). Agentic loops that utilize untrusted data have significant challenges that sandboxing can only partially mitigate.\nWith this scaffolding all in place, I was able to set broader goals during planning sessions (e.g., work towards a fully functioning E2E test suite based on the open beads), let Claude pick a theme, and then iterate on the implementation. In the last few weeks, I have started asking Claude to peer review every plan before it presents it to me – this seems to reduce the number of iterations before I am ready to approve a plan.\nRabbit Hole Early on during implementation, Claude became convinced that Forge was fundamentally broken on Gnome/Mutter 49+ (which dropped support for X11):\nMutter 49 (Aug 2025) added Wayland configure-path tightening: xdg_toplevel edge constraints + a new should_configure() check in src/wayland/meta-window-wayland.c (commit 6c7565eee5) infer tile state from geometry that matches workspace edges. For a window whose programmatic geometry equals workspace dimensions minus a small chrome offset (~16px), Mutter latches it into tile_mode (META_TILE_LEFT/RIGHT/MAXIMIZED) and silently overrides subsequent move_resize_frame() width/height — position applies, size is rejected. Forge’s default tile geometry exactly matches this pattern, causing 13/90 E2E tests to fail on Fedora 43 (Mutter 49.5).\nClaude was stuck here for quite a while. First, I gave it access to the Mutter source code locally so that it could cross-check its assumption. Second, I asked it to give me a prompt for Gemini’s Deep Research to explore but that seemed to only reinforce what Claude had already determined. Claude was convinced that we needed to submit an upstream issue to request a meta_window_untile API to fix the issue. I did not believe that this could be true and continued to push back. This led to Claude instrumenting the extension, running single tests in isolation, and then finally bisecting the tests to find that state was being contaminated across E2E tests. After further debugging, Claude discovered the major underlying issue: the way we were feeding keyboard input (through Clutter’s VirtualInputDevice) for super+c was incorrectly causing the window to snap into tiling. Claude updated the E2E tests to invoke actions via D-Bus instead (cutting out the problematic keyboard inputs) and most of the tests passed. It also found and fixed a minor bug in Forge itself where the layout was not reset after the last window closed. There was never an issue with Mutter.\nOof Loop After emerging from the rabbit hole, Claude iterated towards E2E tests that passed across all the Gnome versions. There was a minor issue with one version of Fedora but Claude was able to figure it out after a nudge to start working and broken containers side-by-side to compare. After that, we entered the “Oof loop” phase where the tests would pass locally but not always in CI/CD. The issues stemmed from either:\nTiming differences between local machine and CI/CD infrastructure. Applying fixes with spot checking for regressions instead of full local E2E. This was definitely the most tedious part of the process. CI/CD takes 10+ minutes to run so the throughput for iterations is a few per hour at best.\nEnd State There is still a bit more work to do on the E2E test infrastructure but I am happy with how it is progressing. One of the nicer features that we added was a recording feature so that we could see the E2E tests in action:\nI pushed the beads for the repo to Dolthub. I am still unsure how these should interact with Github issues. At some point soon, I want to ingest all the issues from the upstream repo into beads to capture anything that I might have missed. Until then, I will keep capturing (and fixing) bugs as I encounter them.\nLinks Latest Code Beads ",
+  "wordCount" : "1157",
+  "inLanguage": "en",
+  "datePublished": "2026-06-05T00:00:00Z",
+  "dateModified": "2026-06-05T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Jonathan Crussell"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/post/forge-e2e/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Jonathan Crussell",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="/" accesskey="h" title="Jonathan Crussell (Alt + H)">Jonathan Crussell</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="/" title="Home">
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="/publication/" title="Publications">
+                    <span>Publications</span>
+                </a>
+            </li>
+            <li>
+                <a href="/project/" title="Projects">
+                    <span>Projects</span>
+                </a>
+            </li>
+            <li>
+                <a href="/post/" title="Posts">
+                    <span>Posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Forge end-to-end testing
+    </h1>
+    <div class="post-description">
+      Building out Forge&#39;s end-to-end test suite with Claude, beads, and a sandboxed feedback loop.
+    </div>
+    <div class="post-meta"><span title='2026-06-05 00:00:00 +0000 UTC'>June 5, 2026</span>&nbsp;·&nbsp;<span>6 min</span>&nbsp;·&nbsp;<span>Jonathan Crussell</span>
+
+</div>
+  </header> 
+  <div class="post-content"><h2 id="recap">Recap<a hidden class="anchor" aria-hidden="true" href="#recap">#</a></h2>
+<p><a href="/post/forge/">A</a> <a href="/post/forge-part-2/">few</a> <a href="/post/forge-part-3/">months</a>
+<a href="/post/forge-part-4/">ago</a>, I was using Claude to fix bugs and add features to
+Forge, a tiling window manager for Gnome, that I now use every day. The last
+&ldquo;piece&rdquo; was to add robust end-to-end (E2E) testing to reduce the need for
+manual testing and I was <a href="/post/ai-for-testing/">making progress</a> but there was
+little sense of urgency &ndash; Forge was now working great for me &ndash; so I decided
+to instead focus on <a href="/post/rust-symex/">other</a> <a href="/post/ralph-fsm/">projects</a>.
+With those other projects now humming along, I decided to revisit Forge.</p>
+<h2 id="scaffolding">Scaffolding<a hidden class="anchor" aria-hidden="true" href="#scaffolding">#</a></h2>
+<p>I have started to use <a href="https://github.com/gastownhall/beads">beads</a> to track
+state across sessions and decided to try to incorporate those into my Forge
+work. The first step was to populate the backlog based on the initial state of
+my fork. This started by prompting Claude:</p>
+<blockquote>
+<p>we have just started using beads to track issues and norms for this repo. do
+a comprehensive review of the repo (including the commit history) from
+multiple angles to determine all the beads that we should create and all the
+memories that we should store. use a swarm of subagents.</p>
+</blockquote>
+<p>I reviewed the plan and everything looked reasonable. Claude did also find a
+<code>.todos/</code> directory that snuck into the repo a while ago (where I had been
+tracking what to do next) which we trimmed from the repo. After this initial set of
+beads, I downloaded the E2E logs from Github and asked Claude to triage the
+failures to identify root causes and create beads as needed. This led to a
+healthy backlog to implement.</p>
+<p>When I first started working on E2E tests, I did not have a robust
+<a href="https://github.com/sandialabs/abox">sandbox</a> so I was reluctant to use
+Claude&rsquo;s <code>--dangerously-skip-permissions</code> flag. This made creating the E2E
+tests, even when starting from an
+<a href="https://github.com/Schneegans/gnome-shell-pod">example</a>, take forever as I
+monitored and approved each action. Now that I can use abox and Claude has an
+<a href="https://claude.com/blog/auto-mode">auto mode</a>, I felt confident to let Claude
+iterate on E2E tests without supervision during implementation. However, for
+the first few iterations, I was still stuck in the loop. Specifically, since I
+still &ldquo;own&rdquo; push/pull operations and did not have E2E tests running locally,
+the way I tested was to push to Github and download the logs when CI/CD
+finished. This was awful for many reasons so after a few iterations, I paused
+to get E2E testing working locally. This was relatively simple as abox allows
+you to run Docker containers inside the VM (although it does require baking
+abox&rsquo;s CA certificate into the containers for them to build properly). Once E2E
+tests were running locally, we were ready to iterate.</p>
+<p>At its core, this is essentially an observe-orient-decide-act
+(<a href="https://en.wikipedia.org/wiki/OODA_loop">OODA</a>) loop. Claude uses these kinds
+of feedback loops all the time &ndash; it generates some code, runs it through the
+compiler, parses the errors, and sets up the next edit. In this context,
+instead of using a compiler to report errors, we are using the full E2E suite.
+This allowed me to adjust my planning so that the end &ldquo;goal&rdquo; was to work towards
+an E2E suite that passes on all supported Gnome versions.</p>
+<p>Aside: we are running Claude in a sandbox with trusted data (i.e., data that we
+generate ourselves). Agentic loops that utilize untrusted data have significant
+<a href="https://www.schneier.com/blog/archives/2025/10/agentic-ais-ooda-loop-problem.html">challenges</a>
+that sandboxing can only partially mitigate.</p>
+<p>With this scaffolding all in place, I was able to set broader goals during
+planning sessions (e.g., work towards a fully functioning E2E test suite based
+on the open beads), let Claude pick a theme, and then iterate on the
+implementation. In the last few weeks, I have started asking Claude to peer
+review every plan before it presents it to me &ndash; this seems to reduce the
+number of iterations before I am ready to approve a plan.</p>
+<h2 id="rabbit-hole">Rabbit Hole<a hidden class="anchor" aria-hidden="true" href="#rabbit-hole">#</a></h2>
+<p>Early on during implementation, Claude became convinced that Forge was
+fundamentally broken on Gnome/Mutter 49+ (which dropped support for X11):</p>
+<blockquote>
+<p>Mutter 49 (Aug 2025) added Wayland configure-path tightening: <code>xdg_toplevel</code>
+edge constraints + a new <code>should_configure()</code> check in
+<code>src/wayland/meta-window-wayland.c</code> (commit 6c7565eee5) infer tile state from
+geometry that matches workspace edges. For a window whose programmatic
+geometry equals workspace dimensions minus a small chrome offset (~16px),
+Mutter latches it into <code>tile_mode</code> (<code>META_TILE_LEFT</code>/<code>RIGHT</code>/<code>MAXIMIZED</code>) and
+silently overrides subsequent <code>move_resize_frame()</code> width/height — position
+applies, size is rejected. Forge&rsquo;s default tile geometry exactly matches this
+pattern, causing 13/90 E2E tests to fail on Fedora 43 (Mutter 49.5).</p>
+</blockquote>
+<p>Claude was stuck here for quite a while. First, I gave it access to the Mutter
+source code locally so that it could cross-check its assumption. Second, I
+asked it to give me a prompt for Gemini&rsquo;s Deep Research to explore but that
+seemed to only reinforce what Claude had already determined. Claude was
+convinced that we needed to submit an upstream issue to request a
+<code>meta_window_untile</code> API to fix the issue. I did not believe that this could be
+true and continued to push back. This led to Claude instrumenting the
+extension, running single tests in isolation, and then finally bisecting the
+tests to find that state was being contaminated across E2E tests. After further
+debugging, Claude discovered the major underlying issue: the way we were
+feeding keyboard input (through Clutter&rsquo;s <code>VirtualInputDevice</code>) for <code>super+c</code>
+was incorrectly causing the window to snap into tiling. Claude updated the E2E
+tests to invoke actions via D-Bus instead (cutting out the problematic keyboard
+inputs) and most of the tests passed. It also found and fixed a minor bug in
+Forge itself where the layout was not reset after the last window closed. There
+was never an issue with Mutter.</p>
+<h2 id="oof-loop">Oof Loop<a hidden class="anchor" aria-hidden="true" href="#oof-loop">#</a></h2>
+<p>After emerging from the rabbit hole, Claude iterated towards E2E tests that
+passed across all the Gnome versions. There was a minor issue with one version
+of Fedora but Claude was able to figure it out after a nudge to start working
+and broken containers side-by-side to compare. After that, we entered the &ldquo;Oof
+loop&rdquo; phase where the tests would pass locally but not always in CI/CD. The
+issues stemmed from either:</p>
+<ul>
+<li>Timing differences between local machine and CI/CD infrastructure.</li>
+<li>Applying fixes with spot checking for regressions instead of full local E2E.</li>
+</ul>
+<p>This was definitely the most tedious part of the process. CI/CD takes 10+
+minutes to run so the throughput for iterations is a few per hour at best.</p>
+<h2 id="end-state">End State<a hidden class="anchor" aria-hidden="true" href="#end-state">#</a></h2>
+<p>There is still a bit more work to do on the E2E test infrastructure but I am
+happy with how it is progressing. One of the nicer features that we added was a
+recording feature so that we could see the E2E tests in action:</p>
+
+<video width="100%" controls>
+  <source src="/webm/forge-workflow.webm" type="video/webm">
+</video>
+
+<p>I pushed the beads for the repo to
+<a href="https://www.dolthub.com/repositories/jcrussell/forge/doc/main">Dolthub</a>. I am
+still unsure how these should interact with Github issues. At some point soon,
+I want to ingest all the issues from the upstream repo into beads to capture
+anything that I might have missed. Until then, I will keep capturing (and
+fixing) bugs as I encounter them.</p>
+<h2 id="links">Links<a hidden class="anchor" aria-hidden="true" href="#links">#</a></h2>
+<ul>
+<li><a href="https://github.com/jcrussell/forge/tree/main">Latest Code</a></li>
+<li><a href="https://www.dolthub.com/repositories/jcrussell/forge">Beads</a></li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="/tags/gnome/">Gnome</a></li>
+      <li><a href="/tags/window-manager/">Window-Manager</a></li>
+      <li><a href="/tags/ai/">Ai</a></li>
+      <li><a href="/tags/testing/">Testing</a></li>
+      <li><a href="/tags/automation/">Automation</a></li>
+    </ul>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>© 2020-2026</span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

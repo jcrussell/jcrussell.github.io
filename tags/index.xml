@@ -7,20 +7,41 @@
     <generator>Hugo -- 0.153.5</generator>
     <language>en-us</language>
     <copyright>2020-2026</copyright>
-    <lastBuildDate>Fri, 22 May 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Ai</title>
       <link>/tags/ai/</link>
-      <pubDate>Fri, 22 May 2026 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
       <guid>/tags/ai/</guid>
       <description></description>
     </item>
     <item>
       <title>Automation</title>
       <link>/tags/automation/</link>
-      <pubDate>Fri, 22 May 2026 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
       <guid>/tags/automation/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gnome</title>
+      <link>/tags/gnome/</link>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/gnome/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Testing</title>
+      <link>/tags/testing/</link>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/testing/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Window-Manager</title>
+      <link>/tags/window-manager/</link>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/window-manager/</guid>
       <description></description>
     </item>
     <item>
@@ -42,27 +63,6 @@
       <link>/tags/symbolic-execution/</link>
       <pubDate>Fri, 22 May 2026 00:00:00 +0000</pubDate>
       <guid>/tags/symbolic-execution/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Testing</title>
-      <link>/tags/testing/</link>
-      <pubDate>Sun, 08 Feb 2026 00:00:00 +0000</pubDate>
-      <guid>/tags/testing/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Gnome</title>
-      <link>/tags/gnome/</link>
-      <pubDate>Sun, 25 Jan 2026 00:00:00 +0000</pubDate>
-      <guid>/tags/gnome/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Window-Manager</title>
-      <link>/tags/window-manager/</link>
-      <pubDate>Sun, 25 Jan 2026 00:00:00 +0000</pubDate>
-      <guid>/tags/window-manager/</guid>
       <description></description>
     </item>
     <item>

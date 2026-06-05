@@ -7,8 +7,15 @@
     <generator>Hugo -- 0.153.5</generator>
     <language>en-us</language>
     <copyright>2020-2026</copyright>
-    <lastBuildDate>Fri, 22 May 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="/categories/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Forge end-to-end testing</title>
+      <link>/post/forge-e2e/</link>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>/post/forge-e2e/</guid>
+      <description>Building out Forge&amp;#39;s end-to-end test suite with Claude, beads, and a sandboxed feedback loop.</description>
+    </item>
     <item>
       <title>From Bash Loops to a Ralph FSM</title>
       <link>/post/ralph-fsm/</link>
