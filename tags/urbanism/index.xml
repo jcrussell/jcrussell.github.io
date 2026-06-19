@@ -1,27 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Go on Jonathan Crussell</title>
-    <link>/tags/go/</link>
-    <description>Recent content in Go on Jonathan Crussell</description>
+    <title>Urbanism on Jonathan Crussell</title>
+    <link>/tags/urbanism/</link>
+    <description>Recent content in Urbanism on Jonathan Crussell</description>
     <generator>Hugo -- 0.153.5</generator>
     <language>en-us</language>
     <copyright>2020-2026</copyright>
     <lastBuildDate>Fri, 19 Jun 2026 00:00:00 +0000</lastBuildDate>
-    <atom:link href="/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="/tags/urbanism/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Solvent Streets</title>
       <link>/post/solvent-streets/</link>
       <pubDate>Fri, 19 Jun 2026 00:00:00 +0000</pubDate>
       <guid>/post/solvent-streets/</guid>
       <description>Building a tool with Claude to measure my city&amp;#39;s pavement and forecast its maintenance cost — a look at the fiscal toll of car-dependent design.</description>
-    </item>
-    <item>
-      <title>From Bash Loops to a Ralph FSM</title>
-      <link>/post/ralph-fsm/</link>
-      <pubDate>Fri, 22 May 2026 00:00:00 +0000</pubDate>
-      <guid>/post/ralph-fsm/</guid>
-      <description>Evolving a Ralph-style Claude loop from a one-shot bash script into a generic Go tool driven by a finite state machine and reusable Go-CLI design scaffolding.</description>
     </item>
   </channel>
 </rss>

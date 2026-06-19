@@ -7,8 +7,15 @@
     <generator>Hugo -- 0.153.5</generator>
     <language>en-us</language>
     <copyright>2020-2026</copyright>
-    <lastBuildDate>Fri, 05 Jun 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jun 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="/tags/ai/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Solvent Streets</title>
+      <link>/post/solvent-streets/</link>
+      <pubDate>Fri, 19 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>/post/solvent-streets/</guid>
+      <description>Building a tool with Claude to measure my city&amp;#39;s pavement and forecast its maintenance cost — a look at the fiscal toll of car-dependent design.</description>
+    </item>
     <item>
       <title>Forge end-to-end testing</title>
       <link>/post/forge-e2e/</link>

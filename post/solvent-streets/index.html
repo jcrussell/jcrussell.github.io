@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Solvent Streets | Jonathan Crussell</title>
+<meta name="keywords" content="ai, go, automation, urbanism">
+<meta name="description" content="Building a tool with Claude to measure my city&#39;s pavement and forecast its maintenance cost — a look at the fiscal toll of car-dependent design.">
+<meta name="author" content="Jonathan Crussell">
+<link rel="canonical" href="/post/solvent-streets/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.cb1b966424391d58a85617e342812e23e741186aa62baaf33e320fa5b85c2b0b.css" integrity="sha256-yxuWZCQ5HVioVhfjQoEuI&#43;dBGGqmK6rzPjIPpbhcKws=" rel="preload stylesheet" as="style">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="/post/solvent-streets/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+        @media (prefers-color-scheme: light) {
+            .list::-webkit-scrollbar-thumb {
+                border-color: var(--code-bg);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="/post/solvent-streets/">
+  <meta property="og:site_name" content="Jonathan Crussell">
+  <meta property="og:title" content="Solvent Streets">
+  <meta property="og:description" content="Building a tool with Claude to measure my city&#39;s pavement and forecast its maintenance cost — a look at the fiscal toll of car-dependent design.">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2026-06-19T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-06-19T00:00:00+00:00">
+    <meta property="article:tag" content="Ai">
+    <meta property="article:tag" content="Go">
+    <meta property="article:tag" content="Automation">
+    <meta property="article:tag" content="Urbanism">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Solvent Streets">
+<meta name="twitter:description" content="Building a tool with Claude to measure my city&#39;s pavement and forecast its maintenance cost — a look at the fiscal toll of car-dependent design.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "/post/"
+    }
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Solvent Streets",
+      "item": "/post/solvent-streets/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Solvent Streets",
+  "name": "Solvent Streets",
+  "description": "Building a tool with Claude to measure my city's pavement and forecast its maintenance cost — a look at the fiscal toll of car-dependent design.",
+  "keywords": [
+    "ai", "go", "automation", "urbanism"
+  ],
+  "articleBody": "Background During the pandemic, I watched a fair amount of YouTube. One of the YouTubers that I started watching was Not Just Bikes, specifically starting with the Strong Towns series. The case studies were compelling but do they apply to where I live? How solvent are our streets?\nPlanning I started thinking about creating a tool to explore this question in February. The initial idea that I fed into Gemini Deep Research:\nI want to write a tool that calculates the total area of pavement in my city of Livermore, California since I can’t find the data publicly available. Data should not be behind a paywall. I would write the backend in go with a web interface.\nI nudged the research plan slightly before letting it start researching:\nI’m mostly interested in roads but exploring other paved surfaces would be interesting too. Finding all the parking areas seems like another side quest\nFrom the output, I asked Gemini to give me an implementation plan that I could hand to Claude. I sat on this plan for a few days before deciding that I wanted to expand the scope of the tool – I wanted to forecast the cost to maintain that pavement infrastructure:\ni have the following idea. i want to use it as a starting point to explore city budgets with car-dependent design. my initial idea is to estimate the cost to maintain the current pavemented infrastructure but now i’m thinking about forecasting costs more generally. what should i add to my plan:\n(full plan from before)\nGemini gave me a new plan that included forecasting the Pavement Condition Index with different maintenance strategies and budgets. With this new plan, I pivoted to Claude Code.\nImplementation The initial implementation went quickly given the extensive plan. After prototyping some features, my main concern was that I had generated a bunch of slop that would get increasingly unwieldy to maintain. This led to many cycles of generate some functionality and then refactor.\nEarly on, I instructed Claude to use the GitHub CLI repo as a reference for any design decisions. This informed the general shape of the tool but Claude was not perfect about sticking to them (and I was not disciplined enough to prompt it to). The code had already grown to around 4-5k LoC and I asked Claude to audit the implementation against the design decisions. This identified several gaps which we refactored leading to proper dependency injection, shared mock storage, and iostreams usage.\nLater, I added a ton of golangci-lint linters to the repo. These caught a lot of common coding issues and adding them seemed like an easy way to drive Claude towards cleaner code. It would have been nice to have them enabled from the beginning though rather than spending a few sessions adding linters and cleaning up lint.\nI worked on the project on and off for a few months and came to the conclusion that I needed to give Claude more structure to keep the repo aligned with my coding preferences. This led to the creation of byob-go-cli, a collection of preferences based on idiomatic Go (that I described previously). I ran multiple passes to identify gaps between the byob-go-cli preferences and the implementation, adding beads as needed. This took several weeks to coalesce.\nOnce my initial proof-of-concept was in good shape, it was time to test on a bunch of cities. I had mostly been testing on Livermore and decided to branch out to other cities/regions. Livermore is inland and one of the early failures when branching out was for cities with a coastline. Specifically, when calculating the percentage paved for cities on the coast (e.g., San Francisco), the percentage would be tiny as it included vast amount of water in the total area. I was curious to see if Claude could figure it out and we went through many cycles of plan-implement-test without succeeding. Turns out “make no mistakes” does not automatically make Claude solve the problem. Eventually, Claude figured out how to stitch the coastline together properly (even when there were small gaps) but it struggled to figure out what side of the coastline was land (I did not want to pull in any additional data sources). It tried many different probing strategies including using points inside the city boundary. We kept running into corner cases and eventually I suggested to use the roads themselves as probes (since they should be on land) which solved the issue where sometimes the boundaries were inverted. This finally succeeded and we were closing in on v0.1.0.\nI published v0.1.0 and with it the generated site. Being a personal project, there was no release party. I liked browsing the site and exploring the data for different cities. I made sure to add a banner to the site that this was a work in progress as I was sure there were still bugs lurking.\nOn June 9th, Fable 5 was released and I wanted to see what bugs it could find in the repo. It did a comprehensive review across multiple dimensions, discovering nearly 80 bugs (correctness 37, perf 13, tests-docs 10, architecture 7, domain-math 6, security 5). This audit was conducted over 20+ hours spanning multiple sessions (totaling almost 150M tokens, including cache reads; almost 17M tokens excluding cache re-reads) using a workflow that fanned out to 144 agent sessions. I had Claude file beads for all the findings which I then used Opus to fix after we all lost access to Fable. Fortunately, there was enough detail in the beads that Opus was able to iterate through and address nearly all the bugs.\nFor brevity, I glossed over a few things in this implementation description including needing to iterate on the export format to generate smaller JSON objects and addressing performance issues in some of the stages.\nOutput The output from the tool is published under my personal website due to a quirk with GitHub pages. The site includes a number of different examples including Livermore, CA, the initial motivator.\nLivermore pavement area screenshot.\nIt also has several metro areas including the Bay Area, Denver, Boston, Los Angeles, and Portland. These multi-city views add Compare and Aggregate tabs. I made some effort (with Claude) to populate initial pavement condition indices and city budgets. There is still more work to do.\nDrawing inspiration from City Nerd I also included an example with the Top 50 US cities. It is fun to zoom around the US and look at how different cities compare.\nLessons Learned The biggest lesson that I learned from implementing this project is the benefit of putting guardrails on Claude early on in the implementation. If you ask Claude to bring you a rock and know that you want a blue rock, telling it upfront that the rock should be blue will save a lot of time and energy. The BYOB scaffolding helps convey the kind of code that I want to read/review.\nSecond, this further reinforced the lack of creative problem solving with tools like Claude. It might have gotten there eventually but “make no mistakes” is no substitute for creativity.\nFinally, I plan to continue to iterate on the site and data before reaching out to some local advocacy organizations to see if it is useful to them. It would be nice to see this project make a difference in my city.\nLinks Site Repo BYOB Strong Towns ",
+  "wordCount" : "1237",
+  "inLanguage": "en",
+  "datePublished": "2026-06-19T00:00:00Z",
+  "dateModified": "2026-06-19T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Jonathan Crussell"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/post/solvent-streets/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Jonathan Crussell",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="/" accesskey="h" title="Jonathan Crussell (Alt + H)">Jonathan Crussell</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="/" title="Home">
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="/publication/" title="Publications">
+                    <span>Publications</span>
+                </a>
+            </li>
+            <li>
+                <a href="/project/" title="Projects">
+                    <span>Projects</span>
+                </a>
+            </li>
+            <li>
+                <a href="/post/" title="Posts">
+                    <span>Posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Solvent Streets
+    </h1>
+    <div class="post-description">
+      Building a tool with Claude to measure my city&#39;s pavement and forecast its maintenance cost — a look at the fiscal toll of car-dependent design.
+    </div>
+    <div class="post-meta"><span title='2026-06-19 00:00:00 +0000 UTC'>June 19, 2026</span>&nbsp;·&nbsp;<span>6 min</span>&nbsp;·&nbsp;<span>Jonathan Crussell</span>
+
+</div>
+  </header> 
+  <div class="post-content"><h2 id="background">Background<a hidden class="anchor" aria-hidden="true" href="#background">#</a></h2>
+<p>During the pandemic, I watched a fair amount of YouTube. One of the YouTubers
+that I started watching was <a href="https://www.youtube.com/@NotJustBikes">Not Just
+Bikes</a>, specifically starting with the
+<a href="https://www.youtube.com/watch?v=y_SXXTBypIg">Strong Towns</a> series. The <a href="https://www.strongtowns.org/journal/2020-8-28-the-growth-ponzi-scheme-a-crash-course">case
+studies</a>
+were compelling but do they apply to where I live? How solvent are our streets?</p>
+<h2 id="planning">Planning<a hidden class="anchor" aria-hidden="true" href="#planning">#</a></h2>
+<p>I started thinking about creating a tool to explore this question in February.
+The initial idea that I fed into Gemini Deep Research:</p>
+<blockquote>
+<p>I want to write a tool that calculates the total area of pavement in my city
+of Livermore, California since I can&rsquo;t find the data publicly available. Data
+should not be behind a paywall. I would write the backend in go with a web
+interface.</p>
+</blockquote>
+<p>I nudged the research plan slightly before letting it start researching:</p>
+<blockquote>
+<p>I&rsquo;m mostly interested in roads but exploring other paved surfaces would be
+interesting too. Finding all the parking areas seems like another side quest</p>
+</blockquote>
+<p>From the output, I asked Gemini to give me an implementation plan that I could
+hand to Claude. I sat on this plan for a few days before deciding that I wanted
+to expand the scope of the tool &ndash; I wanted to forecast the cost to maintain
+that pavement infrastructure:</p>
+<blockquote>
+<p>i have the following idea. i want to use it as a starting point to explore
+city budgets with car-dependent design. my initial idea is to estimate the
+cost to maintain the current pavemented infrastructure but now i&rsquo;m thinking
+about forecasting costs more generally. what should i add to my plan:</p>
+<p>(full plan from before)</p>
+</blockquote>
+<p>Gemini gave me a new plan that included forecasting the <a href="https://en.wikipedia.org/wiki/Pavement_condition_index">Pavement Condition
+Index</a> with different
+maintenance strategies and budgets. With this new plan, I pivoted to Claude
+Code.</p>
+<h2 id="implementation">Implementation<a hidden class="anchor" aria-hidden="true" href="#implementation">#</a></h2>
+<p>The initial implementation went quickly given the extensive plan. After
+prototyping some features, my main concern was that I had generated a bunch of
+slop that would get increasingly unwieldy to maintain. This led to many cycles
+of generate some functionality and then refactor.</p>
+<p>Early on, I instructed Claude to use the <a href="https://github.com/cli/cli">GitHub
+CLI</a> repo as a reference for any design decisions.
+This informed the general shape of the tool but Claude was not perfect about
+sticking to them (and I was not disciplined enough to prompt it to). The code
+had already grown to around 4-5k LoC and I asked Claude to audit the
+implementation against the design decisions. This identified several gaps which
+we refactored leading to proper dependency injection, shared mock storage, and
+iostreams usage.</p>
+<p>Later, I added a <em>ton</em> of
+<a href="https://github.com/golangci/golangci-lint">golangci-lint</a> linters to the repo.
+These caught a lot of common coding issues and adding them seemed like an easy
+way to drive Claude towards cleaner code. It would have been nice to have them
+enabled from the beginning though rather than spending a few sessions adding
+linters and cleaning up lint.</p>
+<p>I worked on the project on and off for a few months and came to the conclusion
+that I needed to give Claude more structure to keep the repo aligned with my
+coding preferences. This led to the creation of
+<a href="https://github.com/jcrussell/byob-go-cli">byob-go-cli</a>, a collection of
+preferences based on idiomatic Go (that I described
+<a href="/post/ralph-fsm/#go-looper">previously</a>). I ran multiple passes to identify
+gaps between the byob-go-cli preferences and the implementation, adding
+<a href="https://github.com/gastownhall/beads">beads</a> as needed. This took several
+weeks to coalesce.</p>
+<p>Once my initial proof-of-concept was in good shape, it was time to test on a
+bunch of cities. I had mostly been testing on Livermore and decided to branch
+out to other cities/regions. Livermore is inland and one of the early failures
+when branching out was for cities with a coastline. Specifically, when
+calculating the percentage paved for cities on the coast (e.g., San Francisco),
+the percentage would be tiny as it included vast amount of water in the total
+area. I was curious to see if Claude could figure it out and we went through
+many cycles of plan-implement-test without succeeding. Turns out &ldquo;make no
+mistakes&rdquo; does not automatically make Claude solve the problem. Eventually,
+Claude figured out how to stitch the coastline together properly (even when
+there were small gaps) but it struggled to figure out what side of the
+coastline was land (I did not want to pull in any additional data sources). It
+tried many different probing strategies including using points inside the city
+boundary. We kept running into corner cases and eventually I suggested to use
+the roads themselves as probes (since they should be on land) which solved the
+issue where sometimes the boundaries were inverted. This finally succeeded and
+we were closing in on v0.1.0.</p>
+<p>I published v0.1.0 and with it the generated site. Being a personal project,
+there was no release party. I liked browsing the site and exploring the data
+for different cities. I made sure to add a banner to the site that this was a
+work in progress as I was sure there were still bugs lurking.</p>
+<p>On June 9th, <a href="https://platform.claude.com/docs/en/about-claude/models/introducing-claude-fable-5-and-claude-mythos-5">Fable
+5</a>
+was released and I wanted to see what bugs it could find in the repo. It did a
+comprehensive review across multiple dimensions, discovering nearly 80 bugs
+(correctness 37, perf 13, tests-docs 10, architecture 7, domain-math 6,
+security 5). This audit was conducted over 20+ hours spanning multiple sessions
+(totaling almost 150M tokens, including cache reads; almost 17M tokens
+excluding cache re-reads) using a
+<a href="https://claude.com/blog/introducing-dynamic-workflows-in-claude-code">workflow</a>
+that fanned out to 144 agent sessions. I had Claude file beads for all the
+findings which I then used Opus to fix after we all lost access to Fable.
+Fortunately, there was enough detail in the beads that Opus was able to iterate
+through and address nearly all the bugs.</p>
+<p>For brevity, I glossed over a few things in this implementation description
+including needing to iterate on the export format to generate smaller JSON
+objects and addressing performance issues in some of the stages.</p>
+<h2 id="output">Output<a hidden class="anchor" aria-hidden="true" href="#output">#</a></h2>
+<p>The <a href="https://joncrussell.com/solvent-streets/">output</a> from the tool is
+published under my personal website due to a quirk with GitHub pages. The site
+includes a number of different examples including <a href="https://joncrussell.com/solvent-streets/livermore-ca/">Livermore,
+CA</a>, the initial
+motivator.</p>
+<figure class="align-center ">
+    <img loading="lazy" src="/img/solvent-streets-livermore.png#center"
+         alt="Livermore pavement area screenshot."/> <figcaption>
+            <p>Livermore pavement area screenshot.</p>
+        </figcaption>
+</figure>
+
+<p>It also has several metro areas including the <a href="https://joncrussell.com/solvent-streets/bay-area-ca/">Bay
+Area</a>,
+<a href="https://joncrussell.com/solvent-streets/denver-metro-co/">Denver</a>,
+<a href="https://joncrussell.com/solvent-streets/greater-boston-ma/">Boston</a>, <a href="https://joncrussell.com/solvent-streets/los-angeles-ca/">Los
+Angeles</a>, and
+<a href="https://joncrussell.com/solvent-streets/portland-metro-or/">Portland</a>. These
+multi-city views add <code>Compare</code> and <code>Aggregate</code> tabs. I made
+some effort (with Claude) to populate initial pavement condition indices and
+city budgets. There is still more work to do.</p>
+<p>Drawing inspiration from <a href="https://www.youtube.com/@CityNerd">City Nerd</a> I also
+included an example with the <a href="https://joncrussell.com/solvent-streets/top-50-cities/">Top 50 US
+cities</a>. It is fun to
+zoom around the US and look at how different cities compare.</p>
+<h2 id="lessons-learned">Lessons Learned<a hidden class="anchor" aria-hidden="true" href="#lessons-learned">#</a></h2>
+<p>The biggest lesson that I learned from implementing this project is the benefit
+of putting guardrails on Claude <em>early on</em> in the implementation. If you ask
+Claude to bring you a rock and know that you want a blue rock, telling it
+upfront that the rock should be blue will save a lot of time and energy. The
+BYOB scaffolding helps convey the kind of code that I want to read/review.</p>
+<p>Second, this further reinforced the lack of creative problem solving with tools
+like Claude. It might have gotten there eventually but &ldquo;make no mistakes&rdquo; is no
+substitute for creativity.</p>
+<p>Finally, I plan to continue to iterate on the site and data before reaching out
+to some local advocacy organizations to see if it is useful to them. It would
+be nice to see this project make a difference in my city.</p>
+<h2 id="links">Links<a hidden class="anchor" aria-hidden="true" href="#links">#</a></h2>
+<ul>
+<li><a href="https://joncrussell.com/solvent-streets/">Site</a></li>
+<li><a href="https://github.com/jcrussell/solvent-streets">Repo</a></li>
+<li><a href="https://github.com/jcrussell/byob-go-cli">BYOB</a></li>
+<li><a href="https://www.strongtowns.org/">Strong Towns</a></li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="/tags/ai/">Ai</a></li>
+      <li><a href="/tags/go/">Go</a></li>
+      <li><a href="/tags/automation/">Automation</a></li>
+      <li><a href="/tags/urbanism/">Urbanism</a></li>
+    </ul>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>© 2020-2026</span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
