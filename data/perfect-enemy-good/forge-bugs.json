@@ -1,0 +1,4904 @@
+{
+ "meta": {
+  "source": "bugs_dataset.json + classified.json (joined by row index, then flattened)",
+  "bd_init": "61391a2",
+  "n_total": 280,
+  "n_product": 241,
+  "n_infra": 39,
+  "n_fixed": 203,
+  "n_unfixed": 34,
+  "n_notdefect": 4,
+  "n_inherited": 160,
+  "n_self_inflicted": 42,
+  "n_from_github": 80,
+  "n_internal": 123,
+  "n_still_broken_upstream": 157,
+  "areas": {
+   "tiling": 60,
+   "float": 26,
+   "decoration": 25,
+   "config": 19,
+   "focus": 18,
+   "resize": 17,
+   "multimonitor": 15,
+   "prefs": 15,
+   "workspace": 13,
+   "keybinding": 11,
+   "theme": 10,
+   "lifecycle": 9,
+   "cheatsheet": 3
+  }
+ },
+ "bugs": [
+  {
+   "ref": "forge-16ms",
+   "gh": null,
+   "bd_id": "forge-16ms",
+   "title": "Regression: windows never tile on non-primary monitors under GNOME default workspaces-only-on-primary=true",
+   "oneliner": "Windows never tile on non-primary monitors under GNOME default workspaces-only-on-primary=true",
+   "area": "multimonitor",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 1,
+   "era": "beads",
+   "fix_commits": [
+    "7fd35de",
+    "e7c6b4e"
+   ],
+   "origin_evidence": "isFloatingExempt's is_on_all_workspaces()/floatByRole check was added by OUR commit 86b82e7 (forge-yyum), NOT in upstream/main. Upstream isFloatingExempt (window.js:2775-2827) has no such check. Regression created by our fork."
+  },
+  {
+   "ref": "forge-fuce",
+   "gh": null,
+   "bd_id": "forge-fuce",
+   "title": "Rare St.BoxLayout 'already disposed' in tab-teardown under fuzzer (forge-bomy/v2yz family)",
+   "oneliner": "Rare St.BoxLayout already-disposed crash in tabbed tab-teardown under fuzzer (bomy/v2yz family)",
+   "area": "decoration",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Open",
+   "product": true,
+   "priority": 1,
+   "era": "beads",
+   "fix_commits": [],
+   "origin_evidence": "Rare disposal in fork-authored tab-teardown machinery (_destroyDecoration/_applyDecorationRect/_buildTabBase all count=0 in upstream). Same family as v2yz/bomy; never root-caused but involved code is our rewrite."
+  },
+  {
+   "ref": "forge-v2yz",
+   "gh": null,
+   "bd_id": "forge-v2yz",
+   "title": "use-after-dispose: _destroyDecoration leaves child .tab refs dangling \u2192 Gjs-CRITICAL crash on close in stacked/tabbed",
+   "oneliner": "use-after-dispose: _destroyDecoration leaves child .tab dangling, crashing on close in stacked/tabbed",
+   "area": "decoration",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 1,
+   "era": "beads",
+   "fix_commits": [
+    "2b01d6a"
+   ],
+   "origin_evidence": "_destroyDecoration (whose missing _resetTabForReparent loop creates dangling .tab refs) is absent from upstream/main tree.js (count=0). The reset/teardown machinery is a fork addition (a3f993f/2b01d6a)."
+  },
+  {
+   "ref": "forge-bomy",
+   "gh": null,
+   "bd_id": "forge-bomy",
+   "title": "tabbed/stacked tab actor double-parented on keyboard swap \u2192 Clutter assertion crashes shell",
+   "oneliner": "Tabbed tab actor double-parented on keyboard swap, tripping a Clutter assertion that crashes shell",
+   "area": "decoration",
+   "origin": "Inherited",
+   "upstream": "Partial",
+   "status": "Fixed",
+   "product": true,
+   "priority": 1,
+   "era": "beads",
+   "fix_commits": [
+    "2b01d6a",
+    "33975a4"
+   ],
+   "origin_evidence": "swapPairs (no .tab detach) and the render guard `if (child.tab && !decoration.contains(child.tab))` exist identically in upstream tree.js:1181/1584; double-parent-on-swap condition predates fork. Upstream try/catch swallows the assertion; our decoration rewrite surfaced the crash."
+  },
+  {
+   "ref": "forge-lvhp",
+   "gh": null,
+   "bd_id": "forge-lvhp",
+   "title": "Per-window/actor signals on tracked dialogs leak on disable (NORMAL_ALL tab list excludes dialogs)",
+   "oneliner": "Tracked dialog signals leak on disable() because the cleanup loop iterates a tab list that excludes dialogs",
+   "area": "lifecycle",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 1,
+   "era": "beads",
+   "fix_commits": [
+    "2dac071"
+   ]
+  },
+  {
+   "ref": "forge-mo27",
+   "gh": null,
+   "bd_id": "forge-mo27",
+   "title": "removeChild splices the wrong child when node.index is null (value-match vs identity-match mismatch)",
+   "oneliner": "removeChild evicts the wrong sibling when a stale node's index is null (value-match vs identity-match)",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 1,
+   "era": "beads",
+   "fix_commits": [
+    "23e5474"
+   ]
+  },
+  {
+   "ref": "forge-98sa",
+   "gh": null,
+   "bd_id": "forge-98sa",
+   "title": "removeWorkspace leaks monitor St.Bins on every dynamic-workspace removal (only workspace bin detached)",
+   "oneliner": "removeWorkspace leaks per-monitor St.Bins on dynamic-workspace removal; only the workspace bin was detached",
+   "area": "workspace",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 1,
+   "era": "beads",
+   "fix_commits": [
+    "2dac071"
+   ]
+  },
+  {
+   "ref": "forge-ph7f",
+   "gh": null,
+   "bd_id": "forge-ph7f",
+   "title": "Rapid focus navigation un-tiles windows (overlap) on Wayland",
+   "oneliner": "Rapid focus navigation strands windows always-on-top and un-tiles them into overlap on Wayland",
+   "area": "focus",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 1,
+   "era": "beads",
+   "fix_commits": [
+    "c0cffa9",
+    "3214290"
+   ],
+   "origin_evidence": "upstream focus() (tree.js:788) only raise/focus/activate \u2014 no make_above pin or _waylandStackingTimeoutId; the single shared Wayland stacking timer was added in our commit 19e00af, fixed in 3214290."
+  },
+  {
+   "ref": "forge-tpgh",
+   "gh": null,
+   "bd_id": "forge-tpgh",
+   "title": "Shell crash: get_work_area_current_monitor abort on monitor-less window",
+   "oneliner": "Shell crash: get_work_area_current_monitor aborts (libmutter g_assert) on a window with no logical monitor",
+   "area": "multimonitor",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 1,
+   "era": "beads",
+   "fix_commits": [
+    "2e62999"
+   ]
+  },
+  {
+   "ref": "forge-3jx9",
+   "gh": null,
+   "bd_id": "forge-3jx9",
+   "title": "WindowManager._kbd captured before Keybindings is constructed \u2014 allowDragDropTile() throws on every tiled-window drag, wedging the window in GRAB_TILE",
+   "oneliner": "kbd getter snapshots undefined keybindings, so allowDragDropTile throws and wedges every drag-drop tile",
+   "area": "tiling",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 1,
+   "era": "beads",
+   "fix_commits": [
+    "535ced5"
+   ],
+   "origin_evidence": "upstream get kbd() lazily constructs Keybindings (window.js:872-878) so an undefined snapshot self-heals; our refactor 19e00af removed the lazy init leaving `return this._kbd;`, which froze undefined. Fixed in 535ced5."
+  },
+  {
+   "ref": "forge-jnfk",
+   "gh": null,
+   "bd_id": "forge-jnfk",
+   "title": "tree.js missing GLib import: Wayland directional focus permanently floats windows",
+   "oneliner": "Missing GLib import in tree.js makes Wayland directional focus throw, leaving windows permanently floating",
+   "area": "focus",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 1,
+   "era": "beads",
+   "fix_commits": [
+    "9489e37"
+   ],
+   "origin_evidence": "upstream tree.js has no GLib import and no make_above/GLib.timeout in focus(); the Wayland stacking pin using GLib.timeout_add was added by our fork without importing GLib. Fixed in 9489e37."
+  },
+  {
+   "ref": "#175 / forge-2gn",
+   "gh": "175",
+   "bd_id": "forge-2gn",
+   "title": "preview overlay stuck when arranging windows with mouse",
+   "oneliner": "Drag preview overlay stays stuck on screen when arranging windows with the mouse",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 1,
+   "era": "both",
+   "fix_commits": [
+    "1da5d63",
+    "bb880c7"
+   ]
+  },
+  {
+   "ref": "forge-my4w",
+   "gh": null,
+   "bd_id": "forge-my4w",
+   "title": "E2E flake: 3 two-window tests lost their 2nd window on CI F42 lane (forge-4wl launch-race family)",
+   "oneliner": "E2E flake: two-window tests lose their 2nd window on the CI F42 lane (launch-race family)",
+   "area": "e2e",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Open",
+   "product": false,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "ad14e50"
+   ],
+   "origin_evidence": "E2E flake in fork-only test infra (tests/e2e/, docker/scripts/ absent from upstream). Launch-race in two_windows fixture / start-user-session.sh; harness only."
+  },
+  {
+   "ref": "forge-qy65",
+   "gh": null,
+   "bd_id": "forge-qy65",
+   "title": "Tab-bar icons double-scaled at integer HiDPI: create_icon_texture(24 * dpi()) but StIcon icon-size is logical \u2014 96px icons distorted in the 70px tab bar on every stacked/tabbed container (default 4K Wayland + X11 200%)",
+   "oneliner": "Tab-bar icons double-scaled at integer HiDPI, distorting icons in every stacked/tabbed tab bar",
+   "area": "decoration",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "a774188"
+   ],
+   "origin_evidence": "Buggy line create_icon_texture(24 * Utils.dpi()) present at upstream/main tree.js:474; introduced by db23098 (2022), an ancestor of upstream/main. Predates fork."
+  },
+  {
+   "ref": "forge-te9o",
+   "gh": null,
+   "bd_id": "forge-te9o",
+   "title": "processFloats clobbers GRAB_TILE\u2192TILE when a force render fires mid-drag \u2014 drag-and-drop tiling silently no-ops (no preview, no drop, snap-back)",
+   "oneliner": "processFloats clobbers GRAB_TILE->TILE on a mid-drag force render, silently no-opping drag tiling",
+   "area": "float",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "1207861"
+   ],
+   "origin_evidence": "processFloats sets float=false unconditionally on non-exempt nodes (no GRAB_TILE guard) at upstream window.js:1185, and renderTree's force path unfreezes without the idle re-checking _freezeRender. Identical clobber mechanism upstream; predates fork."
+  },
+  {
+   "ref": "forge-c2yp",
+   "gh": null,
+   "bd_id": "forge-c2yp",
+   "title": "workspace-removed handler throws on a finalized wrapper \u2014 removeWorkspace/renumber skipped, ws-index scaffold permanently desynced (+ signal/St.Bin leaks)",
+   "oneliner": "workspace-removed handler throws on a finalized wrapper, permanently desyncing the ws-index scaffold",
+   "area": "workspace",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "9b6b895"
+   ],
+   "origin_evidence": "_rehomeWorkspaceWindowsBeforeRemoval/_rehomeWindowToLiveLocation/_containerFullyMigrates absent from upstream. Upstream workspace-removed handler (window.js:268-273) is a trivial removeWorkspace+renderTree with no dead-node rehome walk. Throwing code is fork-authored."
+  },
+  {
+   "ref": "forge-1gjh",
+   "gh": null,
+   "bd_id": "forge-1gjh",
+   "title": "E2E sessions lack XDG_CURRENT_DESKTOP: GNOME session-default gsettings never apply, so the blocking multimonitor gate validates a non-default config",
+   "oneliner": "E2E sessions lack XDG_CURRENT_DESKTOP so GNOME default gsettings never apply, gating a non-default config",
+   "area": "e2e",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": false,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "7fd35de"
+   ],
+   "origin_evidence": "docker/scripts/start-user-session.sh is fork-only e2e infra (docker/ dir absent from upstream). XDG_CURRENT_DESKTOP omission is in our test harness only."
+  },
+  {
+   "ref": "forge-pvxj",
+   "gh": null,
+   "bd_id": "forge-pvxj",
+   "title": "Bug: Wayland window-toggle-float toggles both windows of the same app",
+   "oneliner": "Wayland window-toggle-float toggles both windows of the same multi-window app",
+   "area": "float",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Open",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [],
+   "origin_evidence": "Upstream user report imported from .scratch/new-issues.json #27 (External: gh-wayland-sameapp-float, labels gh-import). floatToggle/toggleFloatingMode path predates fork."
+  },
+  {
+   "ref": "forge-on7h",
+   "gh": null,
+   "bd_id": "forge-on7h",
+   "title": "Bug: Evolution / non-snap Firefox windows always float",
+   "oneliner": "Evolution and non-snap Firefox windows always float instead of tiling",
+   "area": "float",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Open",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [],
+   "origin_evidence": "Upstream user report imported from .scratch/new-issues.json #16 (External: gh-evolution-float, labels gh-import). Evolution/Firefox classification behavior predates fork."
+  },
+  {
+   "ref": "forge-162k",
+   "gh": null,
+   "bd_id": "forge-162k",
+   "title": "Bug: Chrome 149 can't join an existing tabbed container via drag-drop",
+   "oneliner": "Chrome 149 windows cannot join an existing Forge tabbed container via drag-drop",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Open",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [],
+   "origin_evidence": "Upstream user report imported from .scratch/new-issues.json #0 (upstream v89, External: gh-chrome149-tabbed, labels gh-import). Drag-drop tabbed-join path predates fork."
+  },
+  {
+   "ref": "forge-5l9b",
+   "gh": null,
+   "bd_id": "forge-5l9b",
+   "title": "CI e2e on cc27b2d: 3 old-Mutter X11 lane failures (F39 fullscreen-demote stacking, F40 swap pin + workspace-insert lost window)",
+   "oneliner": "Queued raise-float event restacks a demoted float over a fullscreen window, permanently undoing float demotion",
+   "area": "float",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "28dbe36"
+   ],
+   "origin_evidence": "Root cause fixed in 28dbe36 is our fullscreen float-demotion feature (_reconcileFullscreenFloatDemotion / _aboveDemotedForFullscreen, forge-zo4) which does not exist in upstream/main; the queued raise-float re-stacking the demoted float over fullscreen is a regression in our own added code (lib/extension/window.js). F40 legs were non-reproducible CI timing flakes."
+  },
+  {
+   "ref": "forge-0a7t",
+   "gh": null,
+   "bd_id": "forge-0a7t",
+   "title": "E2E harness aborts (SIGABRT in g_settings_get_value) on GNOME 50 / Fedora 44",
+   "oneliner": "E2E harness SIGABRTs in g_settings_get_value on GNOME 50 / Fedora 44 (Python 3.14), aborting the run",
+   "area": "e2e",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Open",
+   "product": false,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [],
+   "origin_evidence": "upstream/main ships zero e2e tests (tests/e2e absent); the entire pytest/D-Bus e2e harness that SIGABRTs on GNOME50/F44 is our fork's infrastructure."
+  },
+  {
+   "ref": "forge-w3ss",
+   "gh": null,
+   "bd_id": "forge-w3ss",
+   "title": "SpinButtonRow bind+onChange are mutually exclusive: Border radius/Tab margin CSS never updates",
+   "oneliner": "SpinButtonRow bind and onChange are mutually exclusive, so Border radius/Tab margin CSS never updates",
+   "area": "prefs",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "7e555d1"
+   ],
+   "origin_evidence": "upstream appearance.js wires Border radius via init+onChange (works), while our fork switched those rows to bind+onChange (appearance.js:152/160 pre-fix) which the bind-XOR-onChange widget silently drops. Commit msg: 'Regression vs upstream'. Fixed 7e555d1."
+  },
+  {
+   "ref": "forge-08he",
+   "gh": null,
+   "bd_id": "forge-08he",
+   "title": "fix: dialogs ride normal layer, raised by focus instead of permanent always-on-top pin",
+   "oneliner": "Dialogs permanently pinned always-on-top, so a sibling float can never be raised above them",
+   "area": "float",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "0159a15"
+   ],
+   "origin_evidence": "upstream `set float` only pins on floatAlwaysOnTop (tree.js:566); our commit 428bed8 added the isDialog forced make_above that strands popups. Fixed in 0159a15."
+  },
+  {
+   "ref": "forge-nmdo",
+   "gh": null,
+   "bd_id": "forge-nmdo",
+   "title": "removeNode dereferences node.parentNode/grandparent without null guard (mid-cleanup throw aborts cleanTree)",
+   "oneliner": "removeNode dereferences node.parentNode without a null guard, aborting cleanTree mid-cleanup",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "23e5474"
+   ]
+  },
+  {
+   "ref": "forge-34c6",
+   "gh": null,
+   "bd_id": "forge-34c6",
+   "title": "_handleResizing cross-container branch indexes childNodes out of bounds, throwing inside size-changed mid-resize",
+   "oneliner": "_handleResizing indexes childNodes out of bounds at a container boundary, throwing during live resize",
+   "area": "resize",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "7ae8cf3"
+   ]
+  },
+  {
+   "ref": "forge-h7ba",
+   "gh": null,
+   "bd_id": "forge-h7ba",
+   "title": "windowDestroy/cleanupAlwaysFloat call Meta.Window accessors without isWindowAlive guard (finalized-wrapper throws)",
+   "oneliner": "Float cleanup/override paths call Meta.Window accessors without liveness guard; finalized wrapper throws",
+   "area": "float",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "bf04456"
+   ]
+  },
+  {
+   "ref": "forge-wrot",
+   "gh": null,
+   "bd_id": "forge-wrot",
+   "title": "Removed WINDOW node's tab St.BoxLayout is never destroyed (actor + signal leak per closed tabbed/stacked window)",
+   "oneliner": "Closed tabbed/stacked window's tab St.BoxLayout never destroyed (actor + signal leak per close)",
+   "area": "decoration",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "af054bb",
+    "23e5474"
+   ]
+  },
+  {
+   "ref": "forge-5qp1",
+   "gh": null,
+   "bd_id": "forge-5qp1",
+   "title": "Stacked layout: no header offset when tab decoration disabled",
+   "oneliner": "Stacked layout shows no header offset when tab decoration disabled (by-design full overlap)",
+   "area": "tiling",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "24770eb",
+    "d9261b5"
+   ]
+  },
+  {
+   "ref": "forge-aydd",
+   "gh": null,
+   "bd_id": "forge-aydd",
+   "title": "Windows can render past the work-area bottom/right edge",
+   "oneliner": "Windows can render past the work-area bottom/right edge (unclamped move + stacked overflow)",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "d9261b5",
+    "e088853"
+   ]
+  },
+  {
+   "ref": "forge-w35r",
+   "gh": null,
+   "bd_id": "forge-w35r",
+   "title": "Stacked/tabbed toggles do nothing; stacked has no title bars",
+   "oneliner": "Stacked/tabbed toggles do nothing (gated off) and stacked layout has no title bars",
+   "area": "tiling",
+   "origin": "Unclear",
+   "upstream": "Partial",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "12845c8"
+   ]
+  },
+  {
+   "ref": "forge-m2oe",
+   "gh": null,
+   "bd_id": "forge-m2oe",
+   "title": "Yellow split-direction hint overshoots window rounded corners",
+   "oneliner": "Yellow split-direction hint border overshoots the window's rounded corners",
+   "area": "decoration",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "12845c8"
+   ]
+  },
+  {
+   "ref": "forge-0rb6",
+   "gh": null,
+   "bd_id": "forge-0rb6",
+   "title": "Cheatsheet overlay has no reliable way to close",
+   "oneliner": "Cheatsheet overlay has no reliable dismiss path (Escape/click-outside/close-X all missing)",
+   "area": "cheatsheet",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "aa6d3a4",
+    "d54a524"
+   ],
+   "origin_evidence": "Cheatsheet is a fork-only feature: lib/extension/cheatsheet.js exists on dev, absent from upstream/main (no cheatsheet file or references). The unclosable-overlay bug is in our code."
+  },
+  {
+   "ref": "forge-rj4x",
+   "gh": null,
+   "bd_id": "forge-rj4x",
+   "title": "extension.js media-keys GSettings override can hard-abort gnome-shell on minimal installs",
+   "oneliner": "media-keys GSettings override can hard-abort gnome-shell when a schema/key is absent",
+   "area": "lifecycle",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "8e6298a"
+   ],
+   "origin_evidence": "SETTINGS_OVERRIDES (GNOME media-keys/Super+L override mechanism) is fork-only - not present in upstream extension.js. The unguarded Gio.Settings construction that hard-aborts gnome-shell on minimal installs is our code."
+  },
+  {
+   "ref": "forge-3t3a",
+   "gh": null,
+   "bd_id": "forge-3t3a",
+   "title": "importAll() (Super+Shift+R ConfigReload / prefs Import) re-entrantly schedules an exportAll() that rewrites the file just imported \u2014 no in-flight guard",
+   "oneliner": "importAll() re-entrantly schedules exportAll(), rewriting the file just imported (no in-flight guard)",
+   "area": "config",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "4406864"
+   ],
+   "origin_evidence": "Portable config-sync (importAll/exportAll, ConfigReload) is fork-only: lib/shared/config-sync.js and lib/prefs/portability.js absent from upstream; config-file-sync setting not in upstream gschema. Re-entrant export bug is in our code."
+  },
+  {
+   "ref": "forge-orrf",
+   "gh": null,
+   "bd_id": "forge-orrf",
+   "title": "init() force-re-enables config-file-sync-enabled on every startup when files exist, overriding a user who disabled auto-sync",
+   "oneliner": "init() force-re-enables config-file-sync on every startup, overriding a user who disabled auto-sync",
+   "area": "config",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "4406864"
+   ],
+   "origin_evidence": "config-file-sync-enabled and the init() startup-sync logic are fork-only (config-sync.js/portability.js absent upstream; setting absent from upstream gschema). The force-re-enable on startup is our code."
+  },
+  {
+   "ref": "forge-el01",
+   "gh": null,
+   "bd_id": "forge-el01",
+   "title": "\"Auto-sync changes\" toggle (config-file-sync-enabled) is ignored by the running extension; auto-export cannot be turned off at runtime",
+   "oneliner": "'Auto-sync changes' toggle ignored at runtime; auto-export cannot be turned off without restart",
+   "area": "config",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "5b888c9",
+    "4406864"
+   ],
+   "origin_evidence": "The Auto-sync toggle (config-file-sync-enabled) and runtime auto-export are part of the fork-only config-sync feature, absent from upstream. The ignored-at-runtime bug is in our code."
+  },
+  {
+   "ref": "forge-3qj3",
+   "gh": null,
+   "bd_id": "forge-3qj3",
+   "title": "EntryRow debounce timeout is never cancelled on widget teardown; save() fires on a finalized prefs widget",
+   "oneliner": "EntryRow debounce timeout never cancelled on teardown; save() fires on a finalized prefs widget",
+   "area": "prefs",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "a1f5969"
+   ],
+   "origin_evidence": "Upstream EntryRow saves synchronously on 'changed' with no timeout/teardown. The 1s debounce was added by our commit 76d65ee (not an ancestor of upstream); its uncancelled timeout firing on a finalized widget is our regression. Fix a1f5969 cancels in vfunc_unroot."
+  },
+  {
+   "ref": "forge-egnf",
+   "gh": null,
+   "bd_id": "forge-egnf",
+   "title": "DropDownRow.reset() forces index 0, overriding the GSettings schema default (dnd-center-layout reset yields 'swap' not 'tabbed')",
+   "oneliner": "DropDownRow.reset() forces index 0, clobbering the GSettings default ResetButton just restored",
+   "area": "prefs",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "a1f5969"
+   ]
+  },
+  {
+   "ref": "forge-f5sl",
+   "gh": null,
+   "bd_id": "forge-f5sl",
+   "title": "Keyboard accelerator map.to() never returns false, so EntryRow shows \"Saved\" for invalid/unsaved shortcuts",
+   "oneliner": "Keyboard accel map.to() never returns false, so invalid shortcuts still toast 'Saved'",
+   "area": "keybinding",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Not a defect",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "69117d5"
+   ]
+  },
+  {
+   "ref": "forge-s7ri",
+   "gh": null,
+   "bd_id": "forge-s7ri",
+   "title": "Keyboard Move at a display edge appends the window to the POINTER's monitor (extWm.currentMonWsNode is pointer-derived), teleporting it across monitors",
+   "oneliner": "Keyboard Move at a display edge teleports the window to the pointer's monitor, not its own",
+   "area": "multimonitor",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "6fbf9be"
+   ]
+  },
+  {
+   "ref": "forge-lid6",
+   "gh": null,
+   "bd_id": "forge-lid6",
+   "title": "Malformed or incomplete user stylesheet.css throws in ThemeManagerBase constructor and aborts extension enable()",
+   "oneliner": "Malformed user stylesheet.css throws in ThemeManagerBase ctor and aborts extension enable()",
+   "area": "theme",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "4406864"
+   ]
+  },
+  {
+   "ref": "forge-8rm6",
+   "gh": null,
+   "bd_id": "forge-8rm6",
+   "title": "reloadWindowOverrides strips live per-window (wmId) float overrides from the cache, re-tiling FloatToggle'd windows after any prefs edit",
+   "oneliner": "reloadWindowOverrides strips live per-window float overrides, re-tiling them after any prefs edit",
+   "area": "config",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "4406864"
+   ]
+  },
+  {
+   "ref": "forge-fov0",
+   "gh": null,
+   "bd_id": "forge-fov0",
+   "title": "FloatingPage.onRemoveHandler deletes every override sharing the wmClass, not just the removed row",
+   "oneliner": "Removing one float override deletes every override sharing the same wmClass",
+   "area": "float",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "92a8a6a"
+   ]
+  },
+  {
+   "ref": "forge-2uc0",
+   "gh": null,
+   "bd_id": "forge-2uc0",
+   "title": "Window whose Shell.WindowTracker app is null at map time never gets a tab \u2014 tab bar permanently misses an entry (sibling of forge-v4u0)",
+   "oneliner": "Window with null WindowTracker app at map time never gets a tab bar entry",
+   "area": "decoration",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "d8583b4"
+   ]
+  },
+  {
+   "ref": "forge-d5mm",
+   "gh": null,
+   "bd_id": "forge-d5mm",
+   "title": "focus-signal queue calls updateStackedFocus()/updateTabbedFocus() with no argument \u2014 permanent no-ops, so click/alt-tab/hover focus never re-stacks a STACKED container",
+   "oneliner": "Plain focus calls updateStacked/TabbedFocus() with no arg, so they no-op (no re-stack/raise)",
+   "area": "focus",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "a9b6e0f",
+    "705cb2e"
+   ]
+  },
+  {
+   "ref": "forge-85ex",
+   "gh": null,
+   "bd_id": "forge-85ex",
+   "title": "No monitors-changed handling: hot-plugged monitor has no MONITOR nodes, so tiling/focus/move onto it is broken (and tree.move can throw) until an unrelated reloadTree",
+   "oneliner": "No monitors-changed handling: hot-plugged monitor has no MONITOR nodes, breaking tiling/move",
+   "area": "multimonitor",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Deferred",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": []
+  },
+  {
+   "ref": "forge-yyum",
+   "gh": null,
+   "bd_id": "forge-yyum",
+   "title": "Sticky 'Always on Visible Workspace' tiled window is repeatedly re-homed into whatever workspace is active, churning layouts on every visited workspace",
+   "oneliner": "Sticky 'Always on Visible Workspace' tiled window is re-homed into the active workspace, churning layouts",
+   "area": "workspace",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "e7c6b4e",
+    "86b82e7"
+   ]
+  },
+  {
+   "ref": "forge-3hsv",
+   "gh": null,
+   "bd_id": "forge-3hsv",
+   "title": "insertChildPercent grants permanently-floating dialogs a tiled share, leaving sibling percents summing < 1 so the Bug-#330 fold dumps the phantom share onto one window \u2014 visible layout flip on dialog open that persists after close",
+   "oneliner": "insertChildPercent gives float-exempt dialogs a tiled share, corrupting sibling split percents",
+   "area": "tiling",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "9ba22bc"
+   ],
+   "origin_evidence": "insertChildPercent and its unconditional trackWindow call were introduced by fork commit 8c45267 (forge-7m3); git grep finds neither in upstream/main"
+  },
+  {
+   "ref": "forge-hs6l",
+   "gh": null,
+   "bd_id": "forge-hs6l",
+   "title": "_handleResizing: dragging an edge toward a floating last sibling assigns .percent on the numeric -1 sentinel, throwing TypeError on every size-changed and skipping normalization/reposition",
+   "oneliner": "nextVisible passes -1 sentinel through; _handleResizing assigns .percent on it, throwing TypeError",
+   "area": "resize",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "9ba22bc"
+   ]
+  },
+  {
+   "ref": "forge-gm0z",
+   "gh": null,
+   "bd_id": "forge-gm0z",
+   "title": "WindowExpand/WindowShrink fire four overlapping manual grabs that overwrite this.grabOp, so only the last (RESIZING_E) is ever applied and the window never grows/shrinks vertically",
+   "oneliner": "WindowExpand/Shrink fired four overlapping resize grabs that clobbered grabOp, so window never grew vertically",
+   "area": "resize",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "9ba22bc"
+   ],
+   "origin_evidence": "WindowExpand/WindowShrink commands do not exist in upstream/main (git show upstream/main:lib/extension/window.js | grep -c WindowExpand = 0); they were authored by our commit fb84f7d and the 4-overlapping-grabs bug was in that code, fixed in 9ba22bc."
+  },
+  {
+   "ref": "forge-74em",
+   "gh": null,
+   "bd_id": "forge-74em",
+   "title": "WindowManager.resize() applies the y-anchor adjustment to the wrong vertical direction, so keyboard resize Top/Bottom acts on the opposite edge of floating windows",
+   "oneliner": "Keyboard resize Top/Bottom anchored the wrong vertical edge, moving the opposite side from requested",
+   "area": "resize",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "10eb666"
+   ]
+  },
+  {
+   "ref": "forge-gdsz",
+   "gh": null,
+   "bd_id": "forge-gdsz",
+   "title": "Node.removeChild's destroy_all_children() destroys tab actors of windows that stay alive in the tree; node.tab dangles and the `_destroyed` guard flag is never set anywhere, so every later render throws on the deallocated actor and tiling stops updating",
+   "oneliner": "Reparenting/flattening a tabbed CON destroys surviving windows' tab actors, so the next render throws",
+   "area": "decoration",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "a3f993f",
+    "d9261b5",
+    "d8583b4"
+   ]
+  },
+  {
+   "ref": "forge-v9o7",
+   "gh": null,
+   "bd_id": "forge-v9o7",
+   "title": "E2E drag lane is vacuous: synthetic drags never fire grab-op-begin in headless containers",
+   "oneliner": "E2E drag lane is vacuous: synthetic drags never fire grab-op-begin in headless containers",
+   "area": "e2e",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Deferred",
+   "product": false,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "a9b6e0f",
+    "a3e7e69"
+   ]
+  },
+  {
+   "ref": "forge-lqe5",
+   "gh": null,
+   "bd_id": "forge-lqe5",
+   "title": "Stacked-focus returns nested CON -> raise() throws",
+   "oneliner": "Stacked-focus returned a nested CON (or minimized) lastChild, crashing metaWindow.raise() on an St.Bin",
+   "area": "focus",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "c7ced6a"
+   ]
+  },
+  {
+   "ref": "forge-ipga",
+   "gh": null,
+   "bd_id": "forge-ipga",
+   "title": "Null-guard FloatToggle + resize() keybinding paths",
+   "oneliner": "FloatToggle and resize() keybindings threw when invoked with no (or untracked) focused window",
+   "area": "keybinding",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "c57ebd5",
+    "9489e37"
+   ]
+  },
+  {
+   "ref": "forge-7c7o",
+   "gh": null,
+   "bd_id": "forge-7c7o",
+   "title": "window-added debounce wedges permanently on finalized window (dd77050 class)",
+   "oneliner": "window-added debounce wedges permanently when a window is finalized within the 200ms window",
+   "area": "workspace",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "9489e37"
+   ]
+  },
+  {
+   "ref": "forge-5y6j",
+   "gh": null,
+   "bd_id": "forge-5y6j",
+   "title": "Untracked settings 'changed' handler fires on zombie WindowManager after disable",
+   "oneliner": "Untracked settings 'changed' handler keeps firing on a zombie WindowManager after disable()",
+   "area": "lifecycle",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "9489e37"
+   ]
+  },
+  {
+   "ref": "#125 / forge-mlpf",
+   "gh": "125",
+   "bd_id": "forge-mlpf",
+   "title": "e2e TestBug125: stacked gate added without enabling stacked-tiling-mode (2 deterministic failures, all GNOME versions)",
+   "oneliner": "e2e TestBug125 stacked-layout gate timed out because the test never enabled stacked-tiling-mode",
+   "area": "e2e",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": false,
+   "priority": 2,
+   "era": "both",
+   "fix_commits": [
+    "1a9aff3",
+    "2ce5be7"
+   ]
+  },
+  {
+   "ref": "forge-3sv2",
+   "gh": null,
+   "bd_id": "forge-3sv2",
+   "title": "settings.js: windowProps setter loses first override write on fresh install (read-only bundled config)",
+   "oneliner": "windowProps setter wrote to read-only bundled config on fresh install, silently losing the first override",
+   "area": "config",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "e40a851"
+   ]
+  },
+  {
+   "ref": "forge-fxf",
+   "gh": null,
+   "bd_id": "forge-fxf",
+   "title": "bug: Super+c cannot re-tile a window floated via Super+Shift+c (per-window vs class float)",
+   "oneliner": "Super+c could not re-tile a window floated via Super+Shift+c because per-window toggle ignored class float",
+   "area": "float",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "b6f5e51"
+   ]
+  },
+  {
+   "ref": "forge-96e",
+   "gh": null,
+   "bd_id": "forge-96e",
+   "title": "bug: empty/corrupt windows.json crashes tiling (windowProps null)",
+   "oneliner": "Empty/corrupt windows.json made windowProps null, crashing all tiling on .overrides dereference",
+   "area": "config",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "b19d268"
+   ]
+  },
+  {
+   "ref": "#532 / forge-5v6",
+   "gh": "532",
+   "bd_id": "forge-5v6",
+   "title": "Bug: Holding window-resize shortcut does not work in tiled",
+   "oneliner": "Holding the window-resize shortcut does not repeat/work for tiled windows",
+   "area": "resize",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "8bd8656",
+    "0776db7"
+   ]
+  },
+  {
+   "ref": "#531 / forge-cuv",
+   "gh": "531",
+   "bd_id": "forge-cuv",
+   "title": "Bug: Forge can't tile",
+   "oneliner": "Forge fails to tile windows at all in some environments",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Open",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "dd77050"
+   ]
+  },
+  {
+   "ref": "#530 / forge-nh7",
+   "gh": "530",
+   "bd_id": "forge-nh7",
+   "title": "Bug: Conflict with Burn my windows extension",
+   "oneliner": "Conflict with Burn My Windows extension breaks tiling/placement",
+   "area": "lifecycle",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "572402a"
+   ]
+  },
+  {
+   "ref": "#529 / forge-63y",
+   "gh": "529",
+   "bd_id": "forge-63y",
+   "title": "Bug: Weird Red Preview Window on moving a tab",
+   "oneliner": "Stray red preview window appears when moving a tab",
+   "area": "decoration",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "d51639d",
+    "f86f5b9"
+   ]
+  },
+  {
+   "ref": "#514 / forge-bj4",
+   "gh": "514",
+   "bd_id": "forge-bj4",
+   "title": "Bug: Incompatible With WPS",
+   "oneliner": "Incompatible with WPS Office windows (not tiled correctly)",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Open",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": []
+  },
+  {
+   "ref": "#509 / forge-fw8",
+   "gh": "509",
+   "bd_id": "forge-fw8",
+   "title": "Bug: fullscreen bug with second app running",
+   "oneliner": "Fullscreen window misbehaves when a second app is running",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "fa74c2f",
+    "11a4c37"
+   ]
+  },
+  {
+   "ref": "#497 / forge-pak",
+   "gh": "497",
+   "bd_id": "forge-pak",
+   "title": "Bug: resizing tabbed window doesnt resize",
+   "oneliner": "Resizing a tabbed window does not actually resize it",
+   "area": "resize",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "both",
+   "fix_commits": [
+    "9d361fd",
+    "06d073a"
+   ]
+  },
+  {
+   "ref": "#482 / forge-3qq",
+   "gh": "482",
+   "bd_id": "forge-3qq",
+   "title": "Bug: Anki doesn't get tiled",
+   "oneliner": "Anki window does not get tiled",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "both",
+   "fix_commits": [
+    "a488b6b",
+    "85e925a"
+   ]
+  },
+  {
+   "ref": "#495 / forge-tl6",
+   "gh": "495",
+   "bd_id": "forge-tl6",
+   "title": "Bug: Some shortcuts not working properly on Fedora",
+   "oneliner": "Some keyboard shortcuts do not work properly on Fedora",
+   "area": "keybinding",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Open",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": []
+  },
+  {
+   "ref": "#480 / forge-91r",
+   "gh": "480",
+   "bd_id": "forge-91r",
+   "title": "Tiling feature does not work with brave browser",
+   "oneliner": "Tiling does not work with Brave browser windows",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Open",
+   "product": true,
+   "priority": 2,
+   "era": "both",
+   "fix_commits": [
+    "93456a1"
+   ]
+  },
+  {
+   "ref": "#472 / forge-0z2",
+   "gh": "472",
+   "bd_id": "forge-0z2",
+   "title": "Evolution email client window always floats",
+   "oneliner": "Evolution email client window always floats instead of tiling",
+   "area": "float",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "both",
+   "fix_commits": [
+    "93456a1",
+    "8e65a19",
+    "07b8919"
+   ]
+  },
+  {
+   "ref": "#470 / forge-6qr",
+   "gh": "470",
+   "bd_id": "forge-6qr",
+   "title": "Bug: Closing windows disrupts tiling in next workspaces",
+   "oneliner": "Closing windows disrupts tiling on other workspaces",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "both",
+   "fix_commits": [
+    "9d361fd",
+    "1966856",
+    "4494eae"
+   ]
+  },
+  {
+   "ref": "#469 / forge-w7e",
+   "gh": "469",
+   "bd_id": "forge-w7e",
+   "title": "Bug: Always on Top break",
+   "oneliner": "Always-on-top windows break layering/behaviour under Forge tiling",
+   "area": "float",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "both",
+   "fix_commits": [
+    "93456a1",
+    "dc76b5f"
+   ]
+  },
+  {
+   "ref": "#464 / forge-7ww",
+   "gh": "464",
+   "bd_id": "forge-7ww",
+   "title": "A grey window appears when enabled",
+   "oneliner": "A grey/blank window appears when the extension is enabled",
+   "area": "decoration",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Open",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": []
+  },
+  {
+   "ref": "#466 / forge-fu2",
+   "gh": "466",
+   "bd_id": "forge-fu2",
+   "title": "problemas con teclado al activar Forge",
+   "oneliner": "Keyboard problems occur when activating Forge",
+   "area": "keybinding",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Open",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "5958ab3"
+   ]
+  },
+  {
+   "ref": "#461 / forge-9yo",
+   "gh": "461",
+   "bd_id": "forge-9yo",
+   "title": "Bug: Window can be snapped to edge in Tiling mode",
+   "oneliner": "Window can be edge-snapped/maximized while in tiling mode",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "both",
+   "fix_commits": [
+    "93456a1",
+    "aedc184"
+   ]
+  },
+  {
+   "ref": "#454 / forge-05l",
+   "gh": "454",
+   "bd_id": "forge-05l",
+   "title": "Bug: forge on over on steam (menus close)",
+   "oneliner": "Forge causes Steam hover menus to close immediately",
+   "area": "focus",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "In progress",
+   "product": true,
+   "priority": 2,
+   "era": "both",
+   "fix_commits": [
+    "93456a1",
+    "c515ccd"
+   ]
+  },
+  {
+   "ref": "#436 / forge-7m3",
+   "gh": "436",
+   "bd_id": "forge-7m3",
+   "title": "New window re-equalizes sizes instead of preserving",
+   "oneliner": "New window re-equalizes sibling sizes instead of preserving percents",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "8c45267"
+   ]
+  },
+  {
+   "ref": "#427 / forge-vmx",
+   "gh": "427",
+   "bd_id": "forge-vmx",
+   "title": "App launches on wrong/second monitor",
+   "oneliner": "App launches on the wrong/second monitor",
+   "area": "multimonitor",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Open",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "8094f3d"
+   ]
+  },
+  {
+   "ref": "#404 / forge-5r4",
+   "gh": "404",
+   "bd_id": "forge-5r4",
+   "title": "[BUG] VS Code not tiled if tab name starts with '+'",
+   "oneliner": "VS Code not tiled when its window title starts with '+'",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Open",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "7e8f34a"
+   ]
+  },
+  {
+   "ref": "#388 / forge-4cv",
+   "gh": "388",
+   "bd_id": "forge-4cv",
+   "title": "bug: some windows always tiling on primary monitor",
+   "oneliner": "Some windows always tile on the primary monitor",
+   "area": "multimonitor",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Open",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "8094f3d"
+   ]
+  },
+  {
+   "ref": "#401 / forge-bqa",
+   "gh": "401",
+   "bd_id": "forge-bqa",
+   "title": "bug: Stacks are lost upon waking from sleep",
+   "oneliner": "Stacked/tabbed groups are lost after waking from sleep",
+   "area": "lifecycle",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "82ca53c"
+   ]
+  },
+  {
+   "ref": "#379 / forge-2zj",
+   "gh": "379",
+   "bd_id": "forge-2zj",
+   "title": "bug: multi-display navigation keybindings not working",
+   "oneliner": "Multi-display navigation keybindings do not work",
+   "area": "multimonitor",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "a038ef5"
+   ]
+  },
+  {
+   "ref": "#354 / forge-tyt",
+   "gh": "354",
+   "bd_id": "forge-tyt",
+   "title": "bug: Bug when swap windows with mouse",
+   "oneliner": "Windows mis-swap when swapping with the mouse",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "In progress",
+   "product": true,
+   "priority": 2,
+   "era": "both",
+   "fix_commits": [
+    "d8ea2d9",
+    "b4aabda"
+   ]
+  },
+  {
+   "ref": "#353 / forge-91s",
+   "gh": "353",
+   "bd_id": "forge-91s",
+   "title": "Some apps open only on top external monitor",
+   "oneliner": "Some apps always open only on the top external monitor instead of the focused one",
+   "area": "multimonitor",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Open",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "8094f3d"
+   ]
+  },
+  {
+   "ref": "#351 / forge-wsc",
+   "gh": "351",
+   "bd_id": "forge-wsc",
+   "title": "bug: window resizing lagging on popups in brave",
+   "oneliner": "Window resizing lags when Brave shows popups",
+   "area": "resize",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "In progress",
+   "product": true,
+   "priority": 2,
+   "era": "both",
+   "fix_commits": [
+    "5e5e28d",
+    "c515ccd"
+   ]
+  },
+  {
+   "ref": "#328 / forge-zrf",
+   "gh": "328",
+   "bd_id": "forge-zrf",
+   "title": "bug: White Screen of death",
+   "oneliner": "White screen of death from finalized-GObject signal-disconnect storm during cross-monitor drag",
+   "area": "lifecycle",
+   "origin": "Inherited",
+   "upstream": "Partial",
+   "status": "In progress",
+   "product": true,
+   "priority": 2,
+   "era": "both",
+   "fix_commits": [
+    "d8ea2d9",
+    "a969aee"
+   ]
+  },
+  {
+   "ref": "#322 / forge-mme",
+   "gh": "322",
+   "bd_id": "forge-mme",
+   "title": "bug: ddterm blinking if Forge enabled",
+   "oneliner": "ddterm window blinks because Forge tries to tile/resize it; fixed by wm_class filter",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "both",
+   "fix_commits": [
+    "5582414"
+   ]
+  },
+  {
+   "ref": "#324 / forge-ne1",
+   "gh": "324",
+   "bd_id": "forge-ne1",
+   "title": "bug: crashing when moving windows",
+   "oneliner": "Crash when moving windows: Move's queued callback dereferences stale/dead nodes",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Partial",
+   "status": "In progress",
+   "product": true,
+   "priority": 2,
+   "era": "both",
+   "fix_commits": [
+    "d8ea2d9",
+    "befb0a3"
+   ]
+  },
+  {
+   "ref": "#316 / forge-4a6",
+   "gh": "316",
+   "bd_id": "forge-4a6",
+   "title": "bug: Slow shortcut editing",
+   "oneliner": "Shortcut editing in preferences is slow until EntryRow saves are debounced",
+   "area": "prefs",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "both",
+   "fix_commits": [
+    "334eb47"
+   ]
+  },
+  {
+   "ref": "#311 / forge-5ng",
+   "gh": "311",
+   "bd_id": "forge-5ng",
+   "title": "bug: Tall Monitor Tiling",
+   "oneliner": "Incorrect tiling layout on tall (portrait) monitors",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "both",
+   "fix_commits": [
+    "8068052",
+    "e7233d8",
+    "d758e74"
+   ]
+  },
+  {
+   "ref": "#312 / forge-9sd",
+   "gh": "312",
+   "bd_id": "forge-9sd",
+   "title": "bug: colors not saving",
+   "oneliner": "Color/theme changes not saved because user stylesheet was read-only on write",
+   "area": "theme",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "both",
+   "fix_commits": [
+    "f91b2d9",
+    "3ee82bd"
+   ]
+  },
+  {
+   "ref": "#305 / forge-12f",
+   "gh": "305",
+   "bd_id": "forge-12f",
+   "title": "bug: resizing one boundary also moves the opposite",
+   "oneliner": "Resizing one tile boundary also shifts the opposite boundary due to cumulative debit drift",
+   "area": "resize",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "both",
+   "fix_commits": [
+    "1a9aff3",
+    "192036c",
+    "f85dfde",
+    "60ceaa7"
+   ]
+  },
+  {
+   "ref": "#309 / forge-eca",
+   "gh": "309",
+   "bd_id": "forge-eca",
+   "title": "bug: Huge black/white empty window with XWayland Video Bridge",
+   "oneliner": "Huge black/white empty XWayland Video Bridge window tiled; fixed by wm_class filter",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "both",
+   "fix_commits": [
+    "1da5d63"
+   ]
+  },
+  {
+   "ref": "#303 / forge-iwi",
+   "gh": "303",
+   "bd_id": "forge-iwi",
+   "title": "bug: tab decorator disappears randomly",
+   "oneliner": "Tab decorator disappears randomly via the minimized/maximized/fullscreen suppression path",
+   "area": "decoration",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "both",
+   "fix_commits": [
+    "1da5d63",
+    "5a4222c"
+   ]
+  },
+  {
+   "ref": "#299 / forge-4dm",
+   "gh": "299",
+   "bd_id": "forge-4dm",
+   "title": "bug: Windows always open on the secondary display",
+   "oneliner": "Windows always open on the secondary display instead of the active monitor",
+   "area": "multimonitor",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Open",
+   "product": true,
+   "priority": 2,
+   "era": "both",
+   "fix_commits": [
+    "a488b6b",
+    "8094f3d"
+   ]
+  },
+  {
+   "ref": "#289 / forge-b3p",
+   "gh": "289",
+   "bd_id": "forge-b3p",
+   "title": "bug: Always-on-top not playing well with fullscreen",
+   "oneliner": "Always-on-top windows conflict with fullscreen; headline symptom is by design",
+   "area": "float",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Not a defect",
+   "product": true,
+   "priority": 2,
+   "era": "both",
+   "fix_commits": [
+    "5e5e28d"
+   ]
+  },
+  {
+   "ref": "#288 / forge-bq3",
+   "gh": "288",
+   "bd_id": "forge-bq3",
+   "title": "bug: conflict with gnome default auto-maximize",
+   "oneliner": "Conflict with GNOME default auto-maximize behavior",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Open",
+   "product": true,
+   "priority": 2,
+   "era": "both",
+   "fix_commits": [
+    "93456a1"
+   ]
+  },
+  {
+   "ref": "#271 / forge-khb",
+   "gh": "271",
+   "bd_id": "forge-khb",
+   "title": "bug: Steam app tiling but size is overlapping",
+   "oneliner": "Steam app tiles but window size overlaps neighbors",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "both",
+   "fix_commits": [
+    "a488b6b",
+    "7e8f34a"
+   ]
+  },
+  {
+   "ref": "#260 / forge-iaj",
+   "gh": "260",
+   "bd_id": "forge-iaj",
+   "title": "Blender does not resize properly when launched",
+   "oneliner": "Blender does not resize properly when launched",
+   "area": "resize",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Open",
+   "product": true,
+   "priority": 2,
+   "era": "both",
+   "fix_commits": [
+    "0d53472"
+   ]
+  },
+  {
+   "ref": "#254 / forge-efp",
+   "gh": "254",
+   "bd_id": "forge-efp",
+   "title": "Qt5/6 windows getting messed up when tiling (X11 Only)",
+   "oneliner": "Qt5/6 windows get messed up when tiling (X11 only)",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Open",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": []
+  },
+  {
+   "ref": "#249 / forge-m37",
+   "gh": "249",
+   "bd_id": "forge-m37",
+   "title": "keyboard shortcuts interfere with gnome lock shortcut",
+   "oneliner": "Keyboard shortcuts collide with GNOME native Super+L lock shortcut",
+   "area": "keybinding",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "both",
+   "fix_commits": [
+    "7790e12",
+    "7030285"
+   ]
+  },
+  {
+   "ref": "#224 / forge-2lx",
+   "gh": "224",
+   "bd_id": "forge-2lx",
+   "title": "gnome 44, alacritty, wayland => crash",
+   "oneliner": "GNOME 44 + Alacritty on Wayland causes a crash",
+   "area": "lifecycle",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Open",
+   "product": true,
+   "priority": 2,
+   "era": "both",
+   "fix_commits": [
+    "d8ea2d9"
+   ]
+  },
+  {
+   "ref": "#213 / forge-zps",
+   "gh": "213",
+   "bd_id": "forge-zps",
+   "title": "Moving windows via kbd shortcuts is janky",
+   "oneliner": "Moving windows via keyboard shortcuts is janky",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Open",
+   "product": true,
+   "priority": 2,
+   "era": "both",
+   "fix_commits": [
+    "8068052"
+   ]
+  },
+  {
+   "ref": "#196 / forge-av4",
+   "gh": "196",
+   "bd_id": "forge-av4",
+   "title": "window resize being ignored - gnome-resize",
+   "oneliner": "Window resize via gnome-resize is being ignored",
+   "area": "resize",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Open",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": []
+  },
+  {
+   "ref": "#176 / forge-uja",
+   "gh": "176",
+   "bd_id": "forge-uja",
+   "title": "contextual menus under the borders",
+   "oneliner": "Contextual menus render under the tiling borders",
+   "area": "decoration",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Open",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": []
+  },
+  {
+   "ref": "#164 / forge-uqx",
+   "gh": "164",
+   "bd_id": "forge-uqx",
+   "title": "bug: tiled outline/hint wrong size for window",
+   "oneliner": "Tiled outline/hint drawn at wrong size on Wayland HiDPI",
+   "area": "decoration",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "both",
+   "fix_commits": [
+    "9d361fd",
+    "6334519"
+   ]
+  },
+  {
+   "ref": "#151 / forge-2iw",
+   "gh": "151",
+   "bd_id": "forge-2iw",
+   "title": "bug: does not work with touchscreen or stylus",
+   "oneliner": "Drag-and-drop tiling does not work with touchscreen or stylus",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "In progress",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "44f788c"
+   ]
+  },
+  {
+   "ref": "#117 / forge-ypn",
+   "gh": "117",
+   "bd_id": "forge-ypn",
+   "title": "Partially Off Screen Apps",
+   "oneliner": "Apps render partially off-screen when tiled near monitor edges",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "both",
+   "fix_commits": [
+    "a488b6b",
+    "8a92915"
+   ]
+  },
+  {
+   "ref": "#109 / forge-e85",
+   "gh": "109",
+   "bd_id": "forge-e85",
+   "title": "bug: losing focus on click on Wayland with Desktop Icons NG",
+   "oneliner": "Window loses focus on click on Wayland with Desktop Icons NG extension",
+   "area": "focus",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Open",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": []
+  },
+  {
+   "ref": "#57 / forge-37r",
+   "gh": "57",
+   "bd_id": "forge-37r",
+   "title": "bug: do not stack nor tab windows with split con siblings",
+   "oneliner": "Stacking/tabbing windows that have split-con siblings produced broken layout",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "both",
+   "fix_commits": [
+    "1a9aff3",
+    "00993a6",
+    "b397d69",
+    "1966856",
+    "ad2df12",
+    "c495ce5"
+   ]
+  },
+  {
+   "ref": "forge-4b6",
+   "gh": null,
+   "bd_id": "forge-4b6",
+   "title": "E2E: drag/fuzz grab-ops contaminate the DBUS full-suite lane (now GNOME 49 too, 39 fails)",
+   "oneliner": "drag_drop grab-ops contaminate the DBUS full-suite E2E lane on Mutter 45-48",
+   "area": "e2e",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": false,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "5c00525",
+    "cb08f42",
+    "4d7c85f"
+   ]
+  },
+  {
+   "ref": "forge-6pe",
+   "gh": null,
+   "bd_id": "forge-6pe",
+   "title": "Overview drag-to-insert-workspace scrambles tiling on shifted workspaces (index-keyed tree nodes)",
+   "oneliner": "Overview drag-to-insert-workspace flattens nested tiling on shifted workspaces",
+   "area": "workspace",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "8c45267",
+    "f051fa5"
+   ]
+  },
+  {
+   "ref": "forge-8iw",
+   "gh": null,
+   "bd_id": "forge-8iw",
+   "title": "[bug] E2E full-suite: test_gap_keybinding leaks window-gap-size-increment via mis-restore",
+   "oneliner": "E2E test_gap_keybinding leaks window-gap-size-increment via faulty setting restore",
+   "area": "e2e",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": false,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "4d4fda3"
+   ]
+  },
+  {
+   "ref": "forge-0gj",
+   "gh": null,
+   "bd_id": "forge-0gj",
+   "title": "F44/Mutter-50: gnome-text-editor GApplication launch race contaminates full E2E lane",
+   "oneliner": "gnome-text-editor GApplication launch race contaminates the full E2E lane",
+   "area": "e2e",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": false,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "34e18d7"
+   ]
+  },
+  {
+   "ref": "forge-qh2",
+   "gh": null,
+   "bd_id": "forge-qh2",
+   "title": "[bug] E2E close-rebalance + post-toggle tests fail under dispatch-mode=dbus on F43/F44",
+   "oneliner": "E2E close-rebalance + post-toggle tests fail under dispatch-mode=dbus on F43/F44",
+   "area": "e2e",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": false,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "3aee391"
+   ]
+  },
+  {
+   "ref": "forge-07x",
+   "gh": null,
+   "bd_id": "forge-07x",
+   "title": "Add Mutter 49+ Meta.Window mock methods (currently completely absent)",
+   "oneliner": "Meta.Window mock lacked Mutter 49+ maximize methods (is_maximized/set_maximize_flags)",
+   "area": "build",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": false,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "724434d"
+   ]
+  },
+  {
+   "ref": "forge-27y",
+   "gh": null,
+   "bd_id": "forge-27y",
+   "title": "Migrate 101 fixed time.sleep() calls in 10 E2E test files to polling helpers",
+   "oneliner": "Migrate 101 fixed time.sleep() E2E calls to deterministic polling helpers",
+   "area": "e2e",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": false,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "3f241e7",
+    "2589f28",
+    "61750c6",
+    "6dcc5a8"
+   ]
+  },
+  {
+   "ref": "forge-2xt",
+   "gh": null,
+   "bd_id": "forge-2xt",
+   "title": "F40 image: user@1000.service PAM failure prevents GNOME Shell boot",
+   "oneliner": "F40 E2E image: user@1000.service PAM failure prevents GNOME Shell boot",
+   "area": "build",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": false,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "a4851a9"
+   ]
+  },
+  {
+   "ref": "forge-fc6",
+   "gh": null,
+   "bd_id": "forge-fc6",
+   "title": "F44/Mutter-50: ~100ms apply delay on move_resize_frame breaks close-rebalance + window-create",
+   "oneliner": "Alleged ~100ms move_resize_frame apply delay disproven as cause of E2E close-rebalance failures",
+   "area": "e2e",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Not a defect",
+   "product": false,
+   "priority": 2,
+   "era": "beads",
+   "fix_commits": [
+    "3aee391"
+   ]
+  },
+  {
+   "ref": "forge-2l83",
+   "gh": null,
+   "bd_id": "forge-2l83",
+   "title": "FloatOverride add/remove use strict === on wmClass but classification uses _wmClassMatches (comma-list) \u2014 comma-list rules (Steam) can never be toggled off",
+   "oneliner": "FloatOverride add/remove compare wmClass with strict === while classification uses comma-list match, so comma-list rules (Steam) can never be toggled off",
+   "area": "float",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Open",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [],
+   "origin_evidence": "The comma-list wmClass classifier _wmClassMatches was introduced by our commit 07b8919 (forge-0z2/#472), which is NOT an ancestor of upstream/main; upstream has no _wmClassMatches (no wmClass comma-split), so the add/remove '===' vs comma-list identity mismatch is created by our code."
+  },
+  {
+   "ref": "forge-hcbz",
+   "gh": null,
+   "bd_id": "forge-hcbz",
+   "title": "Focus/split border inset=3 raw px vs CSS border-width scaled to 6 physical at integer HiDPI \u2014 border ring paints 1.5 logical px over window content on every straight edge (low/P4-leaning)",
+   "oneliner": "Focus/split border inset is raw 3px while CSS border-width is dpi-scaled, so the border paints over window content at integer HiDPI",
+   "area": "decoration",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "a774188"
+   ],
+   "origin_evidence": "The buggy raw-px 'let inset = 3;' is present in upstream/main:lib/extension/window.js:1266 (our fork refactored it into decoration.js). The dpi mismatch predates the fork."
+  },
+  {
+   "ref": "forge-2s37",
+   "gh": null,
+   "bd_id": "forge-2s37",
+   "title": "window-gap-size applied in raw physical px \u2014 gaps (and margins/resize steps) visually halve at integer HiDPI while tab bars/borders on the same screen are dpi-scaled",
+   "oneliner": "window-gap-size applied in raw physical px, so gaps visually halve at integer HiDPI while dpi-scaled bars/borders keep their size",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "a774188"
+   ],
+   "origin_evidence": "upstream/main:lib/extension/window.js:1381 calculateGaps computes gapSize*gapIncrement with no Utils.dpi() scaling; the raw-px gap behavior predates the fork."
+  },
+  {
+   "ref": "forge-u7t0",
+   "gh": null,
+   "bd_id": "forge-u7t0",
+   "title": "Cheatsheet calls get_strv() on string-typed mod-mask-mouse-tile \u2014 one GLib CRITICAL logged per cheatsheet open (hygiene; prefs keyboard page already has the 'as'-type filter)",
+   "oneliner": "Cheatsheet calls get_strv() on string-typed mod-mask-mouse-tile, logging one GLib CRITICAL per open",
+   "area": "keybinding",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "8e65a19"
+   ],
+   "origin_evidence": "lib/extension/cheatsheet.js does not exist in upstream/main; the whole cheatsheet feature (and its get_strv-on-string-key loop) is our fork's addition."
+  },
+  {
+   "ref": "forge-x55z",
+   "gh": null,
+   "bd_id": "forge-x55z",
+   "title": "wmClass rule matching documented as 'substring' in windows.schema.json + docs/user/rules.md but code is exact per-comma-token equality (deliberate, forge-0z2) \u2014 hand-written partial-class rules silently never match",
+   "oneliner": "Docs/schema claim wmClass rules use substring matching but code is exact per-comma-token equality, so partial-class rules silently never match",
+   "area": "config",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "8e65a19"
+   ],
+   "origin_evidence": "Both drifted doc surfaces are ours: config/windows.schema.json and docs/user/rules.md do not exist in upstream/main; the 'substring' wording that contradicts our exact-match matcher (07b8919, also ours) was authored in our fork."
+  },
+  {
+   "ref": "forge-l64o",
+   "gh": null,
+   "bd_id": "forge-l64o",
+   "title": "monitor-skip-tile missing from the settings-changed switch \u2014 'Non-tiling monitors' prefs edit has no effect until an unrelated render (sibling workspace-skip-tile applies instantly)",
+   "oneliner": "monitor-skip-tile missing from the settings-changed switch, so 'Non-tiling monitors' prefs edits do nothing until an unrelated render",
+   "area": "prefs",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "d720e5d"
+   ],
+   "origin_evidence": "The monitor-skip-tile gschema key does not exist anywhere in upstream/main; it is our fork's feature. Upstream has only the workspace-skip-tile case in the settings-changed switch, so the omitted monitor-skip-tile case is a gap in our own added code."
+  },
+  {
+   "ref": "forge-eny3",
+   "gh": null,
+   "bd_id": "forge-eny3",
+   "title": "gschema keys focus-border-size/-color, split-border-color, primary-layout-mode are read by nothing yet exported+documented as typed knobs in settings.json \u2014 decoy settings; border styling doesn't actually migrate",
+   "oneliner": "gschema keys focus-border-size/-color, split-border-color, primary-layout-mode are read by nothing yet exported/documented as live knobs",
+   "area": "config",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "30efe82"
+   ],
+   "origin_evidence": "The four decoy keys (focus-border-size/-color, split-border-color, primary-layout-mode) exist in upstream/main gschema (schemas/...gschema.xml) with zero consumers in upstream lib; they are legacy dead keys predating the fork."
+  },
+  {
+   "ref": "forge-nuny",
+   "gh": null,
+   "bd_id": "forge-nuny",
+   "title": "config-sync whitelists stale: export/import silently drops 4 settings + 5 keybindings added mid-2026; JSON schemas reject them as invalid; exported settings.json violates its own $schema (auto-reorient-on-close)",
+   "oneliner": "config-sync whitelists are stale, silently dropping 4 settings + 5 keybindings on export/import and rejecting them as schema-invalid",
+   "area": "config",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "30efe82"
+   ],
+   "origin_evidence": "lib/shared/config-sync.js does not exist in upstream/main; the portable-config export/import subsystem and its stale whitelists are entirely our fork's code."
+  },
+  {
+   "ref": "forge-f081",
+   "gh": null,
+   "bd_id": "forge-f081",
+   "title": "postProcessWindow passes a Meta.Window to movePointerWith (Node expected) \u2014 new-window pointer-warp has never worked; vacuous unit test pins the broken call",
+   "oneliner": "postProcessWindow passes a Meta.Window to movePointerWith (Node expected), so new-window pointer-warp has never worked",
+   "area": "focus",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "0d38d8c"
+   ],
+   "origin_evidence": "upstream/main:lib/extension/window.js:1577 postProcessWindow still calls movePointerWith(metaWindow); the type-confused call was introduced by e5e5ee1 (2023) which is an ancestor of upstream/main, so it predates the fork and never worked."
+  },
+  {
+   "ref": "forge-j9fo",
+   "gh": null,
+   "bd_id": "forge-j9fo",
+   "title": "swapPairs transfers GRAB_TILE to the drag-swap TARGET and _grabCleanup never resets it \u2014 latent, masked only by forge-te9o's clobber; co-fix required or te9o's fix strands the swap target out of tiling",
+   "oneliner": "swapPairs transfers GRAB_TILE to the drag-swap target and _grabCleanup never resets it, stranding the target out of tiling once te9o is fixed",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "1207861"
+   ],
+   "origin_evidence": "upstream/main:lib/extension/tree.js:1181 swapPairs already swaps node.mode between the pair (transferMode=fromNode.mode; fromNode.mode=toNode.mode; toNode.mode=transferMode), so it transfers GRAB_TILE to the swap target; the defect predates the fork and is masked upstream by the same processFloats clobber (forge-te9o)."
+  },
+  {
+   "ref": "forge-gw2c",
+   "gh": null,
+   "bd_id": "forge-gw2c",
+   "title": "workspaces-reordered never rekeys _workspaceSignals \u2014 surviving workspace can permanently lose its window-added handler; handlers leak past disable() and partially resurrect a Tree (St.Bin/signal leaks)",
+   "oneliner": "workspaces-reordered never rekeys index-keyed _workspaceSignals, stranding window-added handlers (signal/St.Bin leaks)",
+   "area": "workspace",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "9725fdd"
+   ],
+   "origin_evidence": "The index-keyed `_workspaceSignals = new Map()` WorkspaceManager and the workspaces-reordered rekey are our refactor (workspace.js added by commit 3296d59, in upstream/main..dev). Upstream has no workspace.js: it attaches signals directly to the workspace object (metaWorkspace.workspaceSignals) and never listens to workspaces-reordered, so it has no index-desync bug. Fix 9725fdd."
+  },
+  {
+   "ref": "forge-8jks",
+   "gh": null,
+   "bd_id": "forge-8jks",
+   "title": "patchCss backup/copy throws uncaught GError when stylesheet dir is unwritable but stylesheet.css exists \u2014 enable() aborts half-initialized on every start (uncovered leg of forge-0h9k)",
+   "oneliner": "patchCss stylesheet copy throws uncaught GError on unwritable dir, aborting enable() half-initialized",
+   "area": "theme",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "e107185"
+   ],
+   "origin_evidence": "Upstream lib/shared/theme.js patchCss() has the identical unguarded configCss.copy(...) / originalCss.copy(...) calls that throw an uncaught GError when the stylesheet dir is unwritable. Predates the fork. Fix e107185 wraps them in try/catch."
+  },
+  {
+   "ref": "forge-qxqb",
+   "gh": null,
+   "bd_id": "forge-qxqb",
+   "title": "tree.move edge-wrap branch (next === -1) returns early, skipping resetSiblingPercent + resetLayoutSingleChild \u2014 percent corruption and stuck single-child TABBED layout",
+   "oneliner": "tree.move edge-wrap (next===-1) returns early, skipping percent-reset epilogue: percent corruption + stuck single-child TABBED",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "5ed88b7"
+   ],
+   "origin_evidence": "Upstream tree.js move() next===-1 edge-wrap branch appends to the monitor node and returns true early, skipping the resetSiblingPercent x2 + resetLayoutSingleChild epilogue at the bottom of move() \u2014 identical to the buggy code. Fix 5ed88b7 extracts _finishMove and runs it before the edge-wrap return."
+  },
+  {
+   "ref": "forge-ue92",
+   "gh": null,
+   "bd_id": "forge-ue92",
+   "title": "_grabCleanup walks the POST-reparent ancestor chain \u2014 stale initRect strands on stacked/tabbed container after drag-out; next tab resize jumps and is baked in",
+   "oneliner": "_grabCleanup re-walks post-reparent ancestors, stranding stale initRect on tabbed container after drag-out; next tab resize jumps",
+   "area": "resize",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "69e6863"
+   ],
+   "origin_evidence": "The tabbed/stacked-ancestor initRect snapshot re-walk in _grabCleanup was introduced by our commit 06d073a (fix(resize) forge-pak, #497). Upstream window.js _grabCleanup has no tabbedAncestor/initRect walk at all. The post-reparent stale-initRect bug can only exist in our fork. Fix 69e6863."
+  },
+  {
+   "ref": "forge-6c0e",
+   "gh": null,
+   "bd_id": "forge-6c0e",
+   "title": "Startup wmId-override prune is cache-only and clobbered by the first window close; per-window TILE overrides are never cleaned (unbounded windows.json cruft)",
+   "oneliner": "Startup stale-wmId override prune is cache-only, resurrected by first window close; unbounded windows.json cruft",
+   "area": "config",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "e67ebef"
+   ],
+   "origin_evidence": "Upstream reloadWindowOverrides() also filters stale wmId overrides in the in-memory cache (windowProps.overrides.filter(!override.wmId)) and never writes back; since configMgr re-reads windows.json on each access, the first override write resurrects the stale rows. Same cache-only-prune defect predates the fork. Fix e67ebef persists the prune."
+  },
+  {
+   "ref": "forge-xgrn",
+   "gh": null,
+   "bd_id": "forge-xgrn",
+   "title": "FloatClassToggle collaterally deletes other windows per-window tile overrides and permanently shadows bundled class tile rules with no UI to recover",
+   "oneliner": "FloatClassToggle collaterally deletes other windows' per-window tile overrides and permanently shadows bundled class tile rules",
+   "area": "float",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Deferred",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [],
+   "origin_evidence": "The tile-override machinery (removeTileOverride, _removeModeOverride, bundled {evolution|Anki|chrome: tile} rules) was added by our commit b6f5e51 (fix(float) forge-fxf, #387). Upstream's override system is float-only (addFloatOverride/removeFloatOverride, no tile mode, no bundled tile rules); grep of upstream window.js finds zero _removeModeOverride/removeTileOverride. The collateral tile-override deletion only exists in the fork."
+  },
+  {
+   "ref": "forge-lx9m",
+   "gh": null,
+   "bd_id": "forge-lx9m",
+   "title": "Bundled classless Picture-in-Picture float rule matches ANY window by case-insensitive title substring and beats class tile rules",
+   "oneliner": "Bundled classless Picture-in-Picture float rule matches any window by title substring and beats class tile rules",
+   "area": "float",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Deferred",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [],
+   "origin_evidence": "The bundled classless {wmTitle: Picture-in-Picture, mode: float} rule was added by our commit 084f29b (forge-11k migration); 084f29b is in upstream/main..dev and not in upstream. Upstream config/windows.json has no classless PiP rule (its PiP-related rules are class-scoped). The any-title-substring over-match is fork-only."
+  },
+  {
+   "ref": "forge-mhje",
+   "gh": null,
+   "bd_id": "forge-mhje",
+   "title": "auto-split preamble in trackWindow runs before _validWindow/existNodeWindow \u2014 tooltips/menus and reload re-tracks dispatch spurious Splits (phantom single-child CONs)",
+   "oneliner": "auto-split preamble in trackWindow runs before _validWindow/existNodeWindow, dispatching spurious splits (phantom single-child CONs)",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "0b236ec"
+   ],
+   "origin_evidence": "Upstream trackWindow() (window.js ~1409) runs the auto-split preamble before the _validWindow gate and the existNodeWindow dedupe \u2014 identical buggy ordering. Fix 0b236ec moves it inside the !existNodeWindow branch after _validWindow."
+  },
+  {
+   "ref": "forge-vw0l",
+   "gh": null,
+   "bd_id": "forge-vw0l",
+   "title": "_reorientOnClose reorients the DETACHED CON in removeNode collapse branch (feature dead for sub-container closes) and fires on FLOAT-window removal (spurious flip)",
+   "oneliner": "_reorientOnClose reorients the detached CON on collapse (feature dead) and misfires on FLOAT-window removal",
+   "area": "tiling",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "5ed88b7"
+   ],
+   "origin_evidence": "_reorientOnClose and auto-reorient-on-close are our feature, added by commit 8536f61 (feat(tree) forge-nl8). Upstream removeNode() has no _reorientOnClose call. The wrong-node reorient (detached CON) and FLOAT-removal misfire can only exist in the fork. Fix 5ed88b7."
+  },
+  {
+   "ref": "forge-clsp",
+   "gh": null,
+   "bd_id": "forge-clsp",
+   "title": "Split command applies default-window-layout to a PRE-EXISTING container when tree.split() no-ops \u2014 monitor node can become TABBED",
+   "oneliner": "Split applies default-window-layout to pre-existing container when tree.split no-ops, turning monitor node TABBED",
+   "area": "tiling",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "0b236ec"
+   ],
+   "origin_evidence": "applyDefaultLayoutToContainer and default-window-layout are our feature (added by 629a163 / module extraction 3296d59). Upstream's Split command just calls tree.split() with no default-layout stamp. The no-op-split-turns-monitor-TABBED bug can only exist in the fork. Fix 0b236ec makes tree.split return the created CON and gates the stamp on it."
+  },
+  {
+   "ref": "forge-43zk",
+   "gh": null,
+   "bd_id": "forge-43zk",
+   "title": "minimize/unminimize handlers resolve the FOCUSED window, not the signal window \u2014 background (un)minimize resets the wrong container percents",
+   "oneliner": "minimize/unminimize resolve the focused window, not the signal window, resetting the wrong container's percents",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "0d38d8c"
+   ],
+   "origin_evidence": "Upstream's minimize/unminimize handlers (window.js ~224/239) ignore the signal actor and resolve tree.findNode(this.focusMetaWindow), resetting the focused container's percents on any background (un)minimize \u2014 identical defect. Fix 0d38d8c passes actor.meta_window into _onMinimizeChange."
+  },
+  {
+   "ref": "forge-dyt2",
+   "gh": null,
+   "bd_id": "forge-dyt2",
+   "title": "Lone tiled window external maximize is preserved by the signal path but silently reverted by the next renderTree (extends forge-bq3)",
+   "oneliner": "Lone tiled window's external maximize is preserved by the signal path but silently reverted by the next renderTree",
+   "area": "tiling",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "fa74c2f"
+   ],
+   "origin_evidence": "The silent-revert disagreement exists only because our _shouldRejectExternalMaximize lone-tile exemption (added by aedc184 forge-9yo, fork-only; 0 occurrences upstream) preserves the maximize at signal time while tree.apply/move still unmaximizes on render. Upstream move() always unmaximizes and apply() re-slices every tiled window unconditionally (consistent, no exemption), so upstream has no such disagreement. Fix fa74c2f adds _isLoneMaximizedTile skip in tree.apply."
+  },
+  {
+   "ref": "forge-wf49",
+   "gh": null,
+   "bd_id": "forge-wf49",
+   "title": "toggleWorkspaceMonocle heuristic misfires: flattens a user tabbed CON beside a loose window; stuck-in-monocle when a sub-CON holds a minimized window",
+   "oneliner": "Workspace-monocle heuristic misfires: flattens a user tabbed CON beside a loose window; stuck-in-monocle with a minimized sub-CON window",
+   "area": "tiling",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "53b6279"
+   ],
+   "origin_evidence": "toggleWorkspaceMonocle/isMonocle do not exist in upstream/main (grep returns nothing); introduced by our fork commit 629a163 'Implement 4 features: #435, #414, #287, #398' in upstream/main..dev. Fork-authored feature, so the buggy heuristic is our own."
+  },
+  {
+   "ref": "forge-v4wh",
+   "gh": null,
+   "bd_id": "forge-v4wh",
+   "title": "Maximize/fullscreen during the 120ms keyboard-resize debounce is consumed as resize delta, permanently skewing split percents",
+   "oneliner": "Maximize/fullscreen during the 120ms keyboard-resize debounce is consumed as a resize delta, permanently skewing split percents",
+   "area": "resize",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "a6cc261"
+   ],
+   "origin_evidence": "upstream/main:lib/extension/window.js has resize() (line 805) synthesizing the keyboard-resize grab and updateMetaPositionSize routing grabMode RESIZING to _handleResizing (lines 1765-1767) with NO _shouldRejectExternalMaximize (0 occurrences upstream). The maximize-consumed-as-resize-delta path predates our fork."
+  },
+  {
+   "ref": "forge-3scn",
+   "gh": null,
+   "bd_id": "forge-3scn",
+   "title": "Bug: Anki / Opera-flatpak never tile (null get_wm_class forces float)",
+   "oneliner": "Anki / Opera-flatpak never tile because null get_wm_class() forces the window to float",
+   "area": "float",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Open",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [],
+   "origin_evidence": "External ref gh-anki-nullwmclass, dup of upstream #219 (razedk). upstream/main:lib/extension/window.js line 2784 has 'metaWindow.get_wm_class() === null ||' forcing float \u2014 buggy behaviour predates our fork."
+  },
+  {
+   "ref": "forge-l7ms",
+   "gh": null,
+   "bd_id": "forge-l7ms",
+   "title": "E2E full-lane order-dependent: Bug125 stacked-toggle no-op + missing split border (2 residual fails post forge-4b6)",
+   "oneliner": "E2E full-lane order-dependent failures: Bug125 stacked-toggle no-op + missing split border, deterministic under full 133-test ordering",
+   "area": "e2e",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Open",
+   "product": false,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [],
+   "origin_evidence": "The entire tests/e2e/ tree (test_split_border.py, test_regression_validation.py) does not exist in upstream/main ('path exists on disk, but not in upstream/main'); it is fork-authored E2E harness. The order-dependent lane failure is in our own test infra."
+  },
+  {
+   "ref": "forge-9fwj",
+   "gh": null,
+   "bd_id": "forge-9fwj",
+   "title": "Keyboard-resize debounce can strand grabMode/initRect on original window when focus is stolen externally",
+   "oneliner": "Keyboard-resize debounce can strand grabMode/initRect on original window when focus is stolen externally",
+   "area": "resize",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Not a defect",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "cc27b2d"
+   ]
+  },
+  {
+   "ref": "forge-rt10",
+   "gh": null,
+   "bd_id": "forge-rt10",
+   "title": "config-sync auto-export resurrects a user-deleted portable file when only one of the two was deleted",
+   "oneliner": "config-sync auto-export resurrects a user-deleted portable file when only one of the two was deleted",
+   "area": "config",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "a5e283f"
+   ]
+  },
+  {
+   "ref": "forge-6asv",
+   "gh": null,
+   "bd_id": "forge-6asv",
+   "title": "Reparenting a stacked/tabbed CON destroys child tab actors without nulling dangling node.tab refs",
+   "oneliner": "Reparenting a stacked/tabbed CON destroys child tab actors without nulling dangling node.tab refs",
+   "area": "decoration",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "2b01d6a",
+    "a3f993f"
+   ]
+  },
+  {
+   "ref": "forge-5tiz",
+   "gh": null,
+   "bd_id": "forge-5tiz",
+   "title": "dist payload ships dev config files (vitest.config.js, eslint.config.js)",
+   "oneliner": "dist payload ships dev config files (vitest.config.js, eslint.config.js) added by the fork",
+   "area": "build",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": false,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "f29d295"
+   ]
+  },
+  {
+   "ref": "forge-t1s9",
+   "gh": null,
+   "bd_id": "forge-t1s9",
+   "title": "Float*Toggle dereferences existParent without null guard (inconsistent with WindowResetSizes)",
+   "oneliner": "Float*Toggle dereferences existParent without null guard (inconsistent with WindowResetSizes)",
+   "area": "float",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "c57ebd5"
+   ]
+  },
+  {
+   "ref": "forge-2jxz",
+   "gh": null,
+   "bd_id": "forge-2jxz",
+   "title": "_renumberWorkspaces signal-map move can overwrite an existing key on collision (lost signal IDs)",
+   "oneliner": "_renumberWorkspaces signal-map rekey can overwrite an existing key on collision, losing signal IDs",
+   "area": "workspace",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "73a51ee",
+    "6351c51"
+   ],
+   "origin_evidence": "_renumberWorkspaces is fork-only: absent from upstream lib/extension (no workspace.js, no 'renumber' anywhere in upstream); added by our commit 19e00af; related to fork fix forge-6pe."
+  },
+  {
+   "ref": "forge-e3k1",
+   "gh": null,
+   "bd_id": "forge-e3k1",
+   "title": "move() cross-monitor branch commits the reparent before extWm.move/get_work_area can throw",
+   "oneliner": "move() cross-monitor branch commits the reparent before extWm.move/get_work_area can throw",
+   "area": "multimonitor",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "a33bf77"
+   ]
+  },
+  {
+   "ref": "forge-ojwb",
+   "gh": null,
+   "bd_id": "forge-ojwb",
+   "title": "restoreLayoutGroups splices rebuilt CON at a stale pre-detach insertIndex (group order scramble on reload)",
+   "oneliner": "restoreLayoutGroups alleged to splice rebuilt CON at a stale insertIndex (disproven, not reproducible)",
+   "area": "tiling",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": []
+  },
+  {
+   "ref": "forge-zyx3",
+   "gh": null,
+   "bd_id": "forge-zyx3",
+   "title": "next() parent-walk dereferences null parentNode when no WORKSPACE ancestor",
+   "oneliner": "next() parent-walk dereferences null parentNode when no WORKSPACE ancestor",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "c57ebd5"
+   ]
+  },
+  {
+   "ref": "forge-wqlx",
+   "gh": null,
+   "bd_id": "forge-wqlx",
+   "title": "Single shared _wsWindowAddSrcId debounce coalesces window-added across all workspaces, dropping events",
+   "oneliner": "Single shared _wsWindowAddSrcId debounce coalesces window-added across workspaces, dropping events",
+   "area": "multimonitor",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "35da017"
+   ]
+  },
+  {
+   "ref": "forge-62ja",
+   "gh": null,
+   "bd_id": "forge-62ja",
+   "title": "_handleGrabOpEnd focus-lost early return leaves this.grabOp stale (defeats forge-leqs WINDOW_BASE guard)",
+   "oneliner": "_handleGrabOpEnd focus-lost early return leaves this.grabOp stale, defeating the WINDOW_BASE guard",
+   "area": "focus",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "a9b6e0f",
+    "7ae8cf3"
+   ]
+  },
+  {
+   "ref": "forge-9s8c",
+   "gh": null,
+   "bd_id": "forge-9s8c",
+   "title": "SnapLayoutMove break is nested inside if(focusNodeWindow), falling through into ShowTabDecorationToggle",
+   "oneliner": "SnapLayoutMove break is nested inside if(focusNodeWindow), falling through into ShowTabDecorationToggle",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "73a51ee",
+    "c57ebd5"
+   ]
+  },
+  {
+   "ref": "forge-ogmd",
+   "gh": null,
+   "bd_id": "forge-ogmd",
+   "title": "processStacked/processTabbed catch nulls node.decoration without destroying the orphaned St.BoxLayout",
+   "oneliner": "Decoration self-heal catch nulls node.decoration without destroying the orphaned St.BoxLayout",
+   "area": "decoration",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "23e5474"
+   ],
+   "origin_evidence": "The process*/decoration self-heal catch that nulls node.decoration was authored by our fork's stacked/tabbed rewrite (12845c8); upstream/main processStacked/processTabbed have only empty catches and never null decoration, and removeChild destroys it properly. Fix 23e5474."
+  },
+  {
+   "ref": "forge-36le",
+   "gh": null,
+   "bd_id": "forge-36le",
+   "title": "Yellow split-direction border never shows on Wayland",
+   "oneliner": "Yellow split-direction hint border never paints on Wayland because border-radius is also set",
+   "area": "decoration",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "6b0e5a7"
+   ]
+  },
+  {
+   "ref": "forge-5r0j",
+   "gh": null,
+   "bd_id": "forge-5r0j",
+   "title": "Vacuous _destroyed guard on tab actors risks finalized-actor throw in nested tabbed churn",
+   "oneliner": "Vacuous _destroyed guard on tab actors risks finalized-actor throw in nested tabbed churn",
+   "area": "decoration",
+   "origin": "Self-inflicted",
+   "upstream": "Partial",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "23e5474"
+   ],
+   "origin_evidence": "The _destroyed guard on tab actors was added by our fork (1966856); upstream/main tree.js has no _destroyed flag at all, so the vacuous guard is fork-only code. Fix 23e5474."
+  },
+  {
+   "ref": "forge-nn0m",
+   "gh": null,
+   "bd_id": "forge-nn0m",
+   "title": "Cross-process clobber: prefs Import/Export and the extension's debounced exportAll write the same JSON files with no coordination",
+   "oneliner": "Prefs Import/Export and the extension's debounced exportAll clobber the same JSON with no coordination",
+   "area": "config",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "a5e283f",
+    "19216e2"
+   ],
+   "origin_evidence": "Coordination is between prefs Import/Export and the debounced exportAll auto-sync; exportAll/config-file-sync do not exist in upstream (git grep upstream/main: none). Entirely a fork feature. Fix 19216e2."
+  },
+  {
+   "ref": "forge-qj5n",
+   "gh": null,
+   "bd_id": "forge-qj5n",
+   "title": "Auto-export silently resurrects portable config files the user deliberately deleted",
+   "oneliner": "Auto-export silently resurrects portable config files the user deliberately deleted",
+   "area": "config",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "a5e283f",
+    "5b888c9"
+   ],
+   "origin_evidence": "Auto-export/config-file-sync is a fork-only feature (no exportAll/config-file-sync in upstream/main). Fix 5b888c9 guards on hasPortableConfig()."
+  },
+  {
+   "ref": "forge-k5m6",
+   "gh": null,
+   "bd_id": "forge-k5m6",
+   "title": "Cheatsheet overlay is centered once at show() time and never re-positioned on monitor/resolution change",
+   "oneliner": "Cheatsheet overlay centered once at show() and never re-positioned on monitor/resolution change",
+   "area": "cheatsheet",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "aa6d3a4",
+    "9f3cef1"
+   ],
+   "origin_evidence": "Cheatsheet is a fork-only feature: lib/extension/cheatsheet.js exists in dev but not in upstream/main (git ls-tree). Fixes aa6d3a4, 9f3cef1."
+  },
+  {
+   "ref": "forge-f6go",
+   "gh": null,
+   "bd_id": "forge-f6go",
+   "title": "ConfigManager uses legacy imports.byteArray.toString to decode windows.json instead of TextDecoder, breaking on GJS versions that drop the legacy module",
+   "oneliner": "ConfigManager decodes windows.json via legacy imports.byteArray.toString instead of TextDecoder",
+   "area": "config",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "6a7a2d5"
+   ]
+  },
+  {
+   "ref": "forge-v3y3",
+   "gh": null,
+   "bd_id": "forge-v3y3",
+   "title": "Cheatsheet.show() adds an already-parented overlay (Clutter-CRITICAL double-parent) when toggled within the 100ms hide ease",
+   "oneliner": "Cheatsheet.show() re-adds an already-parented overlay (Clutter double-parent) during the hide ease",
+   "area": "cheatsheet",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "9f3cef1"
+   ],
+   "origin_evidence": "Cheatsheet is a fork-only feature (cheatsheet.js absent from upstream/main). Double-parent bug is in fork code. Fix 9f3cef1."
+  },
+  {
+   "ref": "forge-jbkg",
+   "gh": null,
+   "bd_id": "forge-jbkg",
+   "title": "Class-wide tile override short-circuits all floatByType heuristics, force-tiling dialogs, transients and non-resizable windows of that class",
+   "oneliner": "Class-only tile override short-circuits floatByType heuristics, force-tiling that class's dialogs",
+   "area": "float",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "b8177a1"
+   ],
+   "origin_evidence": "The tile-override feature (addTileOverride/mode 'tile') was added by our fork (b6f5e51, forge-fxf #387); upstream/main has no tile-override support (git grep: none, isFloatingExempt has zero tile handling). Fix b8177a1 adds specificity tracking."
+  },
+  {
+   "ref": "forge-n29i",
+   "gh": null,
+   "bd_id": "forge-n29i",
+   "title": "Title-only float override (no wmClass) is silently dead in matching AND crashes the prefs Windows page on open",
+   "oneliner": "Title-only float override (no wmClass) never matches; also crashed the prefs Windows page on open",
+   "area": "float",
+   "origin": "Inherited",
+   "upstream": "Partial",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "aab213f",
+    "b1903e6",
+    "b8177a1"
+   ]
+  },
+  {
+   "ref": "forge-0h9k",
+   "gh": null,
+   "bd_id": "forge-0h9k",
+   "title": "patchCss dereferences null configCss when the config stylesheet cannot be seeded (read-only/root-owned ~/.config/forge), aborting enable() half-initialized",
+   "oneliner": "patchCss dereferences null config stylesheet on read-only config dir, aborting enable()",
+   "area": "theme",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "e107185",
+    "0937089"
+   ]
+  },
+  {
+   "ref": "forge-s7qo",
+   "gh": null,
+   "bd_id": "forge-s7qo",
+   "title": "processTabbed error recovery nulls node.decoration but nothing ever recreates it; an already-shown decoration becomes unhideable orphan",
+   "oneliner": "processTabbed error recovery nulls node.decoration but never recreates it, leaving an unhideable orphan",
+   "area": "decoration",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "2a20d34",
+    "1938ee8",
+    "d8583b4"
+   ],
+   "origin_evidence": "The processTabbed error-recovery that nulls node.decoration without recreating it is fork-authored; upstream/main processTabbed has only empty catches and never nulls decoration. Fixes 2a20d34, 1938ee8, d8583b4."
+  },
+  {
+   "ref": "forge-2s5b",
+   "gh": null,
+   "bd_id": "forge-2s5b",
+   "title": "workspaces-reordered is not handled: ws-index node keys go stale after a workspace reorder, so new windows tile into the wrong workspace's container",
+   "oneliner": "workspaces-reordered unhandled: index-keyed ws nodes go stale, new windows tile into wrong workspace",
+   "area": "workspace",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "258c5b5"
+   ]
+  },
+  {
+   "ref": "forge-ojew",
+   "gh": null,
+   "bd_id": "forge-ojew",
+   "title": "workspace-removed drops the removed workspace's WINDOW subtree before the re-home reconcile runs; if the tree is left with zero windows the retrack gate permanently strands them",
+   "oneliner": "workspace-removed splices subtree before re-home reconcile, stranding all windows if tree empties",
+   "area": "workspace",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "094cbbd"
+   ]
+  },
+  {
+   "ref": "forge-e3xm",
+   "gh": null,
+   "bd_id": "forge-e3xm",
+   "title": "move() min-size clamp uses get_work_area_current_monitor() (the pre-move monitor), bouncing cross-monitor moves of min-size-constrained windows back to the source monitor",
+   "oneliner": "move() min-size clamp uses source monitor work area, bouncing cross-monitor moves of min-size windows",
+   "area": "multimonitor",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "efa0456"
+   ]
+  },
+  {
+   "ref": "forge-cm69",
+   "gh": null,
+   "bd_id": "forge-cm69",
+   "title": "rectForMonitor cross-monitor transform uses absolute coordinates in the '>' branches (missing - currentWorkArea.x/y), computing off-target rects on 3+ monitor rows or when the source monitor is not at origin",
+   "oneliner": "rectForMonitor cross-monitor transform uses absolute coords in '>' branches, computing off-target rects",
+   "area": "multimonitor",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "b8177a1"
+   ]
+  },
+  {
+   "ref": "forge-h6z9",
+   "gh": null,
+   "bd_id": "forge-h6z9",
+   "title": "_manualResizeEndId debounce is not scoped to its window/grab: a focus change between keyboard resizes strands grabMode/initRect on the old window, and the pending end fires into a new pointer grab, killing it mid-drag",
+   "oneliner": "keyboard-resize debounce timer not scoped per-window/grab, stranding grabMode/initRect on focus change",
+   "area": "resize",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "028a9a8",
+    "8bd8656"
+   ],
+   "origin_evidence": "_manualResizeEndId absent in upstream (count 0); introduced by our fork commit 0776db7 (forge-5v6/#532 held-resize), so the unscoped debounce is a regression in code we authored."
+  },
+  {
+   "ref": "forge-leqs",
+   "gh": null,
+   "bd_id": "forge-leqs",
+   "title": "Operator-precedence bug: `!this.grabOp === Meta.GrabOp.WINDOW_BASE` is always false, so updateTabbedFocus is never called when a tabbed window is re-homed to another monitor/workspace",
+   "oneliner": "Operator-precedence bug: !grabOp === WINDOW_BASE always false, so updateTabbedFocus never called on re-home",
+   "area": "focus",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "cc27b2d",
+    "a9b6e0f",
+    "7ae8cf3",
+    "b3e9375"
+   ]
+  },
+  {
+   "ref": "forge-s02h",
+   "gh": null,
+   "bd_id": "forge-s02h",
+   "title": "Stale this.lastFocusedWindow node read in deferred movePointerWith path: storePointerLastPosition calls get_frame_rect() on a possibly-disposed Meta.Window with only a `_data` truthiness guard (isWindowAlive unused) \u2014 unfixed sibling of forge-ne1/befb0a3",
+   "oneliner": "storePointerLastPosition calls get_frame_rect() on a possibly-disposed lastFocusedWindow (no liveness guard)",
+   "area": "focus",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "8bd8656"
+   ]
+  },
+  {
+   "ref": "forge-xom3",
+   "gh": null,
+   "bd_id": "forge-xom3",
+   "title": "this.sortedWindows caches raw Meta.Window objects at grab start and is never pruned when a window is destroyed mid-drag; _findNodeWindowAtPointer later calls get_frame_rect() on the dead window and can mask live drop targets",
+   "oneliner": "sortedWindows snapshot not pruned mid-drag; _findNodeWindowAtPointer throws on destroyed window wrapper",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "8bd8656"
+   ]
+  },
+  {
+   "ref": "forge-wwn8",
+   "gh": null,
+   "bd_id": "forge-wwn8",
+   "title": "Forge's manually loaded stylesheet is never unloaded on extension disable()",
+   "oneliner": "Manually loaded stylesheet is never unloaded on extension disable(), leaking theme state",
+   "area": "theme",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "b852687"
+   ]
+  },
+  {
+   "ref": "forge-h6jc",
+   "gh": null,
+   "bd_id": "forge-h6jc",
+   "title": "Tree scaffold actors (root bin, workspace actorBins, monitor actorBins) are never removed from global.window_group on disable or Tree.reload(), accumulating leaked St.Bins",
+   "oneliner": "Tree scaffold bins never removed from window_group on disable or reload, accumulating actors",
+   "area": "lifecycle",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "b852687"
+   ]
+  },
+  {
+   "ref": "forge-606o",
+   "gh": null,
+   "bd_id": "forge-606o",
+   "title": "_workspaceChangingTimeoutId is never cleared in _removeSignals \u2014 300ms workspace-transition timer outlives disable()",
+   "oneliner": "_workspaceChangingTimeoutId never cleared in _removeSignals: 300ms timer outlives disable()",
+   "area": "lifecycle",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "b852687"
+   ],
+   "origin_evidence": "_workspaceChangingTimeoutId absent in upstream; introduced by our fork commit 19e00af (refactor, NOT in upstream/main), so the uncleared-timer leak is in code we added."
+  },
+  {
+   "ref": "forge-u7xz",
+   "gh": null,
+   "bd_id": "forge-u7xz",
+   "title": "Guard ConfigManager.loadFile first-run path; skip no-op windows.json rewrites",
+   "oneliner": "ConfigManager.loadFile first-run path leaves empty file / does no-op windows.json rewrites",
+   "area": "config",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "9634940",
+    "c7ced6a"
+   ]
+  },
+  {
+   "ref": "forge-v4u0",
+   "gh": null,
+   "bd_id": "forge-v4u0",
+   "title": "tree.js _buildTabBase: missing app null-guard before create_icon_texture",
+   "oneliner": "_createWindowTab passes a null app to create_icon_texture, throwing on an app-less tabbed window",
+   "area": "decoration",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "f1d7198"
+   ]
+  },
+  {
+   "ref": "forge-qwr",
+   "gh": null,
+   "bd_id": "forge-qwr",
+   "title": "E2E: TestBug125VerticalStackedTiling stacked-toggle fails on F42/GNOME48 (pre-existing)",
+   "oneliner": "E2E stacked-toggle test fails on F42/GNOME48 (stacked-tiling-mode not enabled in test)",
+   "area": "e2e",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": false,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": []
+  },
+  {
+   "ref": "forge-2n0",
+   "gh": null,
+   "bd_id": "forge-2n0",
+   "title": "E2E: keyboard-resize tests fail in full suite when Overview is hidden (recording lane)",
+   "oneliner": "E2E keyboard-resize tests fail in full suite when Overview is hidden (focus not activated)",
+   "area": "e2e",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": false,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "ad16903",
+    "1ba6382"
+   ]
+  },
+  {
+   "ref": "forge-2ew",
+   "gh": null,
+   "bd_id": "forge-2ew",
+   "title": "Dialog/popup placed behind its right tiled neighbor (needs repro)",
+   "oneliner": "Transient dialog lands behind its right tiled neighbor; Forge never repositions occluded floats",
+   "area": "float",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "4c48177"
+   ]
+  },
+  {
+   "ref": "forge-g14",
+   "gh": null,
+   "bd_id": "forge-g14",
+   "title": "E2E shell_proxy.is_window_floating() always returns True (broken tree root walk)",
+   "oneliner": "E2E shell_proxy.is_window_floating() always returns True due to a broken tree root walk",
+   "area": "e2e",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": false,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "57b888b",
+    "fa323b4",
+    "3aee391"
+   ]
+  },
+  {
+   "ref": "forge-4wl",
+   "gh": null,
+   "bd_id": "forge-4wl",
+   "title": "[bug] E2E F44/GNOME50 first-window cold-start launch flake (gnome-text-editor did not appear)",
+   "oneliner": "E2E F44/GNOME50 first-window cold-start launch flake (gnome-text-editor did not appear)",
+   "area": "e2e",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "In progress",
+   "product": false,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "ad14e50",
+    "75bd7ef"
+   ]
+  },
+  {
+   "ref": "forge-5qh",
+   "gh": null,
+   "bd_id": "forge-5qh",
+   "title": "[bug] Design a gating --dispatch-mode keybinding E2E CI lane (contamination-safe)",
+   "oneliner": "Design a contamination-safe gating --dispatch-mode keybinding E2E CI lane",
+   "area": "e2e",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": false,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "1c31ed7"
+   ]
+  },
+  {
+   "ref": "forge-6y7",
+   "gh": null,
+   "bd_id": "forge-6y7",
+   "title": "[bug] E2E Wayland failure-screenshot capture is broken (gnome-screenshot not installed)",
+   "oneliner": "E2E Wayland failure-screenshot capture broken (gnome-screenshot missing), hangs/loses diagnostics",
+   "area": "e2e",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": false,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "1ba6382",
+    "4a6c607"
+   ]
+  },
+  {
+   "ref": "forge-ehq",
+   "gh": null,
+   "bd_id": "forge-ehq",
+   "title": "[bug] Add --dispatch-mode keybinding E2E CI lane (super+c keypress path has zero automated coverage)",
+   "oneliner": "Add --dispatch-mode keybinding E2E CI lane (super+c keypress path had zero coverage)",
+   "area": "e2e",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": false,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "b66f8f8"
+   ]
+  },
+  {
+   "ref": "forge-7vu",
+   "gh": null,
+   "bd_id": "forge-7vu",
+   "title": "E2E run-tests.sh crash-check uses pgrep (not in image) \u2192 false 'gnome-shell crashed' warning on every lane",
+   "oneliner": "E2E run-tests.sh crash-check uses pgrep (absent in image), false gnome-shell-crashed warning each lane",
+   "area": "e2e",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": false,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "7ee5a02",
+    "a4851a9"
+   ]
+  },
+  {
+   "ref": "forge-q0k",
+   "gh": null,
+   "bd_id": "forge-q0k",
+   "title": "E2E: unexplained version-conditional xfailed/xpassed counts (13 on F44, 0 on F43)",
+   "oneliner": "E2E version-conditional xfailed/xpassed counts caused by a stale F44 image (build provenance)",
+   "area": "build",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": false,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "1c31ed7",
+    "724434d"
+   ]
+  },
+  {
+   "ref": "forge-6et",
+   "gh": null,
+   "bd_id": "forge-6et",
+   "title": "Triage 8 in-body pytest.skip() calls in test_drag_drop_tiling.py",
+   "oneliner": "Triage 8 in-body pytest.skip() calls in test_drag_drop_tiling.py",
+   "area": "e2e",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": false,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "bb64442",
+    "724434d",
+    "3f241e7",
+    "2589f28"
+   ]
+  },
+  {
+   "ref": "forge-7u3",
+   "gh": null,
+   "bd_id": "forge-7u3",
+   "title": "Investigate / unskip WindowManager-focus.test.js 'overview visible' test",
+   "oneliner": "Unit-test mock sever: globalSetup replaced global.Main.overview, forcing overview-visible focus test to skip",
+   "area": "e2e",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": false,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "7c08f58"
+   ]
+  },
+  {
+   "ref": "forge-3xz",
+   "gh": null,
+   "bd_id": "forge-3xz",
+   "title": "Bisect test-suite contamination causing 13-test stuck-window pattern",
+   "oneliner": "E2E suite contamination: leftover MONITOR.layout and Clutter-keypress state caused 13-test stuck-window failures",
+   "area": "e2e",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": false,
+   "priority": 3,
+   "era": "beads",
+   "fix_commits": [
+    "4494eae",
+    "3fb5835",
+    "536fd17"
+   ]
+  },
+  {
+   "ref": "forge-t3x5",
+   "gh": null,
+   "bd_id": "forge-t3x5",
+   "title": "restoreLayoutGroups reorders windows when the rebuilt cohort is non-contiguous in the flat parent",
+   "oneliner": "Suspected reorder of non-contiguous stacked cohort on reload; verified restoreLayoutGroups is correct",
+   "area": "tiling",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Not a defect",
+   "product": true,
+   "priority": 4,
+   "era": "beads",
+   "fix_commits": [
+    "a3f993f"
+   ]
+  },
+  {
+   "ref": "forge-7bry",
+   "gh": null,
+   "bd_id": "forge-7bry",
+   "title": "_containerFullyMigrates predicate should use Utils.isWindowAlive to avoid throw on disposed window",
+   "oneliner": "_containerFullyMigrates can throw on a disposed window during multi-workspace reconcile; use isWindowAlive guard",
+   "area": "workspace",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 4,
+   "era": "beads",
+   "fix_commits": [
+    "9b6b895",
+    "bf04456"
+   ],
+   "origin_evidence": "_containerFullyMigrates and _queueWindowHomeReconcile are fork-only (0 matches in upstream/main window.js); fix bf04456 switches the predicate to Utils.isWindowAlive."
+  },
+  {
+   "ref": "forge-4w7e",
+   "gh": null,
+   "bd_id": "forge-4w7e",
+   "title": "Classless title-only float rule renders with a blank subtitle in prefs Windows page",
+   "oneliner": "Classless title-only float rule shows a blank subtitle in the prefs Windows page",
+   "area": "prefs",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": 4,
+   "era": "beads",
+   "fix_commits": [
+    "6f9ac3d"
+   ]
+  },
+  {
+   "ref": "#64",
+   "gh": "64",
+   "bd_id": null,
+   "title": "Resize front tab in tabbed container",
+   "oneliner": "Resize the front tab within a tabbed container",
+   "area": "resize",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "a488b6b"
+   ]
+  },
+  {
+   "ref": "#78",
+   "gh": "78",
+   "bd_id": null,
+   "title": "Display disconnect handling",
+   "oneliner": "Handle display disconnect/reconnect cleanly",
+   "area": "multimonitor",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "a488b6b"
+   ]
+  },
+  {
+   "ref": "#171",
+   "gh": "171",
+   "bd_id": null,
+   "title": "Focus memory within containers",
+   "oneliner": "Remember last-focused window within containers",
+   "area": "focus",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "a488b6b"
+   ]
+  },
+  {
+   "ref": "#230",
+   "gh": "230",
+   "bd_id": null,
+   "title": "Focus between stacked groups",
+   "oneliner": "Focus navigation between stacked groups",
+   "area": "focus",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "a488b6b"
+   ]
+  },
+  {
+   "ref": "#258",
+   "gh": "258",
+   "bd_id": null,
+   "title": "Focus transfer on window close",
+   "oneliner": "Transfer focus to a sensible sibling when a window closes",
+   "area": "focus",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "a488b6b"
+   ]
+  },
+  {
+   "ref": "#292",
+   "gh": "292",
+   "bd_id": null,
+   "title": "Toggle float by wmId",
+   "oneliner": "Toggle float for a window addressed by wmId",
+   "area": "float",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "a488b6b"
+   ]
+  },
+  {
+   "ref": "#294",
+   "gh": "294",
+   "bd_id": null,
+   "title": "Tile override configuration",
+   "oneliner": "Tile/window override configuration handling",
+   "area": "config",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "a488b6b"
+   ]
+  },
+  {
+   "ref": "#330",
+   "gh": "330",
+   "bd_id": null,
+   "title": "2x2 layout height calculations",
+   "oneliner": "2x2 tiling layout computes incorrect window heights",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "a488b6b"
+   ]
+  },
+  {
+   "ref": "#387",
+   "gh": "387",
+   "bd_id": null,
+   "title": "Float exemption logic",
+   "oneliner": "Float exemption logic mis-classifies windows that should/shouldn't float",
+   "area": "float",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "a488b6b"
+   ]
+  },
+  {
+   "ref": "#415",
+   "gh": "415",
+   "bd_id": null,
+   "title": "Corrupt config handling",
+   "oneliner": "Corrupt config file is not handled gracefully on load",
+   "area": "config",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "a488b6b"
+   ]
+  },
+  {
+   "ref": "#448",
+   "gh": "448",
+   "bd_id": null,
+   "title": "CSS declaration parsing",
+   "oneliner": "CSS declaration parsing fails on malformed stylesheet declarations",
+   "area": "theme",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "a488b6b"
+   ]
+  },
+  {
+   "ref": "#383",
+   "gh": "383",
+   "bd_id": null,
+   "title": "Tests cover bug fixes , , ,  and behaviors for",
+   "oneliner": "Add regression/behavior tests covering prior bug fixes",
+   "area": "e2e",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": false,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "0d53472"
+   ]
+  },
+  {
+   "ref": "#321",
+   "gh": "321",
+   "bd_id": null,
+   "title": "fix: Improve cheatsheet organization with tables and section spacing",
+   "oneliner": "Cheatsheet organization improved with tables and section spacing",
+   "area": "prefs",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "0a0de2e"
+   ]
+  },
+  {
+   "ref": "#350",
+   "gh": "350",
+   "bd_id": null,
+   "title": "feat: Add portable config sync for settings and keybindings (#350)",
+   "oneliner": "Add portable config sync for settings and keybindings",
+   "area": "config",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "97a5a60"
+   ]
+  },
+  {
+   "ref": "#133",
+   "gh": "133",
+   "bd_id": null,
+   "title": "fix: Move search entry to top of Floating Windows section",
+   "oneliner": "Move search entry to top of Floating Windows prefs section",
+   "area": "prefs",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "130800c"
+   ]
+  },
+  {
+   "ref": "#40",
+   "gh": "40",
+   "bd_id": null,
+   "title": "Focus navigation now skips minimized windows in containers.",
+   "oneliner": "Focus navigation now skips minimized windows in containers",
+   "area": "focus",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "6576599"
+   ]
+  },
+  {
+   "ref": "#439",
+   "gh": "439",
+   "bd_id": null,
+   "title": "Disable experimental options by default (stacked/tabbed tiling,",
+   "oneliner": "Disable experimental options (stacked/tabbed tiling) by default",
+   "area": "prefs",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "334eb47"
+   ]
+  },
+  {
+   "ref": "#165",
+   "gh": "165",
+   "bd_id": null,
+   "title": "Add \"Disable All\" and \"Restore Defaults\" buttons for keyboard",
+   "oneliner": "Add 'Disable All' and 'Restore Defaults' buttons for keyboard shortcuts",
+   "area": "keybinding",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "334eb47"
+   ]
+  },
+  {
+   "ref": "#272",
+   "gh": "272",
+   "bd_id": null,
+   "title": "Add screen edge margin settings (top/bottom/left/right) to",
+   "oneliner": "Add screen edge margin settings (top/bottom/left/right)",
+   "area": "prefs",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "334eb47"
+   ]
+  },
+  {
+   "ref": "#45",
+   "gh": "45",
+   "bd_id": null,
+   "title": "Panel overlap fix (via margin settings)",
+   "oneliner": "Panel overlap with tiled windows fixed via configurable workspace margin settings (gh#45)",
+   "area": "theme",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "334eb47"
+   ]
+  },
+  {
+   "ref": "#408",
+   "gh": "408",
+   "bd_id": null,
+   "title": "Already implemented",
+   "oneliner": "Upstream feature request gh#408 already implemented in fork; closed as already-implemented",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "334eb47"
+   ]
+  },
+  {
+   "ref": "#281",
+   "gh": "281",
+   "bd_id": null,
+   "title": "Already implemented",
+   "oneliner": "Upstream feature request gh#281 already implemented in fork; closed as already-implemented",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "334eb47"
+   ]
+  },
+  {
+   "ref": "#419",
+   "gh": "419",
+   "bd_id": null,
+   "title": "Already implemented",
+   "oneliner": "Upstream feature request gh#419 already implemented in fork; closed as already-implemented",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "334eb47"
+   ]
+  },
+  {
+   "ref": "#172",
+   "gh": "172",
+   "bd_id": null,
+   "title": "Per-window float toggle now only affects the specific window,",
+   "oneliner": "Per-window float toggle now affects only the targeted window, not all windows (gh#172)",
+   "area": "float",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "8068052"
+   ]
+  },
+  {
+   "ref": "#319",
+   "gh": "319",
+   "bd_id": null,
+   "title": "Float always-on-top state properly tracked and cleared when",
+   "oneliner": "Float always-on-top state properly tracked and cleared when float toggled off (gh#319)",
+   "area": "float",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "8068052"
+   ]
+  },
+  {
+   "ref": "#227",
+   "gh": "227",
+   "bd_id": null,
+   "title": "Use last focused window as fallback for tiling new windows",
+   "oneliner": "Use last focused window as fallback target when tiling newly opened windows (gh#227)",
+   "area": "focus",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "7bedfda"
+   ]
+  },
+  {
+   "ref": "#295",
+   "gh": "295",
+   "bd_id": null,
+   "title": "Option to exclude monitors from tiling (monitor-skip-tile setting)",
+   "oneliner": "Add monitor-skip-tile setting to exclude specific monitors from tiling (gh#295)",
+   "area": "multimonitor",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "7bedfda"
+   ]
+  },
+  {
+   "ref": "#396",
+   "gh": "396",
+   "bd_id": null,
+   "title": "Don't focus notifications/popups on hover",
+   "oneliner": "Don't focus notifications/popups on hover-to-focus (gh#396)",
+   "area": "focus",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "f3a4578"
+   ]
+  },
+  {
+   "ref": "#462",
+   "gh": "462",
+   "bd_id": null,
+   "title": "Auto-unmaximize windows when new window tiled (default on)",
+   "oneliner": "Auto-unmaximize maximized windows when a new window is tiled (default on) (gh#462)",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "f3a4578"
+   ]
+  },
+  {
+   "ref": "#458",
+   "gh": "458",
+   "bd_id": null,
+   "title": "Hover-to-focus only during tiling option (default off)",
+   "oneliner": "Option to restrict hover-to-focus to only while tiling is active (default off) (gh#458)",
+   "area": "focus",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "f3a4578"
+   ]
+  },
+  {
+   "ref": "#297",
+   "gh": "297",
+   "bd_id": null,
+   "title": "Hide floating border when tiling is disabled",
+   "oneliner": "Hide floating window border when tiling is disabled (gh#297)",
+   "area": "decoration",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "fb84f7d"
+   ]
+  },
+  {
+   "ref": "#315",
+   "gh": "315",
+   "bd_id": null,
+   "title": "Auto-maximize single window option (default off)",
+   "oneliner": "Add option to auto-maximize a lone window (default off)",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "fb84f7d"
+   ]
+  },
+  {
+   "ref": "#348",
+   "gh": "348",
+   "bd_id": null,
+   "title": "Expand/shrink keybinds (Super+]/[) for all directions",
+   "oneliner": "Expand/shrink keybinds (Super+]/[) work in all directions",
+   "area": "resize",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "fb84f7d"
+   ]
+  },
+  {
+   "ref": "#158",
+   "gh": "158",
+   "bd_id": null,
+   "title": "Tab margin customization in preferences",
+   "oneliner": "Add tab margin customization in preferences",
+   "area": "prefs",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "fb84f7d"
+   ]
+  },
+  {
+   "ref": "#365",
+   "gh": "365",
+   "bd_id": null,
+   "title": "Tab margin customization in preferences",
+   "oneliner": "Add tab margin customization in preferences",
+   "area": "prefs",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "fb84f7d"
+   ]
+  },
+  {
+   "ref": "#435",
+   "gh": "435",
+   "bd_id": null,
+   "title": "Increase gap multiplier cap from 8 to 32",
+   "oneliner": "Increase gap multiplier cap from 8 to 32",
+   "area": "prefs",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "629a163"
+   ]
+  },
+  {
+   "ref": "#414",
+   "gh": "414",
+   "bd_id": null,
+   "title": "Add window-pointer-to-focus keybinding (default unbound)",
+   "oneliner": "Add window-pointer-to-focus keybinding (default unbound)",
+   "area": "keybinding",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "629a163"
+   ]
+  },
+  {
+   "ref": "#287",
+   "gh": "287",
+   "bd_id": null,
+   "title": "Add workspace-monocle-toggle keybinding (default unbound)",
+   "oneliner": "Add workspace-monocle-toggle keybinding (default unbound)",
+   "area": "keybinding",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "629a163"
+   ]
+  },
+  {
+   "ref": "#398",
+   "gh": "398",
+   "bd_id": null,
+   "title": "Add default-window-layout setting (tiled/tabbed/stacked)",
+   "oneliner": "Add default-window-layout setting (tiled/tabbed/stacked)",
+   "area": "prefs",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "629a163"
+   ]
+  },
+  {
+   "ref": "#308",
+   "gh": "308",
+   "bd_id": null,
+   "title": "Add Shift+Super+R keybinding to reload config from files",
+   "oneliner": "Add Shift+Super+R keybinding to reload config from files",
+   "area": "keybinding",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "322b472"
+   ]
+  },
+  {
+   "ref": "#361",
+   "gh": "361",
+   "bd_id": null,
+   "title": "Add border radius setting (0-30px) in Appearance preferences",
+   "oneliner": "Add border radius setting (0-30px) in Appearance preferences",
+   "area": "theme",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "322b472"
+   ]
+  },
+  {
+   "ref": "#262",
+   "gh": "262",
+   "bd_id": null,
+   "title": "Hide focus border when single window",
+   "oneliner": "Hide focus border when only a single window is present",
+   "area": "decoration",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "db2f449"
+   ]
+  },
+  {
+   "ref": "#382",
+   "gh": "382",
+   "bd_id": null,
+   "title": "Evenly distribute windows keybind (Super+=)",
+   "oneliner": "Add evenly-distribute-windows keybind (Super+=)",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "db2f449"
+   ]
+  },
+  {
+   "ref": "#286",
+   "gh": "286",
+   "bd_id": null,
+   "title": "Separate tray icon from quick settings toggle",
+   "oneliner": "Separate panel tray icon from the quick settings toggle",
+   "area": "prefs",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "db2f449"
+   ]
+  },
+  {
+   "ref": "#433",
+   "gh": "433",
+   "bd_id": null,
+   "title": "Track dragged window in _handleGrabOpBegin and",
+   "oneliner": "Track dragged window in _handleGrabOpBegin during drag-tiling",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "1cfc0d1"
+   ]
+  },
+  {
+   "ref": "#407",
+   "gh": "407",
+   "bd_id": null,
+   "title": "Fix split direction hint not appearing (maximized was function, not called)",
+   "oneliner": "Split direction hint never appears because maximized check was a function ref, not called",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "9d361fd"
+   ]
+  },
+  {
+   "ref": "#409",
+   "gh": "409",
+   "bd_id": null,
+   "title": "Fix split direction hint not appearing (maximized was function, not called)",
+   "oneliner": "Split direction hint not appearing (maximized check uncalled) - duplicate report of #407",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "9d361fd"
+   ]
+  },
+  {
+   "ref": "#453",
+   "gh": "453",
+   "bd_id": null,
+   "title": "Wayland window ID toggle - fixed wmId checking for per-window overrides",
+   "oneliner": "Wayland window ID toggle: wmId not checked for per-window overrides",
+   "area": "config",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "d8ea2d9"
+   ]
+  },
+  {
+   "ref": "#374",
+   "gh": "374",
+   "bd_id": null,
+   "title": "Workspace focus jump - added flag to skip focus during transitions",
+   "oneliner": "Workspace focus jump: skip focus during workspace transitions",
+   "area": "workspace",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "d8ea2d9"
+   ]
+  },
+  {
+   "ref": "#411",
+   "gh": "411",
+   "bd_id": null,
+   "title": "Waydroid gaps - app-specific gap skipping for non-standard frames",
+   "oneliner": "Waydroid gaps: skip app-specific gaps for non-standard window frames",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "d8ea2d9"
+   ]
+  },
+  {
+   "ref": "#416",
+   "gh": "416",
+   "bd_id": null,
+   "title": "Wayland stacking - ensure windows appear above desktop layer",
+   "oneliner": "Wayland stacking: ensure tiled windows appear above the desktop layer",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "d8ea2d9"
+   ]
+  },
+  {
+   "ref": "#483",
+   "gh": "483",
+   "bd_id": null,
+   "title": "Hover-to-focus breaks password dialogs",
+   "oneliner": "Hover-to-focus steals focus and breaks password dialogs",
+   "area": "focus",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "93456a1"
+   ]
+  },
+  {
+   "ref": "#426",
+   "gh": "426",
+   "bd_id": null,
+   "title": "Chrome always on top",
+   "oneliner": "Chrome window stuck always-on-top",
+   "area": "float",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "93456a1"
+   ]
+  },
+  {
+   "ref": "#268",
+   "gh": "268",
+   "bd_id": null,
+   "title": "Focus hint stuck on workspace change",
+   "oneliner": "Focus hint stuck on screen after workspace change",
+   "area": "decoration",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "93456a1"
+   ]
+  },
+  {
+   "ref": "#266",
+   "gh": "266",
+   "bd_id": null,
+   "title": "Theme backup undefined.bak",
+   "oneliner": "Theme backup written as undefined.bak due to missing name",
+   "area": "theme",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "93456a1"
+   ]
+  },
+  {
+   "ref": "df04d19",
+   "gh": null,
+   "bd_id": null,
+   "title": "fix: Probe org.gtk.Actions.List to confirm gnome-text-editor GApplication readiness",
+   "oneliner": "E2E gnome-text-editor interaction flaky with no org.gtk.Actions GApplication-readiness probe",
+   "area": "e2e",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": false,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "df04d19"
+   ]
+  },
+  {
+   "ref": "7939cb0",
+   "gh": null,
+   "bd_id": null,
+   "title": "fix: Stabilize E2E suite on GNOME 50 / Fedora 44",
+   "oneliner": "E2E suite unstable on GNOME 50 / Fedora 44",
+   "area": "e2e",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": false,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "7939cb0"
+   ]
+  },
+  {
+   "ref": "d5921ce",
+   "gh": null,
+   "bd_id": null,
+   "title": "fix: Replace pkill with gdbus Quit for gnome-text-editor teardown",
+   "oneliner": "E2E teardown used pkill instead of gdbus Quit for gnome-text-editor",
+   "area": "e2e",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": false,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "d5921ce"
+   ]
+  },
+  {
+   "ref": "436cdaa",
+   "gh": null,
+   "bd_id": null,
+   "title": "fix: Launch dbus-daemon and gnome-shell via systemd-run so they outlive bootstrap exec",
+   "oneliner": "E2E dbus-daemon/gnome-shell died with bootstrap exec; needed systemd-run to outlive it",
+   "area": "e2e",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": false,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "436cdaa"
+   ]
+  },
+  {
+   "ref": "b25b729",
+   "gh": null,
+   "bd_id": null,
+   "title": "fix: Replace fixed sleeps with polling in E2E close-rebalance tests",
+   "oneliner": "E2E close-rebalance tests used fixed sleeps instead of polling",
+   "area": "e2e",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": false,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "b25b729"
+   ]
+  },
+  {
+   "ref": "eee9c98",
+   "gh": null,
+   "bd_id": null,
+   "title": "fix: Fix E2E screenshot directory permission error on bind mounts",
+   "oneliner": "E2E screenshot directory permission error on bind mounts",
+   "area": "e2e",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": false,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "eee9c98"
+   ]
+  },
+  {
+   "ref": "6e3ba08",
+   "gh": null,
+   "bd_id": null,
+   "title": "fix: Prevent gnome-shell crash during E2E tests and migrate to self-contained containers",
+   "oneliner": "gnome-shell crashed during E2E; migrated to self-contained containers",
+   "area": "e2e",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": false,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "6e3ba08"
+   ]
+  },
+  {
+   "ref": "95a9e7f",
+   "gh": null,
+   "bd_id": null,
+   "title": "fix: Renumber workspace tree nodes when GNOME adds/removes workspaces",
+   "oneliner": "Workspace tree node IDs not renumbered on workspace add/remove, orphaning windows",
+   "area": "workspace",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "95a9e7f"
+   ]
+  },
+  {
+   "ref": "511105a",
+   "gh": null,
+   "bd_id": null,
+   "title": "fix: Add build deps for dbus-python in E2E Dockerfile",
+   "oneliner": "E2E Dockerfile missing build deps for dbus-python",
+   "area": "build",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": false,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "511105a"
+   ]
+  },
+  {
+   "ref": "428bed8",
+   "gh": null,
+   "bd_id": null,
+   "title": "fix: Always raise dialog/transient windows above tiled windows",
+   "oneliner": "Dialog/transient windows could appear behind tiled windows instead of being raised",
+   "area": "float",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "428bed8"
+   ]
+  },
+  {
+   "ref": "4066921",
+   "gh": null,
+   "bd_id": null,
+   "title": "fix: Show split direction hint with multiple windows in container",
+   "oneliner": "Split-direction hint only shown with a single child, never with 2+ windows in a container",
+   "area": "decoration",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "4066921"
+   ]
+  },
+  {
+   "ref": "de1f3ea",
+   "gh": null,
+   "bd_id": null,
+   "title": "fix: Preserve window proportions when moving between workspaces",
+   "oneliner": "Moving a window between workspaces reset siblings to equal sizes instead of preserving proportions",
+   "area": "workspace",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "de1f3ea"
+   ]
+  },
+  {
+   "ref": "2ae085c",
+   "gh": null,
+   "bd_id": null,
+   "title": "fix: Show border when window is alone in container but not alone on workspace",
+   "oneliner": "Border hidden when window is alone in its container but sibling containers hold other windows",
+   "area": "decoration",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "2ae085c"
+   ]
+  },
+  {
+   "ref": "8f67e10",
+   "gh": null,
+   "bd_id": null,
+   "title": "fix: Disable GNOME minimize keybinding to prevent Super+H conflict",
+   "oneliner": "Forge Super+H (focus-left) conflicts with GNOME's default minimize keybinding",
+   "area": "keybinding",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "8f67e10"
+   ]
+  },
+  {
+   "ref": "a88562a",
+   "gh": null,
+   "bd_id": null,
+   "title": "refactor: Extract drop zone utilities and fix createCon flag bug",
+   "oneliner": "Drag-drop reset createCon/detachWindow flags on reassignable childNode instead of focusNodeWindow",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "a88562a"
+   ]
+  },
+  {
+   "ref": "d1eeb8a",
+   "gh": null,
+   "bd_id": null,
+   "title": "refactor: Add DRY helpers and fix tree._search() MODE fallthrough bug",
+   "oneliner": "tree._search() MODE case fell through to LAYOUT due to missing break, mismatching nodes",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "d1eeb8a"
+   ]
+  },
+  {
+   "ref": "22ccd46",
+   "gh": null,
+   "bd_id": null,
+   "title": "refactor: Apply DRY principles and fix this reference bug",
+   "oneliner": "resolveX/Y crashed using `this` to call module functions when centering/aligning windows",
+   "area": "float",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "22ccd46"
+   ]
+  },
+  {
+   "ref": "c3f3433",
+   "gh": null,
+   "bd_id": null,
+   "title": "fix: Handle CSS comments and @-rules in theme parser",
+   "oneliner": "Theme parser crashed on CSS comments/@-rules that lack a selectors property",
+   "area": "theme",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "c3f3433"
+   ]
+  },
+  {
+   "ref": "1517ee7",
+   "gh": null,
+   "bd_id": null,
+   "title": "fix: Prevent window \"traveling\" during resize operations",
+   "oneliner": "Windows visually traveled/drifted during resize and snapped back on release",
+   "area": "resize",
+   "origin": "Inherited",
+   "upstream": "Partial",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "1517ee7"
+   ]
+  },
+  {
+   "ref": "bd12c3c",
+   "gh": null,
+   "bd_id": null,
+   "title": "Phase 4: Documentation updates and won't-fix annotations",
+   "oneliner": "Documentation pass: annotate known limitations and won't-fix items in code comments",
+   "area": "build",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": false,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "bd12c3c"
+   ]
+  },
+  {
+   "ref": "629dae8",
+   "gh": null,
+   "bd_id": null,
+   "title": "Phase 3: Bug fixes and enhancements",
+   "oneliner": "Fix node move/prepend at monitor edge, flatten nested single-child containers, skip float/min windows",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "629dae8"
+   ]
+  },
+  {
+   "ref": "23e0a56",
+   "gh": null,
+   "bd_id": null,
+   "title": "Fix all 64 failing tests - test suite now 100% passing",
+   "oneliner": "removeChild left stale parentNode reference and rect setter crashed on null rect",
+   "area": "tiling",
+   "origin": "Inherited",
+   "upstream": "Yes (still present)",
+   "status": "Fixed",
+   "product": true,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "23e0a56"
+   ]
+  },
+  {
+   "ref": "1e8bb15",
+   "gh": null,
+   "bd_id": null,
+   "title": "Fix WindowManager focus tests - 36/37 now passing (97%)",
+   "oneliner": "Our WindowManager focus unit tests failed due to missing Clutter backend and overview mocks",
+   "area": "e2e",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": false,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "1e8bb15"
+   ]
+  },
+  {
+   "ref": "51125e9",
+   "gh": null,
+   "bd_id": null,
+   "title": "Fix unit testing infrastructure and resolve circular dependencies",
+   "oneliner": "Our unit test infra broken by circular dependency and GObject.Object naming conflict",
+   "area": "e2e",
+   "origin": "Self-inflicted",
+   "upstream": "n/a (self-inflicted)",
+   "status": "Fixed",
+   "product": false,
+   "priority": null,
+   "era": "pre-beads",
+   "fix_commits": [
+    "51125e9"
+   ]
+  }
+ ]
+}
