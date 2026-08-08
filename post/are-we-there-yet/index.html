@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Are we there yet? Ten weeks of Rust Symex | Jonathan Crussell</title>
+<meta name="keywords" content="ai, rust, symbolic-execution, automation">
+<meta name="description" content="Ten weeks of letting Ralph grind on the Rust symbolic execution engine -- 2,593 iterations, six moonshots, runaway memories, and endless audits.">
+<meta name="author" content="Jonathan Crussell">
+<link rel="canonical" href="/post/are-we-there-yet/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.cb1b966424391d58a85617e342812e23e741186aa62baaf33e320fa5b85c2b0b.css" integrity="sha256-yxuWZCQ5HVioVhfjQoEuI&#43;dBGGqmK6rzPjIPpbhcKws=" rel="preload stylesheet" as="style">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="/post/are-we-there-yet/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+        @media (prefers-color-scheme: light) {
+            .list::-webkit-scrollbar-thumb {
+                border-color: var(--code-bg);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="/post/are-we-there-yet/">
+  <meta property="og:site_name" content="Jonathan Crussell">
+  <meta property="og:title" content="Are we there yet? Ten weeks of Rust Symex">
+  <meta property="og:description" content="Ten weeks of letting Ralph grind on the Rust symbolic execution engine -- 2,593 iterations, six moonshots, runaway memories, and endless audits.">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2026-08-08T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-08-08T00:00:00+00:00">
+    <meta property="article:tag" content="Ai">
+    <meta property="article:tag" content="Rust">
+    <meta property="article:tag" content="Symbolic-Execution">
+    <meta property="article:tag" content="Automation">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Are we there yet? Ten weeks of Rust Symex">
+<meta name="twitter:description" content="Ten weeks of letting Ralph grind on the Rust symbolic execution engine -- 2,593 iterations, six moonshots, runaway memories, and endless audits.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "/post/"
+    }
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Are we there yet? Ten weeks of Rust Symex",
+      "item": "/post/are-we-there-yet/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Are we there yet? Ten weeks of Rust Symex",
+  "name": "Are we there yet? Ten weeks of Rust Symex",
+  "description": "Ten weeks of letting Ralph grind on the Rust symbolic execution engine -- 2,593 iterations, six moonshots, runaway memories, and endless audits.",
+  "keywords": [
+    "ai", "rust", "symbolic-execution", "automation"
+  ],
+  "articleBody": "tl;dr: Ten weeks and 2,593 Ralph iterations later, Rust is the default symbolic execution engine and Python is the fallback. Along the way I asked Claude for moonshots, pruned its memory store from 1,296 entries down to 414 and watched it grow back, and settled into a rhythm of auditing on weekends so Ralph has something to chew on all week.\nRecap I have been exploring agentic engineering and have been using Claude to create a Rust Symbolic Execution engine for Angr based on inspiration from a blog post. In April, I wrote about how the port was going, and in May I wrote about rebuilding the automation that drives it – Ralph, a Go tool that loops Claude over a backlog using a clean/dirty state machine. This post covers the ten weeks since then.\nMuch like my previous post, this entry documents how I have kept pushing on the Rust Symex without a clear stopping point.\nMoonshots Given the solid foundation for the Rust Symex, I asked Claude to be more ambitious and explore how to extend the engine beyond what the Python engine does today. Claude came up with a list of moonshots:\nCrack the Z3 wall – pre-classify solver queries to skip expensive Z3 calls Deterministic, reportable results – identical found-sets/models across runs Real-binary practicality – directed search + state merging on real binaries Hybrid concolic engine – pair the icicle fuzzer with symex, Driller/QSYM-style Parallel find-all payoff – does parallelism actually pay off on real workloads? Flip the default engine to Rust – make Rust the default, Python the fallback These all seemed interesting so I let Claude plan a roadmap for each, including creating go/no-go decisions. The roadmap was stored in beads (over 90 issues) so that I could use Ralph to work through them.\nHere is how each one landed:\nNO-GO – a structural pre-check only classified 2.2% of queries as cheap, well short of the 30% bar needed to justify building it. GO – canonicalizing constraint and witness ordering made results reproducible, even though raw Z3 wall-clock timing stayed irreducibly variable. Deferred – the implementation shipped, but it is still waiting on a real binary with the right control-flow-divergent shape to actually validate against. Partial GO – the fuzzer-to-symex handoff was proven sound in principle, but full validation needs an x86 pypcode/sleigh environment that my sandbox does not have yet. Fixable, just not done. Deferred – same problem as #3, no real “wide and slow” target to measure the speedup on yet, though chasing one surfaced and fixed several parallel-drain bugs. GO – every child issue shipped and default_engine=\"rust\" is live, backed by nightly parity CI. The one that matters most is #6: Rust is now the default engine, with Python as the fallback. The port is no longer an experiment and is hopefully getting close to being ready to submit a PR upstream.\nI still plan to write a post on the state of the engine itself but I am waiting for the benchmarking results to be something truly worth writing up.\nSo Many Memories Since early April (even before switching Ralph to a FSM), Claude has been accumulating memories in beads via bd remember. Specifically, in my Ralph prompt footer:\n10. **MANDATORY — save what you learned.** Run `bd remember` for each that applies: - Root cause was surprising or non-obvious? `--key \u003ctopic\u003e-root-cause` - An approach failed before the one that worked? `--key avoid-\u003cthing\u003e` - A constraint/invariant future work must respect? `--key invariant-\u003cthing\u003e` - Profiling showed bottleneck was NOT where expected? `--key \u003ctopic\u003e-bottleneck` - A benchmark number changed significantly? `--key benchmark-\u003ctopic\u003e` Do NOT skip this step. Context dies between sessions; memories are the only bridge. **Anchor references to symbol names (fn/struct/method) instead of raw line numbers** — line refs drift 10-600 lines across refactors while symbol anchors stay resolvable (see `refactor-memory-sweep-rule`). At the beginning of June, I decided to check to see how many memories it had made and was surprised to find almost 1,300 memories. That seemed like a lot, especially since memories appear in every context window via bd prime, so I decided to ask Claude what to do with all of them. Specifically, I was interested in what to convert into “long-term” memories (a.k.a., documentation) versus what was fleeting, and whether any of the memories were in conflict.\nThe first “round” of pruning used some heuristics and light agent review which reduced the number of memories from 1,296 to 832 – 464 forgotten. This still felt like a lot of memories so I had Claude do a more aggressive prune, reviewing the body of each memory, which dropped another 418 to land at 414. I did not have a chance to look through the 882 memories forgotten across those two rounds so I decided to save them and review them later.\nA month or so later, I checked again and the number of memories was back up to 934. I had Claude prune them yet again, and this process repeated several times until I decided to spend a few sessions in the repo with the memories to characterize what was forgotten and then adapt the Ralph footer to restrict what gets created. I will need to do an update in a few weeks to see if the rate of memory creation has decreased. While I was working with the memories, I made a site so that I could look through them, copying a lot of the design from byob-go-cli.\nSome of this is a tooling gap rather than a prompting one. Beads memories currently carry no per-key timestamps, so bd prime can only order them alphabetically when it hits its cap and there is no way to audit which guidance has gone stale. Recency-aware selection would make a large store much less dangerous.\nJust Keep Auditing My typical workflow has been to audit the codebase for bugs and then use Ralph to address the findings. My goal has been to find enough bugs on the weekends that I can let it iterate on through the week until I hit my weekly limit. This process seems to work reasonably well with minimal oversight but it is not very fast or efficient. The last three bug audits (from scratch, not incremental) have produced 239, 149, and 50 issues, respectively. We seem to be trending in the right direction but we are not there yet.\nAfter each audit, I have been using a few sessions to understand the types of bugs that were discovered and then apply fixes to the root causes. One of the current themes is that the agent decided to recreate code instead of extracting a shared helper. That is near-miss cloning – copies that drift as each site gets patched independently, so a fix in one place silently misses the others. Detecting code clones was a large focus in my dissertation and it makes me want to point those techniques at agent-generated code.\nRalph Stats Ralph has been the workhorse of my agentic engineering experiments. It works surprisingly well and has clocked a huge number of iterations over the last ten weeks on this project.\nState transitions – the FSM edges Ralph took, where clean and dirty describe the state of the working tree at the start of an iteration and done/failed/revert describe how a task ended. These are transitions rather than iterations, so they do not sum to the iteration count below:\nclean: 2287 dirty: 233 done: 26 failed: 5 revert: 50 Cost:\niters: 2593 wallclock: 303h56m35s (~12.7 days) cost: $4,549.37 (API-equivalent cost) Fortunately, the monthly subscription costs far less.\nSystemd I can now check on Ralph from my phone. Claude recently added “server mode” to remote control – claude remote-control starts a server that can be used to spawn sessions. In the past, checking in on Ralph meant keeping a long-running remote control session running which eventually accumulated a lot of context. Now, I can spawn a new session whenever I feel like it.\nOne problem with this approach was that I was also using these sessions to start audits and Ralph itself which sometimes OOM’d during cargo commands. This never took down the machine – it killed my Claude session – but it still left me restarting the server by hand, so I had Claude create a systemd service. The two lines that matter are Restart=always, which brings the server back without me, and MemoryMax=4G, which caps the service cgroup so a runaway cargo has a ceiling:\n[Unit] Description=Claude Code Remote Control (angr repo) After=network-online.target Wants=network-online.target StartLimitIntervalSec=0 [Service] Type=simple User=ubuntu Group=ubuntu WorkingDirectory=/home/ubuntu/repos/angr Environment=HOME=/home/ubuntu Environment=PATH=/home/ubuntu/.local/bin:/home/ubuntu/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ExecStart=/home/ubuntu/.local/bin/claude remote-control Restart=always RestartSec=5 MemoryAccounting=true MemoryMax=4G StandardOutput=journal StandardError=journal [Install] WantedBy=multi-user.target I have been thinking about doing something similar for Ralph – I added a --wait-for-beads bd ready flag so that instead of exiting on done{idle} or done{queue_empty}, Ralph parks polling bd ready and resumes when the queue changes. With that, I could probably make it so that Ralph is always on standby.\nLessons Learned Pruning a memory store is treating the symptom. I pruned several times before I did the thing that actually worked, which was editing the prompt that creates the memories. The store regrew at roughly the same rate after each prune because I had not addressed the root cause. Trading machine time for my time is the whole point. Finding bugs on the weekend and letting the loop grind through them all week costs me very little time. It costs a lot of machine time – 12.7 days of wallclock, about $1.75 an iteration – but that is the resource I have in surplus. Agents duplicate rather than abstract. Left alone, the loop consistently recreated code instead of extracting a shared helper. It is a bias worth naming explicitly in the prompt, because it does not show up as a failing test – it shows up months later as three copies that have drifted apart. Summary It has been interesting to continue to explore how to build tools in the agentic era. This has been the biggest project by far – the existing Rust Symex is over 160K LoC. Are we there yet? Not quite – the engine is good enough to be the default but there is still work to do to eliminate bugs. I am hoping to get this process refined enough that I can finally make progress on all the various side projects that I have thought about over the years.\nLinks rust-symex branch Beads Ralph angr-memories angr-memories site ",
+  "wordCount" : "1745",
+  "inLanguage": "en",
+  "datePublished": "2026-08-08T00:00:00Z",
+  "dateModified": "2026-08-08T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Jonathan Crussell"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/post/are-we-there-yet/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Jonathan Crussell",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="/" accesskey="h" title="Jonathan Crussell (Alt + H)">Jonathan Crussell</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="/" title="Home">
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="/publication/" title="Publications">
+                    <span>Publications</span>
+                </a>
+            </li>
+            <li>
+                <a href="/project/" title="Projects">
+                    <span>Projects</span>
+                </a>
+            </li>
+            <li>
+                <a href="/post/" title="Posts">
+                    <span>Posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Are we there yet? Ten weeks of Rust Symex
+    </h1>
+    <div class="post-description">
+      Ten weeks of letting Ralph grind on the Rust symbolic execution engine -- 2,593 iterations, six moonshots, runaway memories, and endless audits.
+    </div>
+    <div class="post-meta"><span title='2026-08-08 00:00:00 +0000 UTC'>August 8, 2026</span>&nbsp;·&nbsp;<span>9 min</span>&nbsp;·&nbsp;<span>Jonathan Crussell</span>
+
+</div>
+  </header> 
+  <div class="post-content"><p>tl;dr: Ten weeks and 2,593 Ralph iterations later, Rust is the default symbolic
+execution engine and Python is the fallback. Along the way I asked Claude for
+moonshots, pruned its memory store from 1,296 entries down to 414 and watched
+it grow back, and settled into a rhythm of auditing on weekends so Ralph has
+something to chew on all week.</p>
+<h2 id="recap">Recap<a hidden class="anchor" aria-hidden="true" href="#recap">#</a></h2>
+<p>I have been exploring agentic engineering and have been using Claude to create
+a Rust Symbolic Execution engine for Angr based on inspiration from a <a href="https://blog.vjeux.com/2026/analysis/porting-100k-lines-from-typescript-to-rust-using-claude-code-in-a-month.html">blog
+post</a>.
+<a href="/post/rust-symex/">In April</a>, I wrote about how the port was going, and <a href="/post/ralph-fsm/">in
+May</a> I wrote about rebuilding the automation that drives it
+&ndash; <a href="https://github.com/jcrussell/ralph">Ralph</a>, a Go tool that loops Claude
+over a backlog using a clean/dirty state machine. This post covers the ten
+weeks since then.</p>
+<p>Much like my <a href="/post/perfect-enemy-good/">previous post</a>, this entry documents
+how I have kept pushing on the Rust Symex without a clear stopping point.</p>
+<h2 id="moonshots">Moonshots<a hidden class="anchor" aria-hidden="true" href="#moonshots">#</a></h2>
+<p>Given the solid foundation for the Rust Symex, I asked Claude to be more
+ambitious and explore how to extend the engine beyond what the Python engine
+does today. Claude came up with a list of moonshots:</p>
+<ol>
+<li>Crack the Z3 wall &ndash; pre-classify solver queries to skip expensive Z3 calls</li>
+<li>Deterministic, reportable results &ndash; identical found-sets/models across runs</li>
+<li>Real-binary practicality &ndash; directed search + state merging on real binaries</li>
+<li>Hybrid concolic engine &ndash; pair the icicle fuzzer with symex, Driller/QSYM-style</li>
+<li>Parallel find-all payoff &ndash; does parallelism actually pay off on real workloads?</li>
+<li>Flip the default engine to Rust &ndash; make Rust the default, Python the fallback</li>
+</ol>
+<p>These all seemed interesting so I let Claude plan a roadmap for each, including
+creating go/no-go decisions. The roadmap was stored in
+<a href="https://github.com/gastownhall/beads">beads</a> (over 90 issues) so that I could
+use Ralph to work through them.</p>
+<p>Here is how each one landed:</p>
+<ol>
+<li><strong>NO-GO</strong> &ndash; a structural pre-check only classified 2.2% of queries as
+cheap, well short of the 30% bar needed to justify building it.</li>
+<li><strong>GO</strong> &ndash; canonicalizing constraint and witness ordering made results
+reproducible, even though raw Z3 wall-clock timing stayed irreducibly
+variable.</li>
+<li><strong>Deferred</strong> &ndash; the implementation shipped, but it is still waiting on a
+real binary with the right control-flow-divergent shape to actually
+validate against.</li>
+<li><strong>Partial GO</strong> &ndash; the fuzzer-to-symex handoff was proven sound in
+principle, but full validation needs an x86 pypcode/sleigh environment
+that my sandbox does not have yet. Fixable, just not done.</li>
+<li><strong>Deferred</strong> &ndash; same problem as #3, no real &ldquo;wide and slow&rdquo; target to
+measure the speedup on yet, though chasing one surfaced and fixed several
+parallel-drain bugs.</li>
+<li><strong>GO</strong> &ndash; every child issue shipped and <code>default_engine=&quot;rust&quot;</code> is live,
+backed by nightly parity CI.</li>
+</ol>
+<p>The one that matters most is #6: Rust is now the default engine, with Python as
+the fallback. The port is no longer an experiment and is hopefully getting
+close to being ready to submit a PR upstream.</p>
+<p>I still plan to write a post on the state of the engine itself but I am
+waiting for the benchmarking results to be something truly worth writing up.</p>
+<h2 id="so-many-memories">So Many Memories<a hidden class="anchor" aria-hidden="true" href="#so-many-memories">#</a></h2>
+<p>Since early April (even before switching Ralph to a FSM), Claude has been
+accumulating memories in beads via <code>bd remember</code>. Specifically, in my Ralph
+prompt
+<a href="https://github.com/jcrussell/angr/blob/c17e0abaf8b36a77d75bb241c7f11d354184aa37/.ralph/prompts/_footer.md#workflow">footer</a>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="mf">10.</span> <span class="o">**</span><span class="n">MANDATORY</span> <span class="err">—</span> <span class="n">save</span> <span class="n">what</span> <span class="n">you</span> <span class="n">learned</span><span class="o">.**</span> <span class="n">Run</span> <span class="err">`</span><span class="n">bd</span> <span class="n">remember</span><span class="err">`</span> <span class="k">for</span> <span class="n">each</span> <span class="n">that</span> <span class="n">applies</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">Root</span> <span class="n">cause</span> <span class="n">was</span> <span class="n">surprising</span> <span class="ow">or</span> <span class="n">non</span><span class="o">-</span><span class="n">obvious</span><span class="err">?</span> <span class="err">`</span><span class="o">--</span><span class="n">key</span> <span class="o">&lt;</span><span class="n">topic</span><span class="o">&gt;-</span><span class="n">root</span><span class="o">-</span><span class="n">cause</span><span class="err">`</span>
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">An</span> <span class="n">approach</span> <span class="n">failed</span> <span class="n">before</span> <span class="n">the</span> <span class="n">one</span> <span class="n">that</span> <span class="n">worked</span><span class="err">?</span> <span class="err">`</span><span class="o">--</span><span class="n">key</span> <span class="n">avoid</span><span class="o">-&lt;</span><span class="n">thing</span><span class="o">&gt;</span><span class="err">`</span>
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">A</span> <span class="n">constraint</span><span class="o">/</span><span class="n">invariant</span> <span class="n">future</span> <span class="n">work</span> <span class="n">must</span> <span class="n">respect</span><span class="err">?</span> <span class="err">`</span><span class="o">--</span><span class="n">key</span> <span class="n">invariant</span><span class="o">-&lt;</span><span class="n">thing</span><span class="o">&gt;</span><span class="err">`</span>
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">Profiling</span> <span class="n">showed</span> <span class="n">bottleneck</span> <span class="n">was</span> <span class="n">NOT</span> <span class="n">where</span> <span class="n">expected</span><span class="err">?</span> <span class="err">`</span><span class="o">--</span><span class="n">key</span> <span class="o">&lt;</span><span class="n">topic</span><span class="o">&gt;-</span><span class="n">bottleneck</span><span class="err">`</span>
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">A</span> <span class="n">benchmark</span> <span class="n">number</span> <span class="n">changed</span> <span class="n">significantly</span><span class="err">?</span> <span class="err">`</span><span class="o">--</span><span class="n">key</span> <span class="n">benchmark</span><span class="o">-&lt;</span><span class="n">topic</span><span class="o">&gt;</span><span class="err">`</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">Do</span> <span class="n">NOT</span> <span class="n">skip</span> <span class="n">this</span> <span class="n">step</span><span class="o">.</span> <span class="n">Context</span> <span class="n">dies</span> <span class="n">between</span> <span class="n">sessions</span><span class="p">;</span> <span class="n">memories</span> <span class="n">are</span> <span class="n">the</span> <span class="n">only</span>
+</span></span><span class="line"><span class="cl">    <span class="n">bridge</span><span class="o">.</span> <span class="o">**</span><span class="n">Anchor</span> <span class="n">references</span> <span class="n">to</span> <span class="n">symbol</span> <span class="n">names</span> <span class="p">(</span><span class="n">fn</span><span class="o">/</span><span class="n">struct</span><span class="o">/</span><span class="n">method</span><span class="p">)</span> <span class="n">instead</span> <span class="n">of</span>
+</span></span><span class="line"><span class="cl">    <span class="n">raw</span> <span class="n">line</span> <span class="n">numbers</span><span class="o">**</span> <span class="err">—</span> <span class="n">line</span> <span class="n">refs</span> <span class="n">drift</span> <span class="mi">10</span><span class="o">-</span><span class="mi">600</span> <span class="n">lines</span> <span class="n">across</span> <span class="n">refactors</span> <span class="k">while</span>
+</span></span><span class="line"><span class="cl">    <span class="n">symbol</span> <span class="n">anchors</span> <span class="n">stay</span> <span class="n">resolvable</span> <span class="p">(</span><span class="n">see</span> <span class="err">`</span><span class="n">refactor</span><span class="o">-</span><span class="n">memory</span><span class="o">-</span><span class="n">sweep</span><span class="o">-</span><span class="n">rule</span><span class="err">`</span><span class="p">)</span><span class="o">.</span>
+</span></span></code></pre></div><p>At the beginning of June, I decided to check to see how many memories it had
+made and was surprised to find almost 1,300 memories. That seemed like a lot,
+especially since memories appear in every context window via <code>bd prime</code>, so I
+decided to ask Claude what to do with all of them. Specifically, I was
+interested in what to convert into &ldquo;long-term&rdquo; memories (a.k.a., documentation)
+versus what was fleeting, and whether any of the memories were in conflict.</p>
+<p>The first &ldquo;round&rdquo; of pruning used some heuristics and light agent review which
+reduced the number of memories from 1,296 to 832 &ndash; 464 forgotten. This still
+felt like a lot of memories so I had Claude do a more aggressive prune,
+reviewing the body of each memory, which dropped another 418 to land at 414. I
+did not have a chance to look through the 882 memories forgotten across those
+two rounds so I decided to <a href="https://github.com/jcrussell/angr-memories">save
+them</a> and review them later.</p>
+<p>A month or so later, I checked again and the number of memories was back up to
+934. I had Claude prune them yet again, and this process repeated several times
+until I decided to spend a few sessions in the repo with the memories to
+characterize what was forgotten and then adapt the Ralph
+<a href="https://github.com/jcrussell/angr/commit/c744d1a37edfe70b2a551d5eda97c5050542b5d8">footer</a>
+to restrict what gets created. I will need to do an update in a few weeks to
+see if the rate of memory creation has decreased. While I was working with the
+memories, I made a <a href="https://joncrussell.com/angr-memories/">site</a> so that I
+could look through them, copying a lot of the design from
+<a href="https://joncrussell.com/byob-go-cli/">byob-go-cli</a>.</p>
+<p>Some of this is a tooling gap rather than a prompting one. Beads memories
+currently carry <a href="https://github.com/gastownhall/beads/issues/4605">no per-key
+timestamps</a>, so <code>bd prime</code>
+can only order them alphabetically when it hits its cap and there is no way to
+audit which guidance has gone stale. Recency-aware selection would make a large
+store much less dangerous.</p>
+<h2 id="just-keep-auditing">Just Keep Auditing<a hidden class="anchor" aria-hidden="true" href="#just-keep-auditing">#</a></h2>
+<p>My typical workflow has been to audit the codebase for bugs and then use Ralph
+to address the findings. My goal has been to find enough bugs on the weekends
+that I can let it iterate on through the week until I hit my weekly limit. This
+process seems to work reasonably well with minimal oversight but it is not very
+fast or efficient. The last three bug audits (from scratch, not incremental)
+have produced 239, 149, and 50 issues, respectively. We seem to be trending in
+the right direction but we are not there yet.</p>
+<p>After each audit, I have been using a few sessions to understand the types of
+bugs that were discovered and then apply fixes to the root causes.
+One of the current themes is that the agent decided to recreate code instead of
+extracting a shared helper. That is near-miss cloning &ndash; copies that drift as
+each site gets patched independently, so a fix in one place silently misses the
+others. Detecting code clones was a large focus in my
+<a href="/publication/crussell2014scalable/">dissertation</a> and it makes me want to point
+those techniques at agent-generated code.</p>
+<h2 id="ralph-stats">Ralph Stats<a hidden class="anchor" aria-hidden="true" href="#ralph-stats">#</a></h2>
+<p>Ralph has been the workhorse of my agentic engineering experiments. It works
+surprisingly well and has clocked a huge number of iterations over the last ten
+weeks on this project.</p>
+<p>State transitions &ndash; the <a href="/post/ralph-fsm/">FSM</a> edges Ralph took, where <code>clean</code>
+and <code>dirty</code> describe the state of the working tree at the start of an iteration
+and <code>done</code>/<code>failed</code>/<code>revert</code> describe how a task ended. These are transitions
+rather than iterations, so they do not sum to the iteration count below:</p>
+<ul>
+<li>clean: 2287</li>
+<li>dirty: 233</li>
+<li>done: 26</li>
+<li>failed: 5</li>
+<li>revert: 50</li>
+</ul>
+<p>Cost:</p>
+<ul>
+<li>iters: 2593</li>
+<li>wallclock: 303h56m35s (~12.7 days)</li>
+<li>cost: $4,549.37 (API-equivalent cost)</li>
+</ul>
+<p>Fortunately, the monthly subscription costs far less.</p>
+<h2 id="systemd">Systemd<a hidden class="anchor" aria-hidden="true" href="#systemd">#</a></h2>
+<p>I can now check on Ralph from my phone. Claude recently added &ldquo;server mode&rdquo; to
+<a href="https://code.claude.com/docs/en/remote-control">remote control</a> &ndash; <code>claude remote-control</code> starts a server that can be used to spawn sessions. In the
+past, checking in on Ralph meant keeping a long-running remote control session
+running which eventually accumulated a lot of context. Now, I can spawn a new
+session whenever I feel like it.</p>
+<p>One problem with this approach was that I was also using these sessions to start
+audits and Ralph itself which sometimes OOM&rsquo;d during <code>cargo</code> commands. This never
+took down the machine &ndash; it killed my Claude session &ndash; but it still left me
+restarting the server by hand, so I had Claude create a systemd service. The two
+lines that matter are <code>Restart=always</code>, which brings the server back without me,
+and <code>MemoryMax=4G</code>, which caps the service cgroup so a runaway <code>cargo</code> has a
+ceiling:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[Unit]
+</span></span><span class="line"><span class="cl">Description=Claude Code Remote Control (angr repo)
+</span></span><span class="line"><span class="cl">After=network-online.target
+</span></span><span class="line"><span class="cl">Wants=network-online.target
+</span></span><span class="line"><span class="cl">StartLimitIntervalSec=0
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[Service]
+</span></span><span class="line"><span class="cl">Type=simple
+</span></span><span class="line"><span class="cl">User=ubuntu
+</span></span><span class="line"><span class="cl">Group=ubuntu
+</span></span><span class="line"><span class="cl">WorkingDirectory=/home/ubuntu/repos/angr
+</span></span><span class="line"><span class="cl">Environment=HOME=/home/ubuntu
+</span></span><span class="line"><span class="cl">Environment=PATH=/home/ubuntu/.local/bin:/home/ubuntu/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+</span></span><span class="line"><span class="cl">ExecStart=/home/ubuntu/.local/bin/claude remote-control
+</span></span><span class="line"><span class="cl">Restart=always
+</span></span><span class="line"><span class="cl">RestartSec=5
+</span></span><span class="line"><span class="cl">MemoryAccounting=true
+</span></span><span class="line"><span class="cl">MemoryMax=4G
+</span></span><span class="line"><span class="cl">StandardOutput=journal
+</span></span><span class="line"><span class="cl">StandardError=journal
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[Install]
+</span></span><span class="line"><span class="cl">WantedBy=multi-user.target
+</span></span></code></pre></div><p>I have been thinking about doing something similar for Ralph &ndash; I added a
+<code>--wait-for-beads bd ready</code> flag so that instead of exiting on <code>done{idle}</code> or
+<code>done{queue_empty}</code>, Ralph parks polling <code>bd ready</code> and resumes when the queue
+changes. With that, I could probably make it so that Ralph is always on standby.</p>
+<h2 id="lessons-learned">Lessons Learned<a hidden class="anchor" aria-hidden="true" href="#lessons-learned">#</a></h2>
+<ul>
+<li><strong>Pruning a memory store is treating the symptom.</strong> I pruned several times
+before I did the thing that actually worked, which was editing the prompt
+that creates the memories. The store regrew at roughly the same rate after
+each prune because I had not addressed the root cause.</li>
+<li><strong>Trading machine time for my time is the whole point.</strong> Finding bugs on the
+weekend and letting the loop grind through them all week costs me very
+little time. It costs a lot of machine time &ndash; 12.7 days of wallclock, about
+$1.75 an iteration &ndash; but that is the resource I have in surplus.</li>
+<li><strong>Agents duplicate rather than abstract.</strong> Left alone, the loop consistently
+recreated code instead of extracting a shared helper. It is a bias worth
+naming explicitly in the prompt, because it does not show up as a failing
+test &ndash; it shows up months later as three copies that have drifted apart.</li>
+</ul>
+<h2 id="summary">Summary<a hidden class="anchor" aria-hidden="true" href="#summary">#</a></h2>
+<p>It has been interesting to continue to explore how to build tools in the
+agentic era. This has been the biggest project by far &ndash; the existing Rust
+Symex is over 160K LoC. Are we there yet? Not quite &ndash; the engine is good
+enough to be the default but there is still work to do to eliminate bugs. I am
+hoping to get this process refined enough that I can finally make progress on
+all the various side projects that I have thought about over the years.</p>
+<h2 id="links">Links<a hidden class="anchor" aria-hidden="true" href="#links">#</a></h2>
+<ul>
+<li><a href="https://github.com/jcrussell/angr/tree/rust-symex">rust-symex branch</a></li>
+<li><a href="https://github.com/gastownhall/beads">Beads</a></li>
+<li><a href="https://github.com/jcrussell/ralph">Ralph</a></li>
+<li><a href="https://github.com/jcrussell/angr-memories">angr-memories</a></li>
+<li><a href="https://joncrussell.com/angr-memories/">angr-memories site</a></li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="/tags/ai/">Ai</a></li>
+      <li><a href="/tags/rust/">Rust</a></li>
+      <li><a href="/tags/symbolic-execution/">Symbolic-Execution</a></li>
+      <li><a href="/tags/automation/">Automation</a></li>
+    </ul>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>© 2020-2026</span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

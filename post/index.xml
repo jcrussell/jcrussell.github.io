@@ -7,8 +7,15 @@
     <generator>Hugo -- 0.153.5</generator>
     <language>en-us</language>
     <copyright>2020-2026</copyright>
-    <lastBuildDate>Sun, 12 Jul 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 08 Aug 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Are we there yet? Ten weeks of Rust Symex</title>
+      <link>/post/are-we-there-yet/</link>
+      <pubDate>Sat, 08 Aug 2026 00:00:00 +0000</pubDate>
+      <guid>/post/are-we-there-yet/</guid>
+      <description>Ten weeks of letting Ralph grind on the Rust symbolic execution engine -- 2,593 iterations, six moonshots, runaway memories, and endless audits.</description>
+    </item>
     <item>
       <title>Perfect is the enemy of good</title>
       <link>/post/perfect-enemy-good/</link>

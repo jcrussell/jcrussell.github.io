@@ -3,30 +3,39 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>/tags/ai/</loc>
-    <lastmod>2026-07-12T00:00:00+00:00</lastmod>
+    <lastmod>2026-08-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/post/are-we-there-yet/</loc>
+    <lastmod>2026-08-08T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tags/automation/</loc>
-    <lastmod>2026-07-12T00:00:00+00:00</lastmod>
+    <lastmod>2026-08-08T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/categories/</loc>
-    <lastmod>2026-07-12T00:00:00+00:00</lastmod>
+    <lastmod>2026-08-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/</loc>
+    <lastmod>2026-08-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/posts/</loc>
+    <lastmod>2026-08-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/post/</loc>
+    <lastmod>2026-08-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/rust/</loc>
+    <lastmod>2026-08-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/symbolic-execution/</loc>
+    <lastmod>2026-08-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/</loc>
+    <lastmod>2026-08-08T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tags/gnome/</loc>
     <lastmod>2026-07-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/</loc>
-    <lastmod>2026-07-12T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>/post/perfect-enemy-good/</loc>
-    <lastmod>2026-07-12T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/categories/posts/</loc>
-    <lastmod>2026-07-12T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/post/</loc>
-    <lastmod>2026-07-12T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/tags/</loc>
     <lastmod>2026-07-12T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tags/testing/</loc>
@@ -50,11 +59,50 @@
     <loc>/post/ralph-fsm/</loc>
     <lastmod>2026-05-22T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/tags/rust/</loc>
-    <lastmod>2026-05-22T00:00:00+00:00</lastmod>
+    <loc>/authors/angelo-porcella/</loc>
+    <lastmod>2026-05-08T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/tags/symbolic-execution/</loc>
-    <lastmod>2026-05-22T00:00:00+00:00</lastmod>
+    <loc>/authors/ann-marie-reinhold/</loc>
+    <lastmod>2026-05-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/authors/</loc>
+    <lastmod>2026-05-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/publication/porcella2026characterizing/</loc>
+    <lastmod>2026-05-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/authors/clemente-izurieta/</loc>
+    <lastmod>2026-05-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/authors/jonathan-crussell/</loc>
+    <lastmod>2026-05-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/malware/</loc>
+    <lastmod>2026-05-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/publications/</loc>
+    <lastmod>2026-05-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/publication/</loc>
+    <lastmod>2026-05-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/quality/</loc>
+    <lastmod>2026-05-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/software/</loc>
+    <lastmod>2026-05-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/sophistication/</loc>
+    <lastmod>2026-05-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/static-analysis/</loc>
+    <lastmod>2026-05-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/threat-analysis/</loc>
+    <lastmod>2026-05-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/authors/zachary-wadhams/</loc>
+    <lastmod>2026-05-08T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/post/rust-symex/</loc>
     <lastmod>2026-04-21T00:00:00+00:00</lastmod>
@@ -101,9 +149,6 @@
     <loc>/project/</loc>
     <lastmod>2026-01-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/authors/</loc>
-    <lastmod>2025-02-28T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>/tags/binary-analysis/</loc>
     <lastmod>2025-02-28T00:00:00+00:00</lastmod>
   </url><url>
@@ -113,16 +158,7 @@
     <loc>/publication/crussell2025ghidra/</loc>
     <lastmod>2025-02-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/authors/jonathan-crussell/</loc>
-    <lastmod>2025-02-28T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>/tags/malware-analysis/</loc>
-    <lastmod>2025-02-28T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/categories/publications/</loc>
-    <lastmod>2025-02-28T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/publication/</loc>
     <lastmod>2025-02-28T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tags/reverse-engineering/</loc>
@@ -276,9 +312,6 @@
     <lastmod>2014-12-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/authors/clint-gibler/</loc>
-    <lastmod>2014-12-17T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/tags/static-analysis/</loc>
     <lastmod>2014-12-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tags/dynamic-analysis/</loc>

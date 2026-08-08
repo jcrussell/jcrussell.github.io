@@ -7,20 +7,34 @@
     <generator>Hugo -- 0.153.5</generator>
     <language>en-us</language>
     <copyright>2020-2026</copyright>
-    <lastBuildDate>Sun, 12 Jul 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 08 Aug 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Ai</title>
       <link>/tags/ai/</link>
-      <pubDate>Sun, 12 Jul 2026 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 08 Aug 2026 00:00:00 +0000</pubDate>
       <guid>/tags/ai/</guid>
       <description></description>
     </item>
     <item>
       <title>Automation</title>
       <link>/tags/automation/</link>
-      <pubDate>Sun, 12 Jul 2026 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 08 Aug 2026 00:00:00 +0000</pubDate>
       <guid>/tags/automation/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Rust</title>
+      <link>/tags/rust/</link>
+      <pubDate>Sat, 08 Aug 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/rust/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Symbolic-Execution</title>
+      <link>/tags/symbolic-execution/</link>
+      <pubDate>Sat, 08 Aug 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/symbolic-execution/</guid>
       <description></description>
     </item>
     <item>
@@ -59,17 +73,45 @@
       <description></description>
     </item>
     <item>
-      <title>Rust</title>
-      <link>/tags/rust/</link>
-      <pubDate>Fri, 22 May 2026 00:00:00 +0000</pubDate>
-      <guid>/tags/rust/</guid>
+      <title>Malware</title>
+      <link>/tags/malware/</link>
+      <pubDate>Fri, 08 May 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/malware/</guid>
       <description></description>
     </item>
     <item>
-      <title>Symbolic-Execution</title>
-      <link>/tags/symbolic-execution/</link>
-      <pubDate>Fri, 22 May 2026 00:00:00 +0000</pubDate>
-      <guid>/tags/symbolic-execution/</guid>
+      <title>Quality</title>
+      <link>/tags/quality/</link>
+      <pubDate>Fri, 08 May 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/quality/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Software</title>
+      <link>/tags/software/</link>
+      <pubDate>Fri, 08 May 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/software/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Sophistication</title>
+      <link>/tags/sophistication/</link>
+      <pubDate>Fri, 08 May 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/sophistication/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Static-Analysis</title>
+      <link>/tags/static-analysis/</link>
+      <pubDate>Fri, 08 May 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/static-analysis/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Threat-Analysis</title>
+      <link>/tags/threat-analysis/</link>
+      <pubDate>Fri, 08 May 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/threat-analysis/</guid>
       <description></description>
     </item>
     <item>
@@ -287,13 +329,6 @@
       <link>/tags/thesis/</link>
       <pubDate>Wed, 31 Dec 2014 00:00:00 +0000</pubDate>
       <guid>/tags/thesis/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Static-Analysis</title>
-      <link>/tags/static-analysis/</link>
-      <pubDate>Wed, 17 Dec 2014 00:00:00 +0000</pubDate>
-      <guid>/tags/static-analysis/</guid>
       <description></description>
     </item>
     <item>
