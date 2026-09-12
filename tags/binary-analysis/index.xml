@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Binary-Analysis on Jonathan Crussell</title>
+    <title>Binary Analysis on Jonathan Crussell</title>
     <link>/tags/binary-analysis/</link>
-    <description>Recent content in Binary-Analysis on Jonathan Crussell</description>
+    <description>Recent content in Binary Analysis on Jonathan Crussell</description>
     <generator>Hugo -- 0.153.5</generator>
     <language>en-us</language>
     <copyright>2020-2026</copyright>
-    <lastBuildDate>Fri, 28 Feb 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 12 Sep 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="/tags/binary-analysis/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>rust-symex</title>
+      <link>/project/rust-symex/</link>
+      <pubDate>Sat, 12 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>/project/rust-symex/</guid>
+      <description>A Rust port of Angr&amp;#39;s symbolic execution engine.</description>
+    </item>
     <item>
       <title>Ghidra: Is Newer Always Better?</title>
       <link>/publication/crussell2025ghidra/</link>

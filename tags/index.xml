@@ -7,69 +7,83 @@
     <generator>Hugo -- 0.153.5</generator>
     <language>en-us</language>
     <copyright>2020-2026</copyright>
-    <lastBuildDate>Sat, 08 Aug 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 12 Sep 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Ai</title>
+      <title>AI</title>
       <link>/tags/ai/</link>
-      <pubDate>Sat, 08 Aug 2026 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 12 Sep 2026 00:00:00 +0000</pubDate>
       <guid>/tags/ai/</guid>
       <description></description>
     </item>
     <item>
       <title>Automation</title>
       <link>/tags/automation/</link>
-      <pubDate>Sat, 08 Aug 2026 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 12 Sep 2026 00:00:00 +0000</pubDate>
       <guid>/tags/automation/</guid>
       <description></description>
     </item>
     <item>
-      <title>Rust</title>
-      <link>/tags/rust/</link>
-      <pubDate>Sat, 08 Aug 2026 00:00:00 +0000</pubDate>
-      <guid>/tags/rust/</guid>
+      <title>Binary Analysis</title>
+      <link>/tags/binary-analysis/</link>
+      <pubDate>Sat, 12 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/binary-analysis/</guid>
       <description></description>
     </item>
     <item>
-      <title>Symbolic-Execution</title>
-      <link>/tags/symbolic-execution/</link>
-      <pubDate>Sat, 08 Aug 2026 00:00:00 +0000</pubDate>
-      <guid>/tags/symbolic-execution/</guid>
+      <title>Data Visualization</title>
+      <link>/tags/data-visualization/</link>
+      <pubDate>Sat, 12 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/data-visualization/</guid>
       <description></description>
     </item>
     <item>
-      <title>Gnome</title>
+      <title>GNOME</title>
       <link>/tags/gnome/</link>
-      <pubDate>Sun, 12 Jul 2026 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 12 Sep 2026 00:00:00 +0000</pubDate>
       <guid>/tags/gnome/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Testing</title>
-      <link>/tags/testing/</link>
-      <pubDate>Sun, 12 Jul 2026 00:00:00 +0000</pubDate>
-      <guid>/tags/testing/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Window-Manager</title>
-      <link>/tags/window-manager/</link>
-      <pubDate>Sun, 12 Jul 2026 00:00:00 +0000</pubDate>
-      <guid>/tags/window-manager/</guid>
       <description></description>
     </item>
     <item>
       <title>Go</title>
       <link>/tags/go/</link>
-      <pubDate>Fri, 19 Jun 2026 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 12 Sep 2026 00:00:00 +0000</pubDate>
       <guid>/tags/go/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Rust</title>
+      <link>/tags/rust/</link>
+      <pubDate>Sat, 12 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/rust/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Symbolic Execution</title>
+      <link>/tags/symbolic-execution/</link>
+      <pubDate>Sat, 12 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/symbolic-execution/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Testing</title>
+      <link>/tags/testing/</link>
+      <pubDate>Sat, 12 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/testing/</guid>
       <description></description>
     </item>
     <item>
       <title>Urbanism</title>
       <link>/tags/urbanism/</link>
-      <pubDate>Fri, 19 Jun 2026 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 12 Sep 2026 00:00:00 +0000</pubDate>
       <guid>/tags/urbanism/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Window Manager</title>
+      <link>/tags/window-manager/</link>
+      <pubDate>Sat, 12 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/window-manager/</guid>
       <description></description>
     </item>
     <item>
@@ -101,31 +115,17 @@
       <description></description>
     </item>
     <item>
-      <title>Static-Analysis</title>
+      <title>Static Analysis</title>
       <link>/tags/static-analysis/</link>
       <pubDate>Fri, 08 May 2026 00:00:00 +0000</pubDate>
       <guid>/tags/static-analysis/</guid>
       <description></description>
     </item>
     <item>
-      <title>Threat-Analysis</title>
+      <title>Threat Analysis</title>
       <link>/tags/threat-analysis/</link>
       <pubDate>Fri, 08 May 2026 00:00:00 +0000</pubDate>
       <guid>/tags/threat-analysis/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Ai-Assisted</title>
-      <link>/tags/ai-assisted/</link>
-      <pubDate>Thu, 01 Jan 2026 00:00:00 +0000</pubDate>
-      <guid>/tags/ai-assisted/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Data-Visualization</title>
-      <link>/tags/data-visualization/</link>
-      <pubDate>Thu, 01 Jan 2026 00:00:00 +0000</pubDate>
-      <guid>/tags/data-visualization/</guid>
       <description></description>
     </item>
     <item>
@@ -136,24 +136,10 @@
       <description></description>
     </item>
     <item>
-      <title>Golang</title>
-      <link>/tags/golang/</link>
-      <pubDate>Thu, 01 Jan 2026 00:00:00 +0000</pubDate>
-      <guid>/tags/golang/</guid>
-      <description></description>
-    </item>
-    <item>
       <title>Healthcare</title>
       <link>/tags/healthcare/</link>
       <pubDate>Thu, 01 Jan 2026 00:00:00 +0000</pubDate>
       <guid>/tags/healthcare/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Binary-Analysis</title>
-      <link>/tags/binary-analysis/</link>
-      <pubDate>Fri, 28 Feb 2025 00:00:00 +0000</pubDate>
-      <guid>/tags/binary-analysis/</guid>
       <description></description>
     </item>
     <item>
@@ -164,14 +150,14 @@
       <description></description>
     </item>
     <item>
-      <title>Malware-Analysis</title>
+      <title>Malware Analysis</title>
       <link>/tags/malware-analysis/</link>
       <pubDate>Fri, 28 Feb 2025 00:00:00 +0000</pubDate>
       <guid>/tags/malware-analysis/</guid>
       <description></description>
     </item>
     <item>
-      <title>Reverse-Engineering</title>
+      <title>Reverse Engineering</title>
       <link>/tags/reverse-engineering/</link>
       <pubDate>Fri, 28 Feb 2025 00:00:00 +0000</pubDate>
       <guid>/tags/reverse-engineering/</guid>
@@ -185,7 +171,7 @@
       <description></description>
     </item>
     <item>
-      <title>Network-Analysis</title>
+      <title>Network Analysis</title>
       <link>/tags/network-analysis/</link>
       <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
       <guid>/tags/network-analysis/</guid>
@@ -199,7 +185,7 @@
       <description></description>
     </item>
     <item>
-      <title>Uncertainty-Quantification</title>
+      <title>Uncertainty Quantification</title>
       <link>/tags/uncertainty-quantification/</link>
       <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
       <guid>/tags/uncertainty-quantification/</guid>
@@ -220,7 +206,7 @@
       <description></description>
     </item>
     <item>
-      <title>Network-Discovery</title>
+      <title>Network Discovery</title>
       <link>/tags/network-discovery/</link>
       <pubDate>Tue, 24 Mar 2020 00:00:00 +0000</pubDate>
       <guid>/tags/network-discovery/</guid>
@@ -248,14 +234,14 @@
       <description></description>
     </item>
     <item>
-      <title>Distributed-Systems</title>
+      <title>Distributed Systems</title>
       <link>/tags/distributed-systems/</link>
       <pubDate>Sat, 10 Nov 2018 00:00:00 +0000</pubDate>
       <guid>/tags/distributed-systems/</guid>
       <description></description>
     </item>
     <item>
-      <title>Ad-Fraud</title>
+      <title>Ad Fraud</title>
       <link>/tags/ad-fraud/</link>
       <pubDate>Wed, 09 Mar 2016 00:00:00 +0000</pubDate>
       <guid>/tags/ad-fraud/</guid>
@@ -276,14 +262,14 @@
       <description></description>
     </item>
     <item>
-      <title>Network-Provenance</title>
+      <title>Network Provenance</title>
       <link>/tags/network-provenance/</link>
       <pubDate>Wed, 09 Mar 2016 00:00:00 +0000</pubDate>
       <guid>/tags/network-provenance/</guid>
       <description></description>
     </item>
     <item>
-      <title>Adversarial-Ml</title>
+      <title>Adversarial ML</title>
       <link>/tags/adversarial-ml/</link>
       <pubDate>Thu, 30 Apr 2015 00:00:00 +0000</pubDate>
       <guid>/tags/adversarial-ml/</guid>
@@ -297,28 +283,28 @@
       <description></description>
     </item>
     <item>
-      <title>Data-Poisoning</title>
+      <title>Data Poisoning</title>
       <link>/tags/data-poisoning/</link>
       <pubDate>Thu, 30 Apr 2015 00:00:00 +0000</pubDate>
       <guid>/tags/data-poisoning/</guid>
       <description></description>
     </item>
     <item>
-      <title>Machine-Learning</title>
+      <title>Machine Learning</title>
       <link>/tags/machine-learning/</link>
       <pubDate>Thu, 30 Apr 2015 00:00:00 +0000</pubDate>
       <guid>/tags/machine-learning/</guid>
       <description></description>
     </item>
     <item>
-      <title>Clone-Detection</title>
+      <title>Clone Detection</title>
       <link>/tags/clone-detection/</link>
       <pubDate>Wed, 31 Dec 2014 00:00:00 +0000</pubDate>
       <guid>/tags/clone-detection/</guid>
       <description></description>
     </item>
     <item>
-      <title>Program-Analysis</title>
+      <title>Program Analysis</title>
       <link>/tags/program-analysis/</link>
       <pubDate>Wed, 31 Dec 2014 00:00:00 +0000</pubDate>
       <guid>/tags/program-analysis/</guid>
@@ -332,7 +318,7 @@
       <description></description>
     </item>
     <item>
-      <title>Dynamic-Analysis</title>
+      <title>Dynamic Analysis</title>
       <link>/tags/dynamic-analysis/</link>
       <pubDate>Mon, 16 Jun 2014 00:00:00 +0000</pubDate>
       <guid>/tags/dynamic-analysis/</guid>
@@ -346,7 +332,7 @@
       <description></description>
     </item>
     <item>
-      <title>Taint-Analysis</title>
+      <title>Taint Analysis</title>
       <link>/tags/taint-analysis/</link>
       <pubDate>Wed, 13 Jun 2012 00:00:00 +0000</pubDate>
       <guid>/tags/taint-analysis/</guid>

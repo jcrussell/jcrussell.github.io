@@ -6,11 +6,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
 <title>gamify-ccda | Jonathan Crussell</title>
-<meta name="keywords" content="healthcare, gamification, data-visualization, ai-assisted, golang">
+<meta name="keywords" content="healthcare, gamification, data-visualization, ai, go">
 <meta name="description" content="Transform health records into an interactive achievement system.">
 <meta name="author" content="Jonathan Crussell">
 <link rel="canonical" href="/project/gamify-ccda/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.cb1b966424391d58a85617e342812e23e741186aa62baaf33e320fa5b85c2b0b.css" integrity="sha256-yxuWZCQ5HVioVhfjQoEuI&#43;dBGGqmK6rzPjIPpbhcKws=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.b06ec7980d2d50d7d6297d1d4e1d4def65e232a8293377508f722d730d19e949.css" integrity="sha256-sG7HmA0tUNfWKX0dTh1N72XiMqgpM3dQj3Itcw0Z6Uk=" rel="preload stylesheet" as="style">
 <link rel="icon" href="/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -81,9 +81,9 @@
     <meta property="article:modified_time" content="2026-01-01T00:00:00+00:00">
     <meta property="article:tag" content="Healthcare">
     <meta property="article:tag" content="Gamification">
-    <meta property="article:tag" content="Data-Visualization">
-    <meta property="article:tag" content="Ai-Assisted">
-    <meta property="article:tag" content="Golang">
+    <meta property="article:tag" content="Data Visualization">
+    <meta property="article:tag" content="AI">
+    <meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="gamify-ccda">
 <meta name="twitter:description" content="Transform health records into an interactive achievement system.">
@@ -117,7 +117,7 @@
   "name": "gamify-ccda",
   "description": "Transform health records into an interactive achievement system.",
   "keywords": [
-    "healthcare", "gamification", "data-visualization", "ai-assisted", "golang"
+    "healthcare", "gamification", "data-visualization", "ai", "go"
   ],
   "articleBody": "Note: Like almost everyone, I have been exploring how to use generative AI. During some time off work over the holidays, I decided to get a Claude Pro subscription and see if I could turn an idea that I have wanted to implement for years into a useable tool. This is the result of ~20 hours of planning, generating, and iterating. I am impressed with the results and hope to turn a few other ideas into useable tools over the next few months. The AI-generated description of the project is as follows.\nGamify-ccda transforms CCDA (Consolidated Clinical Document Architecture) health record exports into an interactive achievement system. The tool parses clinical data and generates a gamified HTML dashboard featuring badges, statistics, and visualizations to make personal health data more engaging and accessible.\nThis project was created to explore the capabilities of Claude AI in software development, demonstrating AI-assisted development of a complete application from concept to implementation.\nFeatures Interactive Dashboard: Activity heatmap showing health encounters over time with analytical insights Location Mapping: Visualizes healthcare facilities with distance tracking (optional geocoding via OpenStreetMap) 101 Achievement Badges: Organized across 16 categories including temporal patterns, location visits, holidays, care modalities, provider continuity, medical specialties, laboratory work, vitals, medications, immunizations, diagnoses, wellness milestones, travel distances, and seasonal patterns Analytics: Comprehensive yearly and lifetime statistics tracking Time Travel: Historical data viewing using the --when flag to see achievements as of past dates Privacy-First Design: All processing happens locally on your machine—your data never leaves your computer Security: Supports password-protected ZIP files for secure health record storage Technical Details Written in Go, the tool processes standard CCDA R2.1 exports in IHE_XDM format. Installation requires building from source:\ngo build -o gamify-ccda ./cmd/gamify-ccda Basic usage:\n# Generate interactive dashboard ./gamify-ccda generate your-health-records.zip # Browse in terminal ./gamify-ccda browse your-health-records.zip # View historical snapshot ./gamify-ccda --when 2023-12-31 generate your-health-records.zip # Enable optional location mapping ./gamify-ccda generate --enable-geocoding your-health-records.zip Output is saved to output/index.html for viewing in any web browser.\nLinks:\nGitHub Repository ",
   "wordCount" : "334",
@@ -190,6 +190,11 @@
             <li>
                 <a href="/post/" title="Posts">
                     <span>Posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="/tags/" title="Tags">
+                    <span>Tags</span>
                 </a>
             </li>
             <li>
@@ -271,9 +276,9 @@ Installation requires building from source:</p>
     <ul class="post-tags">
       <li><a href="/tags/healthcare/">Healthcare</a></li>
       <li><a href="/tags/gamification/">Gamification</a></li>
-      <li><a href="/tags/data-visualization/">Data-Visualization</a></li>
-      <li><a href="/tags/ai-assisted/">Ai-Assisted</a></li>
-      <li><a href="/tags/golang/">Golang</a></li>
+      <li><a href="/tags/data-visualization/">Data Visualization</a></li>
+      <li><a href="/tags/ai/">AI</a></li>
+      <li><a href="/tags/go/">Go</a></li>
     </ul>
 
   </footer>
