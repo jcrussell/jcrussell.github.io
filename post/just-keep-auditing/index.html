@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Just keep auditing | Jonathan Crussell</title>
+<meta name="keywords" content="ai, rust, symbolic-execution, automation">
+<meta name="description" content="Letting Claude audit and fix the Rust symbolic execution engine eight times over two months and no sign of convergence.">
+<meta name="author" content="Jonathan Crussell">
+<link rel="canonical" href="/post/just-keep-auditing/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.f9e97af24ce0a03563c4878d7aa7c6e4d1582b55c13992db01f85e1bf2c25c0f.css" integrity="sha256-&#43;el68kzgoDVjxIeNeqfG5NFYK1XBOZLbAfheG/LCXA8=" rel="preload stylesheet" as="style">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="/post/just-keep-auditing/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+        @media (prefers-color-scheme: light) {
+            .list::-webkit-scrollbar-thumb {
+                border-color: var(--code-bg);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="/post/just-keep-auditing/">
+  <meta property="og:site_name" content="Jonathan Crussell">
+  <meta property="og:title" content="Just keep auditing">
+  <meta property="og:description" content="Letting Claude audit and fix the Rust symbolic execution engine eight times over two months and no sign of convergence.">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2026-10-14T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-10-14T00:00:00+00:00">
+    <meta property="article:tag" content="AI">
+    <meta property="article:tag" content="Rust">
+    <meta property="article:tag" content="Symbolic Execution">
+    <meta property="article:tag" content="Automation">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Just keep auditing">
+<meta name="twitter:description" content="Letting Claude audit and fix the Rust symbolic execution engine eight times over two months and no sign of convergence.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "/post/"
+    }
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Just keep auditing",
+      "item": "/post/just-keep-auditing/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Just keep auditing",
+  "name": "Just keep auditing",
+  "description": "Letting Claude audit and fix the Rust symbolic execution engine eight times over two months and no sign of convergence.",
+  "keywords": [
+    "ai", "rust", "symbolic-execution", "automation"
+  ],
+  "articleBody": "Recap I have been trying to use Claude to create a Rust Symbolic Execution engine for angr based on inspiration from a blog post since late January. In August, I wrote about letting Ralph grind away for 10 weeks, chasing moonshots, and three waves of bug audits. This post covers many more audits, an exploration of the bugs that the audits found, and the latest benchmark results.\nJust Keep Auditing I was somewhat hopeful based on the trend from my first three bug audits that we were converging towards a codebase that was suitable to share with others. Those audits produced 217, 138, and 95 findings, respectively, categorized into bugs, tasks, and chores. Each of these audits was done from scratch and the trend was looking great. To my dismay, the next audit produced 83 issues. Not to worry, another Ralph session can fix those and then maybe the trend will resume? Nope. I proceeded to run the audit/ralph a total of eight times over a two-month period, producing a total of 855 findings (yikes). This table shows the number of findings (and their priorities) for each audit:\nAudit findings per round with priority\nRound Started P1 P2 P3 P4 Total 1 2026-07-31 8 48 89 72 217 2 2026-08-05 4 15 51 68 138 3 2026-08-08 5 8 27 55 95 4 2026-08-09 5 14 40 24 83 5 2026-08-12 7 7 24 41 79 6 2026-08-20 1 8 23 37 69 7 2026-09-04 6 12 36 32 86 8 2026-09-13 2 9 39 38 88 Total 38 121 329 367 855 These are based on Claude’s self-assigned priorities (assigned by a finder agent and confirmed by a verifier agent). P1 is the highest priority and P4 is the lowest. The number of P1s has generally decreased over time. I tried to hold the audit workflow consistent across rounds (specifically, asking Claude to do the N+1th comprehensive audit of the codebase) but the workflow ended up drifting over time. The audits all started with the same goal: auditing native/angr/src from multiple angles including correctness, DRY, and organization. The way the codebase was split varied slightly for each audit. Later rounds added a new angle for overflow and width-boundary bugs based on bugs that were discovered in previous audits.\nDuring the remediation phase, Ralph actually found about 20 more bugs that the audit rounds missed and filed them as additional findings (and a bunch of non-bug findings) under the same epics used to track the audit rounds. The bugs fell into categories like “fixed one site, then checked for the same shape elsewhere” and “writing tests for one bug surfaced another”. The reuse of the top-level epic confused Claude (and myself) when trying to document how many findings each audit identified (including an error in my previous post). It would have been better to snapshot the beads database after each audit to avoid this confusion.\nHidden in the table above is the breakdown of bugs, tasks, and chores:\nAudit findings per round broken down by type\nRound Bug Task Chore Total 1 60 21 136 217 2 37 0 101 138 3 21 12 62 95 4 41 0 42 83 5 20 59 0 79 6 0 69 0 69 7 21 14 51 86 8 22 66 0 88 Total 222 241 392 855 Again, these are based on Claude’s self-assigned categorizations for bug versus task versus chore. In round 6, it decided to make everything a task (specifically, the bead type, which we use for counting). It did put the intended category in the bead titles (e.g., “chore:”). Repo conventions (if they were actually enforced) could have improved our ability to compare audits.\nMost of the audits were conducted with Opus. The last audit was done with Sonnet 5 and it still found plenty of bugs. I am curious to go in the opposite direction to see what an audit with Fable finds. Hopefully Fable 5.5 comes out soon and is token-efficient enough to make this feasible.\nBug Investigation To better understand the bugs produced by these audits, I asked Claude to write me a script to tabulate, for each bug:\nWhen was it added? What model added it? What subcomponent was it in? The script traces the lineage of each bug to identify when it was introduced via git blame and some extra tracing. The extra tracing was due to a couple of resets early on. Once the bug and its introducing commit have been identified, the model that wrote the code can be extracted from the Co-Authored-By line that Claude likes to append. The audits started at commit 2e6cac6f5 (2026-07-30) and the analysis snapshot was at commit 8c157f891. The bugs introduced by model are as follows:\nBugs already in the code at the audit baseline (2026-07-30)\nModel Bugs P1 P2 P3 P4 Claude Opus 4.8 48 4 17 25 2 Claude Opus 4.7 47 11 21 13 2 Claude Opus 4.5 31 4 14 13 0 Claude Opus 4.6 26 5 11 10 0 Claude Fable 5 6 1 4 1 0 Human / upstream 6 0 4 2 0 Ambiguous 67 10 28 29 0 Total 231 35 99 93 4 It is surprising to see just how many models have contributed to the project. Opus 5.5 is too new to have written code before the beginning of the auditing. I usually switch to newer models as they become available (newer is always better) and was curious which models wrote most of the code. Perhaps models with many bugs just wrote more code:\nCode at the audit baseline, with bugs per 1k production lines\nModel Production Test Total Bugs Per 1k production lines Claude Opus 4.8 38,889 24,704 63,593 48 1.23 Claude Opus 4.7 29,910 19,962 49,872 47 1.57 Claude Opus 4.6 18,222 4,096 22,318 26 1.43 Claude Opus 4.5 12,784 1,706 14,490 31 2.42 Claude Fable 5 2,230 1,510 3,740 6 2.69 Human / upstream / bot 3,213 328 3,541 6 1.87 Claude Sonnet 5 467 770 1,237 0 0.00 Ambiguous — — — 67 — Total 105,715 53,076 158,791 231 2.19 Opus 4.8 wrote the most code (and bugs) but had the lowest bugs per 1k production lines. Sonnet 5 broke the measure by writing code with no bugs found (yet). There is a lot of noise in these measurements; hopefully some good papers on bugs/LoC across models come out soon.\nLastly, I wanted to understand what we actually did during all the fixing passes. This summarizes the changes in lines of code per subsystem:\nWhat changed during the audit/fix loop, by subsystem (2026-07-30 → HEAD)\nSubsystem Production Tests exploration +3,008 (+17%) +10,119 (+155%) vex +5,424 (+28%) +3,503 (+159%) symbolic +2,230 (+18%) +4,495 (+56%) procedures +1,383 (+15%) +3,793 (+31%) syscalls +833 (+15%) +2,779 (+33%) memory +1,281 (+27%) +3,156 (+67%) interpreter +1,485 (+23%) +2,892 (+132%) state +1,388 (+25%) +3,190 (+112%) arch +956 (+29%) +1,532 (+167%) callbacks −166 (−6%) +1,379 (+334%) All other +1,513 (+15%) +3,932 (+141%) Total +19,335 (+20%) +40,770 (+80%) The tests grew significantly in comparison to the production code. This was due to the prompt asking for a test case that failed on the bug and went green once it was fixed. It would be interesting to see if one model wrote more of a given subsystem than another (and whether that explains why some subsystems changed more than others). I also need to revisit these numbers with cloc.\nFinally, I had Claude review the bugs that it had found so far and gave it some rough guidance to create a rubric for the project. At some point, it would be interesting to do a retrospective for all audit findings against this rubric and see how things change.\nTowards Merging I doubt that the angr developers want to merge this any time soon. There are a lot of minor things that we have found along the way that I have started to carve out and submit PRs for:\nlibc: add getopt, getopt_long and getopt_long_only merged libc: add str*_chk and __fprintf_chk, fix _chk prototypes merged libc: add stpncpy, memrchr, rawmemchr, strchrnul, asprintf and getline merged format_parser, strtol: fix printf/scanf conversions merged glibc.json: fix __fprintf_chk and __sprintf_chk prototypes There has also been a ton of movement in the upstream repo that I have had Claude update the rust-symex branch to match. Funnily enough, upgrading all the dependencies and checking the outputs uncovered another eight bugs in the Rust engine (five of which are P1s based on the new rubric).\nLatest Benchmark It has been a while since I benchmarked the Rust engine against the latest upstream code. Inside my little VM with 8 CPUs and 8 GB memory, I had Claude benchmark our Rust engine (commit 940333138) against the upstream engine (commit d1e9ec806) using angr-examples (commit c98733f):\nSpeedup for Rust engine against upstream.\nThere is definitely a speedup, but the two biggest speedups come from subtle differences in the engines:\nBench As measured Explanation Equal footing ekopartyctf2016_rev250 51.06× getenv modeling differs: Rust returns NULL, Python a symbolic pointer ≈ 2.8× cow_fork_scaling 33.95× Rust skips the symbolic return-address enumeration ≈ 4× flareon2015_2 7.76× Upstream angr 10’s Rust-backed claripy is slow on min/max ≈ 1.6× (vs the fork’s Python engine) flareon2015_10 4.62× Genuine: identical work, faster interpreter 4.62× sharif7_rev50 4.46× Genuine: near-identical work, faster interpreter 4.46× Lessons Learned A few lessons learned from this process:\nDefine a rubric (e.g., severity, categorization) for Claude to follow when filing bugs in your repo. Do not expect one audit to find all the bugs (or even a significant fraction of them). Expect fixing bugs to introduce new bugs. Summary At this point, I think the Rust symex engine is in decent shape. It would be neat to discuss with folks at SynSec but I cannot attend this time. Hopefully there will be another similar conference next year.\nLinks rust-symex branch Triage rubric angr-examples Ralph ",
+  "wordCount" : "1646",
+  "inLanguage": "en",
+  "datePublished": "2026-10-14T00:00:00Z",
+  "dateModified": "2026-10-14T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Jonathan Crussell"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/post/just-keep-auditing/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Jonathan Crussell",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="/" accesskey="h" title="Jonathan Crussell (Alt + H)">Jonathan Crussell</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="/" title="Home">
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="/publication/" title="Publications">
+                    <span>Publications</span>
+                </a>
+            </li>
+            <li>
+                <a href="/project/" title="Projects">
+                    <span>Projects</span>
+                </a>
+            </li>
+            <li>
+                <a href="/post/" title="Posts">
+                    <span>Posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Just keep auditing
+    </h1>
+    <div class="post-description">
+      Letting Claude audit and fix the Rust symbolic execution engine eight times over two months and no sign of convergence.
+    </div>
+    <div class="post-meta"><span title='2026-10-14 00:00:00 +0000 UTC'>October 14, 2026</span>&nbsp;·&nbsp;<span>8 min</span>&nbsp;·&nbsp;<span>Jonathan Crussell</span>
+
+</div>
+  </header> 
+  <div class="post-content"><h2 id="recap">Recap<a hidden class="anchor" aria-hidden="true" href="#recap">#</a></h2>
+<p>I have been trying to use Claude to create a Rust Symbolic Execution engine for
+angr based on inspiration from a <a href="https://blog.vjeux.com/2026/analysis/porting-100k-lines-from-typescript-to-rust-using-claude-code-in-a-month.html">blog
+post</a>
+since late January. In <a href="/post/are-we-there-yet/">August</a>, I wrote about letting
+<a href="https://github.com/jcrussell/ralph">Ralph</a> grind away for 10 weeks, chasing
+moonshots, and three waves of bug audits. This post covers many more audits, an
+exploration of the bugs that the audits found, and the latest benchmark
+results.</p>
+<h2 id="just-keep-auditing">Just Keep Auditing<a hidden class="anchor" aria-hidden="true" href="#just-keep-auditing">#</a></h2>
+<p>I was somewhat hopeful based on the trend from my first three bug audits that
+we were converging towards a codebase that was suitable to share with others.
+Those audits produced 217, 138, and 95 findings, respectively, categorized into
+bugs, tasks, and chores. Each of these audits was done from scratch and the
+trend was looking great. To my dismay, the next audit produced 83 issues. Not
+to worry, another Ralph session can fix those and then maybe the trend will
+resume? Nope. I proceeded to run the audit/ralph a total of eight times over a
+two-month period, producing a total of 855 findings (yikes). This table shows
+the number of findings (and their priorities) for each audit:</p>
+<p><strong>Audit findings per round with priority</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: right">Round</th>
+          <th>Started</th>
+          <th style="text-align: right">P1</th>
+          <th style="text-align: right">P2</th>
+          <th style="text-align: right">P3</th>
+          <th style="text-align: right">P4</th>
+          <th style="text-align: right">Total</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: right">1</td>
+          <td>2026-07-31</td>
+          <td style="text-align: right">8</td>
+          <td style="text-align: right">48</td>
+          <td style="text-align: right">89</td>
+          <td style="text-align: right">72</td>
+          <td style="text-align: right">217</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2</td>
+          <td>2026-08-05</td>
+          <td style="text-align: right">4</td>
+          <td style="text-align: right">15</td>
+          <td style="text-align: right">51</td>
+          <td style="text-align: right">68</td>
+          <td style="text-align: right">138</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">3</td>
+          <td>2026-08-08</td>
+          <td style="text-align: right">5</td>
+          <td style="text-align: right">8</td>
+          <td style="text-align: right">27</td>
+          <td style="text-align: right">55</td>
+          <td style="text-align: right">95</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">4</td>
+          <td>2026-08-09</td>
+          <td style="text-align: right">5</td>
+          <td style="text-align: right">14</td>
+          <td style="text-align: right">40</td>
+          <td style="text-align: right">24</td>
+          <td style="text-align: right">83</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">5</td>
+          <td>2026-08-12</td>
+          <td style="text-align: right">7</td>
+          <td style="text-align: right">7</td>
+          <td style="text-align: right">24</td>
+          <td style="text-align: right">41</td>
+          <td style="text-align: right">79</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">6</td>
+          <td>2026-08-20</td>
+          <td style="text-align: right">1</td>
+          <td style="text-align: right">8</td>
+          <td style="text-align: right">23</td>
+          <td style="text-align: right">37</td>
+          <td style="text-align: right">69</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">7</td>
+          <td>2026-09-04</td>
+          <td style="text-align: right">6</td>
+          <td style="text-align: right">12</td>
+          <td style="text-align: right">36</td>
+          <td style="text-align: right">32</td>
+          <td style="text-align: right">86</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">8</td>
+          <td>2026-09-13</td>
+          <td style="text-align: right">2</td>
+          <td style="text-align: right">9</td>
+          <td style="text-align: right">39</td>
+          <td style="text-align: right">38</td>
+          <td style="text-align: right">88</td>
+      </tr>
+      <tr>
+          <td style="text-align: right"><strong>Total</strong></td>
+          <td></td>
+          <td style="text-align: right"><strong>38</strong></td>
+          <td style="text-align: right"><strong>121</strong></td>
+          <td style="text-align: right"><strong>329</strong></td>
+          <td style="text-align: right"><strong>367</strong></td>
+          <td style="text-align: right"><strong>855</strong></td>
+      </tr>
+  </tbody>
+</table>
+<p>These are based on Claude&rsquo;s self-assigned priorities (assigned by a finder
+agent and confirmed by a verifier agent). P1 is the highest priority and P4 is
+the lowest. The number of P1s has generally decreased over time. I tried to
+hold the audit workflow consistent across rounds (specifically, asking Claude
+to do the N+1th comprehensive audit of the codebase) but the workflow ended up
+drifting over time. The audits all started with the same goal: auditing
+<code>native/angr/src</code> from multiple angles including correctness, DRY, and
+organization. The way the codebase was split varied slightly for each audit.
+Later rounds added a new angle for overflow and width-boundary bugs based on
+bugs that were discovered in previous audits.</p>
+<p>During the remediation phase, Ralph actually found about 20 more bugs that the
+audit rounds missed and filed them as additional findings (and a bunch of
+non-bug findings) under the same epics used to track the audit rounds. The bugs
+fell into categories like &ldquo;fixed one site, then checked for the same shape
+elsewhere&rdquo; and &ldquo;writing tests for one bug surfaced another&rdquo;. The reuse of the
+top-level epic confused Claude (and myself) when trying to document how many
+findings each audit identified (including an error in my previous post). It
+would have been better to snapshot the beads database after each audit to avoid
+this confusion.</p>
+<p>Hidden in the table above is the breakdown of bugs, tasks, and chores:</p>
+<p><strong>Audit findings per round broken down by type</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: right">Round</th>
+          <th style="text-align: right">Bug</th>
+          <th style="text-align: right">Task</th>
+          <th style="text-align: right">Chore</th>
+          <th style="text-align: right">Total</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: right">1</td>
+          <td style="text-align: right">60</td>
+          <td style="text-align: right">21</td>
+          <td style="text-align: right">136</td>
+          <td style="text-align: right">217</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2</td>
+          <td style="text-align: right">37</td>
+          <td style="text-align: right">0</td>
+          <td style="text-align: right">101</td>
+          <td style="text-align: right">138</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">21</td>
+          <td style="text-align: right">12</td>
+          <td style="text-align: right">62</td>
+          <td style="text-align: right">95</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">4</td>
+          <td style="text-align: right">41</td>
+          <td style="text-align: right">0</td>
+          <td style="text-align: right">42</td>
+          <td style="text-align: right">83</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">5</td>
+          <td style="text-align: right">20</td>
+          <td style="text-align: right">59</td>
+          <td style="text-align: right">0</td>
+          <td style="text-align: right">79</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">6</td>
+          <td style="text-align: right">0</td>
+          <td style="text-align: right">69</td>
+          <td style="text-align: right">0</td>
+          <td style="text-align: right">69</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">7</td>
+          <td style="text-align: right">21</td>
+          <td style="text-align: right">14</td>
+          <td style="text-align: right">51</td>
+          <td style="text-align: right">86</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">8</td>
+          <td style="text-align: right">22</td>
+          <td style="text-align: right">66</td>
+          <td style="text-align: right">0</td>
+          <td style="text-align: right">88</td>
+      </tr>
+      <tr>
+          <td style="text-align: right"><strong>Total</strong></td>
+          <td style="text-align: right"><strong>222</strong></td>
+          <td style="text-align: right"><strong>241</strong></td>
+          <td style="text-align: right"><strong>392</strong></td>
+          <td style="text-align: right"><strong>855</strong></td>
+      </tr>
+  </tbody>
+</table>
+<p>Again, these are based on Claude&rsquo;s self-assigned categorizations for bug versus
+task versus chore. In round 6, it decided to make everything a task
+(specifically, the <a href="https://github.com/gastownhall/beads">bead</a> type, which we
+use for counting). It did put the intended category in the bead titles (e.g.,
+&ldquo;chore:&rdquo;). Repo conventions (if they were actually enforced) could have
+improved our ability to compare audits.</p>
+<p>Most of the audits were conducted with Opus. The last audit was done with
+Sonnet 5 and it still found plenty of bugs. I am curious to go in the opposite
+direction to see what an audit with Fable finds. Hopefully Fable 5.5 comes out
+soon and is token-efficient enough to make this feasible.</p>
+<h2 id="bug-investigation">Bug Investigation<a hidden class="anchor" aria-hidden="true" href="#bug-investigation">#</a></h2>
+<p>To better understand the bugs produced by these audits, I asked Claude to write
+me a script to tabulate, for each bug:</p>
+<ul>
+<li>When was it added?</li>
+<li>What model added it?</li>
+<li>What subcomponent was it in?</li>
+</ul>
+<p>The script traces the lineage of each bug to identify when it was introduced
+via <code>git blame</code> and some extra tracing. The extra tracing was due to a couple
+of <a href="/post/rust-symex/">resets</a> early on. Once the bug and its introducing
+commit have been identified, the model that wrote the code can be extracted
+from the <code>Co-Authored-By</code> line that Claude likes to append. The audits started
+at commit <code>2e6cac6f5</code> (2026-07-30) and the analysis snapshot was at commit
+<code>8c157f891</code>. The bugs introduced by model are as follows:</p>
+<p><strong>Bugs already in the code at the audit baseline (2026-07-30)</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th>Model</th>
+          <th style="text-align: right">Bugs</th>
+          <th style="text-align: right">P1</th>
+          <th style="text-align: right">P2</th>
+          <th style="text-align: right">P3</th>
+          <th style="text-align: right">P4</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Claude Opus 4.8</td>
+          <td style="text-align: right">48</td>
+          <td style="text-align: right">4</td>
+          <td style="text-align: right">17</td>
+          <td style="text-align: right">25</td>
+          <td style="text-align: right">2</td>
+      </tr>
+      <tr>
+          <td>Claude Opus 4.7</td>
+          <td style="text-align: right">47</td>
+          <td style="text-align: right">11</td>
+          <td style="text-align: right">21</td>
+          <td style="text-align: right">13</td>
+          <td style="text-align: right">2</td>
+      </tr>
+      <tr>
+          <td>Claude Opus 4.5</td>
+          <td style="text-align: right">31</td>
+          <td style="text-align: right">4</td>
+          <td style="text-align: right">14</td>
+          <td style="text-align: right">13</td>
+          <td style="text-align: right">0</td>
+      </tr>
+      <tr>
+          <td>Claude Opus 4.6</td>
+          <td style="text-align: right">26</td>
+          <td style="text-align: right">5</td>
+          <td style="text-align: right">11</td>
+          <td style="text-align: right">10</td>
+          <td style="text-align: right">0</td>
+      </tr>
+      <tr>
+          <td>Claude Fable 5</td>
+          <td style="text-align: right">6</td>
+          <td style="text-align: right">1</td>
+          <td style="text-align: right">4</td>
+          <td style="text-align: right">1</td>
+          <td style="text-align: right">0</td>
+      </tr>
+      <tr>
+          <td>Human / upstream</td>
+          <td style="text-align: right">6</td>
+          <td style="text-align: right">0</td>
+          <td style="text-align: right">4</td>
+          <td style="text-align: right">2</td>
+          <td style="text-align: right">0</td>
+      </tr>
+      <tr>
+          <td>Ambiguous</td>
+          <td style="text-align: right">67</td>
+          <td style="text-align: right">10</td>
+          <td style="text-align: right">28</td>
+          <td style="text-align: right">29</td>
+          <td style="text-align: right">0</td>
+      </tr>
+      <tr>
+          <td><strong>Total</strong></td>
+          <td style="text-align: right"><strong>231</strong></td>
+          <td style="text-align: right">35</td>
+          <td style="text-align: right">99</td>
+          <td style="text-align: right">93</td>
+          <td style="text-align: right">4</td>
+      </tr>
+  </tbody>
+</table>
+<p>It is surprising to see just how many models have contributed to the project.
+Opus 5.5 is too new to have written code before the beginning of the auditing.
+I usually switch to newer models as they become available (newer is <em>always</em>
+better) and was curious which models wrote most of the code. Perhaps models
+with many bugs just wrote more code:</p>
+<p><strong>Code at the audit baseline, with bugs per 1k production lines</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th>Model</th>
+          <th style="text-align: right">Production</th>
+          <th style="text-align: right">Test</th>
+          <th style="text-align: right">Total</th>
+          <th style="text-align: right">Bugs</th>
+          <th style="text-align: right">Per 1k production lines</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Claude Opus 4.8</td>
+          <td style="text-align: right">38,889</td>
+          <td style="text-align: right">24,704</td>
+          <td style="text-align: right">63,593</td>
+          <td style="text-align: right">48</td>
+          <td style="text-align: right">1.23</td>
+      </tr>
+      <tr>
+          <td>Claude Opus 4.7</td>
+          <td style="text-align: right">29,910</td>
+          <td style="text-align: right">19,962</td>
+          <td style="text-align: right">49,872</td>
+          <td style="text-align: right">47</td>
+          <td style="text-align: right">1.57</td>
+      </tr>
+      <tr>
+          <td>Claude Opus 4.6</td>
+          <td style="text-align: right">18,222</td>
+          <td style="text-align: right">4,096</td>
+          <td style="text-align: right">22,318</td>
+          <td style="text-align: right">26</td>
+          <td style="text-align: right">1.43</td>
+      </tr>
+      <tr>
+          <td>Claude Opus 4.5</td>
+          <td style="text-align: right">12,784</td>
+          <td style="text-align: right">1,706</td>
+          <td style="text-align: right">14,490</td>
+          <td style="text-align: right">31</td>
+          <td style="text-align: right">2.42</td>
+      </tr>
+      <tr>
+          <td>Claude Fable 5</td>
+          <td style="text-align: right">2,230</td>
+          <td style="text-align: right">1,510</td>
+          <td style="text-align: right">3,740</td>
+          <td style="text-align: right">6</td>
+          <td style="text-align: right">2.69</td>
+      </tr>
+      <tr>
+          <td>Human / upstream / bot</td>
+          <td style="text-align: right">3,213</td>
+          <td style="text-align: right">328</td>
+          <td style="text-align: right">3,541</td>
+          <td style="text-align: right">6</td>
+          <td style="text-align: right">1.87</td>
+      </tr>
+      <tr>
+          <td>Claude Sonnet 5</td>
+          <td style="text-align: right">467</td>
+          <td style="text-align: right">770</td>
+          <td style="text-align: right">1,237</td>
+          <td style="text-align: right">0</td>
+          <td style="text-align: right">0.00</td>
+      </tr>
+      <tr>
+          <td>Ambiguous</td>
+          <td style="text-align: right">—</td>
+          <td style="text-align: right">—</td>
+          <td style="text-align: right">—</td>
+          <td style="text-align: right">67</td>
+          <td style="text-align: right">—</td>
+      </tr>
+      <tr>
+          <td><strong>Total</strong></td>
+          <td style="text-align: right"><strong>105,715</strong></td>
+          <td style="text-align: right"><strong>53,076</strong></td>
+          <td style="text-align: right"><strong>158,791</strong></td>
+          <td style="text-align: right"><strong>231</strong></td>
+          <td style="text-align: right"><strong>2.19</strong></td>
+      </tr>
+  </tbody>
+</table>
+<p>Opus 4.8 wrote the most code (and bugs) but had the lowest bugs per 1k
+production lines. Sonnet 5 broke the measure by writing code with no bugs found
+(yet). There is a lot of noise in these measurements; hopefully some good
+papers on bugs/LoC across models come out soon.</p>
+<p>Lastly, I wanted to understand what we actually <em>did</em> during all the fixing
+passes. This summarizes the changes in lines of code per subsystem:</p>
+<p><strong>What changed during the audit/fix loop, by subsystem (2026-07-30 → HEAD)</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th>Subsystem</th>
+          <th style="text-align: right">Production</th>
+          <th style="text-align: right">Tests</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>exploration</td>
+          <td style="text-align: right">+3,008 (+17%)</td>
+          <td style="text-align: right">+10,119 (+155%)</td>
+      </tr>
+      <tr>
+          <td>vex</td>
+          <td style="text-align: right">+5,424 (+28%)</td>
+          <td style="text-align: right">+3,503 (+159%)</td>
+      </tr>
+      <tr>
+          <td>symbolic</td>
+          <td style="text-align: right">+2,230 (+18%)</td>
+          <td style="text-align: right">+4,495 (+56%)</td>
+      </tr>
+      <tr>
+          <td>procedures</td>
+          <td style="text-align: right">+1,383 (+15%)</td>
+          <td style="text-align: right">+3,793 (+31%)</td>
+      </tr>
+      <tr>
+          <td>syscalls</td>
+          <td style="text-align: right">+833 (+15%)</td>
+          <td style="text-align: right">+2,779 (+33%)</td>
+      </tr>
+      <tr>
+          <td>memory</td>
+          <td style="text-align: right">+1,281 (+27%)</td>
+          <td style="text-align: right">+3,156 (+67%)</td>
+      </tr>
+      <tr>
+          <td>interpreter</td>
+          <td style="text-align: right">+1,485 (+23%)</td>
+          <td style="text-align: right">+2,892 (+132%)</td>
+      </tr>
+      <tr>
+          <td>state</td>
+          <td style="text-align: right">+1,388 (+25%)</td>
+          <td style="text-align: right">+3,190 (+112%)</td>
+      </tr>
+      <tr>
+          <td>arch</td>
+          <td style="text-align: right">+956 (+29%)</td>
+          <td style="text-align: right">+1,532 (+167%)</td>
+      </tr>
+      <tr>
+          <td>callbacks</td>
+          <td style="text-align: right">−166 (−6%)</td>
+          <td style="text-align: right">+1,379 (+334%)</td>
+      </tr>
+      <tr>
+          <td>All other</td>
+          <td style="text-align: right">+1,513 (+15%)</td>
+          <td style="text-align: right">+3,932 (+141%)</td>
+      </tr>
+      <tr>
+          <td><strong>Total</strong></td>
+          <td style="text-align: right"><strong>+19,335 (+20%)</strong></td>
+          <td style="text-align: right"><strong>+40,770 (+80%)</strong></td>
+      </tr>
+  </tbody>
+</table>
+<p>The tests grew significantly in comparison to the production code. This was due
+to the prompt asking for a test case that failed on the bug and went green once
+it was fixed. It would be interesting to see if one model wrote more of a given
+subsystem than another (and whether that explains why some subsystems changed
+more than others). I also need to revisit these numbers with <code>cloc</code>.</p>
+<p>Finally, I had Claude review the bugs that it had found so far and gave it some
+rough guidance to create a
+<a href="https://github.com/jcrussell/angr/blob/rust-symex/TRIAGE.md">rubric</a> for the
+project. At some point, it would be interesting to do a retrospective for all
+audit findings against this rubric and see how things change.</p>
+<h2 id="towards-merging">Towards Merging<a hidden class="anchor" aria-hidden="true" href="#towards-merging">#</a></h2>
+<p>I doubt that the angr developers want to merge this any time soon. There are a
+lot of minor things that we have found along the way that I have started to
+carve out and submit PRs for:</p>
+<ul>
+<li><a href="https://github.com/angr/angr/pull/7499"><code>libc: add getopt, getopt_long and getopt_long_only</code></a> <span class="merged-badge">merged</span></li>
+<li><a href="https://github.com/angr/angr/pull/7500"><code>libc: add str*_chk and __fprintf_chk, fix _chk prototypes</code></a> <span class="merged-badge">merged</span></li>
+<li><a href="https://github.com/angr/angr/pull/7501"><code>libc: add stpncpy, memrchr, rawmemchr, strchrnul, asprintf and getline</code></a> <span class="merged-badge">merged</span></li>
+<li><a href="https://github.com/angr/angr/pull/7502"><code>format_parser, strtol: fix printf/scanf conversions</code></a> <span class="merged-badge">merged</span></li>
+<li><a href="https://github.com/angr/angr-data/pull/2"><code>glibc.json: fix __fprintf_chk and __sprintf_chk prototypes</code></a></li>
+</ul>
+<p>There has also been a ton of movement in the upstream repo that I have had
+Claude update the rust-symex branch to match. Funnily enough, upgrading all the
+dependencies and checking the outputs uncovered another eight bugs in the Rust
+engine (five of which are P1s based on the new rubric).</p>
+<h2 id="latest-benchmark">Latest Benchmark<a hidden class="anchor" aria-hidden="true" href="#latest-benchmark">#</a></h2>
+<p>It has been a while since I benchmarked the Rust engine against the latest
+upstream code. Inside my little VM with 8 CPUs and 8 GB memory, I had Claude
+benchmark our Rust engine (commit <code>940333138</code>) against the upstream engine
+(commit <code>d1e9ec806</code>) using
+<a href="https://github.com/angr/angr-examples">angr-examples</a> (commit <code>c98733f</code>):</p>
+<figure class="align-center ">
+    <img loading="lazy" src="/img/rust-symex-speedup.png#center"
+         alt="Speedup for Rust engine against upstream."/> <figcaption>
+            <p>Speedup for Rust engine against upstream.</p>
+        </figcaption>
+</figure>
+
+<p>There is definitely a speedup, but the two biggest speedups come from subtle
+differences in the engines:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Bench</th>
+          <th style="text-align: right">As measured</th>
+          <th>Explanation</th>
+          <th style="text-align: right">Equal footing</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>ekopartyctf2016_rev250</code></td>
+          <td style="text-align: right">51.06×</td>
+          <td><code>getenv</code> modeling differs: Rust returns NULL, Python a symbolic pointer</td>
+          <td style="text-align: right">≈ 2.8×</td>
+      </tr>
+      <tr>
+          <td><code>cow_fork_scaling</code></td>
+          <td style="text-align: right">33.95×</td>
+          <td>Rust skips the symbolic return-address enumeration</td>
+          <td style="text-align: right">≈ 4×</td>
+      </tr>
+      <tr>
+          <td><code>flareon2015_2</code></td>
+          <td style="text-align: right">7.76×</td>
+          <td>Upstream angr 10&rsquo;s Rust-backed claripy is slow on <code>min</code>/<code>max</code></td>
+          <td style="text-align: right">≈ 1.6× (vs the fork&rsquo;s Python engine)</td>
+      </tr>
+      <tr>
+          <td><code>flareon2015_10</code></td>
+          <td style="text-align: right">4.62×</td>
+          <td>Genuine: identical work, faster interpreter</td>
+          <td style="text-align: right">4.62×</td>
+      </tr>
+      <tr>
+          <td><code>sharif7_rev50</code></td>
+          <td style="text-align: right">4.46×</td>
+          <td>Genuine: near-identical work, faster interpreter</td>
+          <td style="text-align: right">4.46×</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="lessons-learned">Lessons Learned<a hidden class="anchor" aria-hidden="true" href="#lessons-learned">#</a></h2>
+<p>A few lessons learned from this process:</p>
+<ul>
+<li>Define a rubric (e.g., severity, categorization) for Claude to follow when
+filing bugs in your repo.</li>
+<li>Do not expect one audit to find all the bugs (or even a significant fraction
+of them).</li>
+<li>Expect fixing bugs to introduce new bugs.</li>
+</ul>
+<h2 id="summary">Summary<a hidden class="anchor" aria-hidden="true" href="#summary">#</a></h2>
+<p>At this point, I think the Rust symex engine is in decent shape. It would be
+neat to discuss with folks at <a href="https://synsec.org/">SynSec</a> but I cannot attend
+this time. Hopefully there will be another similar conference next year.</p>
+<h2 id="links">Links<a hidden class="anchor" aria-hidden="true" href="#links">#</a></h2>
+<ul>
+<li><a href="https://github.com/jcrussell/angr/tree/rust-symex">rust-symex branch</a></li>
+<li><a href="https://github.com/jcrussell/angr/blob/rust-symex/TRIAGE.md">Triage rubric</a></li>
+<li><a href="https://github.com/angr/angr-examples">angr-examples</a></li>
+<li><a href="https://github.com/jcrussell/ralph">Ralph</a></li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="/tags/ai/">AI</a></li>
+      <li><a href="/tags/rust/">Rust</a></li>
+      <li><a href="/tags/symbolic-execution/">Symbolic Execution</a></li>
+      <li><a href="/tags/automation/">Automation</a></li>
+    </ul>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>© 2020-2026</span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

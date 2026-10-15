@@ -7,8 +7,15 @@
     <generator>Hugo -- 0.153.5</generator>
     <language>en-us</language>
     <copyright>2020-2026</copyright>
-    <lastBuildDate>Sat, 08 Aug 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 14 Oct 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="/categories/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Just keep auditing</title>
+      <link>/post/just-keep-auditing/</link>
+      <pubDate>Wed, 14 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>/post/just-keep-auditing/</guid>
+      <description>Letting Claude audit and fix the Rust symbolic execution engine eight times over two months and no sign of convergence.</description>
+    </item>
     <item>
       <title>Are we there yet? Ten weeks of Rust Symex</title>
       <link>/post/are-we-there-yet/</link>

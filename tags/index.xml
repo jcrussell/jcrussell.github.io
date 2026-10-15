@@ -7,83 +7,69 @@
     <generator>Hugo -- 0.153.5</generator>
     <language>en-us</language>
     <copyright>2020-2026</copyright>
-    <lastBuildDate>Sat, 12 Sep 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 14 Oct 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>AI</title>
       <link>/tags/ai/</link>
-      <pubDate>Sat, 12 Sep 2026 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 14 Oct 2026 00:00:00 +0000</pubDate>
       <guid>/tags/ai/</guid>
       <description></description>
     </item>
     <item>
       <title>Automation</title>
       <link>/tags/automation/</link>
-      <pubDate>Sat, 12 Sep 2026 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 14 Oct 2026 00:00:00 +0000</pubDate>
       <guid>/tags/automation/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Binary Analysis</title>
-      <link>/tags/binary-analysis/</link>
-      <pubDate>Sat, 12 Sep 2026 00:00:00 +0000</pubDate>
-      <guid>/tags/binary-analysis/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Data Visualization</title>
-      <link>/tags/data-visualization/</link>
-      <pubDate>Sat, 12 Sep 2026 00:00:00 +0000</pubDate>
-      <guid>/tags/data-visualization/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>GNOME</title>
-      <link>/tags/gnome/</link>
-      <pubDate>Sat, 12 Sep 2026 00:00:00 +0000</pubDate>
-      <guid>/tags/gnome/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Go</title>
-      <link>/tags/go/</link>
-      <pubDate>Sat, 12 Sep 2026 00:00:00 +0000</pubDate>
-      <guid>/tags/go/</guid>
       <description></description>
     </item>
     <item>
       <title>Rust</title>
       <link>/tags/rust/</link>
-      <pubDate>Sat, 12 Sep 2026 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 14 Oct 2026 00:00:00 +0000</pubDate>
       <guid>/tags/rust/</guid>
       <description></description>
     </item>
     <item>
       <title>Symbolic Execution</title>
       <link>/tags/symbolic-execution/</link>
-      <pubDate>Sat, 12 Sep 2026 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 14 Oct 2026 00:00:00 +0000</pubDate>
       <guid>/tags/symbolic-execution/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>GNOME</title>
+      <link>/tags/gnome/</link>
+      <pubDate>Sun, 12 Jul 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/gnome/</guid>
       <description></description>
     </item>
     <item>
       <title>Testing</title>
       <link>/tags/testing/</link>
-      <pubDate>Sat, 12 Sep 2026 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 12 Jul 2026 00:00:00 +0000</pubDate>
       <guid>/tags/testing/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Urbanism</title>
-      <link>/tags/urbanism/</link>
-      <pubDate>Sat, 12 Sep 2026 00:00:00 +0000</pubDate>
-      <guid>/tags/urbanism/</guid>
       <description></description>
     </item>
     <item>
       <title>Window Manager</title>
       <link>/tags/window-manager/</link>
-      <pubDate>Sat, 12 Sep 2026 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 12 Jul 2026 00:00:00 +0000</pubDate>
       <guid>/tags/window-manager/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Go</title>
+      <link>/tags/go/</link>
+      <pubDate>Fri, 19 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/go/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Urbanism</title>
+      <link>/tags/urbanism/</link>
+      <pubDate>Fri, 19 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/urbanism/</guid>
       <description></description>
     </item>
     <item>
@@ -129,6 +115,13 @@
       <description></description>
     </item>
     <item>
+      <title>Data Visualization</title>
+      <link>/tags/data-visualization/</link>
+      <pubDate>Thu, 01 Jan 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/data-visualization/</guid>
+      <description></description>
+    </item>
+    <item>
       <title>Gamification</title>
       <link>/tags/gamification/</link>
       <pubDate>Thu, 01 Jan 2026 00:00:00 +0000</pubDate>
@@ -140,6 +133,13 @@
       <link>/tags/healthcare/</link>
       <pubDate>Thu, 01 Jan 2026 00:00:00 +0000</pubDate>
       <guid>/tags/healthcare/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Binary Analysis</title>
+      <link>/tags/binary-analysis/</link>
+      <pubDate>Fri, 28 Feb 2025 00:00:00 +0000</pubDate>
+      <guid>/tags/binary-analysis/</guid>
       <description></description>
     </item>
     <item>
